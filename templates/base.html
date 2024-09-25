@@ -17,8 +17,12 @@
     {% block core_css %}
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     {% endblock %}
-    
+
     {% block extra_css %}
+    {% endblock %}
+
+    {% block core_js %}
+    <script src="https://kit.fontawesome.com/1d63fa792f.js" crossorigin="anonymous"></script>
     {% endblock %}
 
     <title>Supplemint {% block extra_title %}{% endblock %}</title>
@@ -27,10 +31,68 @@
 
 <body>
 
-    <header></header>
+    <header class="header-container">
+        <div class="header-row">
+            <div class="logo-section">
+                <a href="{% url 'home' %}" class="logo-link">
+                    <h2 class="brand-name">Supplemint</h2>
+                </a>
+            </div>
+            <div class="search-section">
+                <form method="GET" action="">
+                    <div class="search-box">
+                        <input class="search-input" type="text" name="q" placeholder="Search for supplements">
+                        <button class="search-button" type="submit">
+                            <span class="search-icon">
+                                <i class="fas fa-search"></i>
+                            </span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="user-section">
+                <ul class="user-menu">
+                    <li class="user-item dropdown">
+                        <a class="account-link" href="#" id="account-menu">
+                            <div class="account-info">
+                                <div><i class="fas fa-user fa-lg"></i></div>
+                                <p class="account-text">My Account</p>
+                            </div>
+                        </a>
+                        <div class="dropdown-content" aria-labelledby="account-menu">
+                            {% if request.user.is_authenticated %}
+                            {% if request.user.is_superuser %}
+                            <a href="" class="dropdown-link">Product Management</a>
+                            {% endif %}
+                            <a href="" class="dropdown-link">My Profile</a>
+                            <a href="{% url 'account_logout' %}" class="dropdown-link">Logout</a>
+                            {% else %}
+                            <a href="{% url 'account_signup' %}" class="dropdown-link">Register</a>
+                            <a href="{% url 'account_login' %}" class="dropdown-link">Login</a>
+                            {% endif %}
+                        </div>
+                    </li>
+                    <li class="user-item">
+                        <a class="{% if grand_total %}highlighted-link{% else %}normal-link{% endif %}" href="">
+                            <div class="cart-info">
+                                <div><i class="fas fa-shopping-bag fa-lg"></i></div>
+                                <p class="cart-text">
+                                    {% if grand_total %}
+                                    ${{ grand_total|floatformat:2 }}
+                                    {% else %}
+                                    $0.00
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
 
     {% if messages %}
-        <div class="message-container"></div>
+    <div class="message-container"></div>
     {% endif %}
 
     {% block page_header %}

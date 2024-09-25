@@ -1,3 +1,111 @@
 html {
     height: 100%;
 }
+
+.header-container {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: white;
+    border-bottom: 1px solid #ccc;
+    z-index: 1000;
+}
+
+.header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.logo-section, .search-section, .user-section {
+    flex: 1;
+}
+
+.logo-link {
+    text-decoration: none;
+}
+
+.brand-name {
+    font-family: Arial, sans-serif;
+    color: black;
+}
+
+.search-box {
+    display: flex;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.search-input {
+    width: 80%;
+    padding: 5px;
+    border: 1px solid black;
+    border-right: none;
+    outline: none;
+}
+
+.search-button {
+    width: 20%;
+    padding: 5px;
+    background-color: black;
+    color: white;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.user-menu {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+}
+
+.user-item {
+    position: relative;
+}
+
+.account-link, .normal-link, .highlighted-link {
+    text-decoration: none;
+    color: black;
+}
+
+.highlighted-link {
+    color: #17a2b8;
+    font-weight: bold;
+}
+
+.account-info, .cart-info {
+    text-align: center;
+}
+
+.account-text, .cart-text {
+    margin-top: 5px;
+    font-size: 12px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    z-index: 2000;
+}
+
+.dropdown-link {
+    display: block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: black;
+    white-space: nowrap;
+}
+
+.user-item:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-link:hover {
+    background-color: #f8f9fa;
+}
