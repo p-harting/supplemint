@@ -26,8 +26,24 @@
 </head>
 
 <body>
+    
     <header></header>
+
+    {% if messages %}
+        <div class="message-container"></div>
+    {% endif %}
+
+    {% block page_header %}
+    {% endblock %}
+
+    {% block content %}
+    {% endblock %}
+
+    {% block postloadjs %}
+    {% endblock %}
+
     <h1>Hello, customer!</h1>
+
 </body>
 
 </html>
