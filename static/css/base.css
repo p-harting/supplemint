@@ -7,8 +7,9 @@ html {
     top: 0;
     width: 100%;
     background-color: white;
-    border-bottom: 1px solid #ccc;
     z-index: 1000;
+    display: flex;
+    justify-content: center;
 }
 
 .header-row {
@@ -16,9 +17,13 @@ html {
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
+    width: 100%;
+    max-width: 1200px;
 }
 
-.logo-section, .search-section, .user-section {
+.logo-section,
+.search-section,
+.user-section {
     flex: 1;
 }
 
@@ -27,32 +32,47 @@ html {
 }
 
 .brand-name {
-    font-family: Arial, sans-serif;
     color: black;
+    font-weight: bold;
 }
 
-.search-box {
+.search-section {
     display: flex;
+    justify-content: center;
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
     width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
+    max-width: 500px;
+    position: relative;
 }
 
 .search-input {
-    width: 80%;
-    padding: 5px;
-    border: 1px solid black;
-    border-right: none;
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #f2f2f2;
+    border: 0 none;
+    border-radius: 0;
+    font-size: 16px;
     outline: none;
+    border-radius: 4px;
 }
 
 .search-button {
-    width: 20%;
-    padding: 5px;
-    background-color: black;
-    color: white;
-    border: 1px solid black;
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
     cursor: pointer;
+    padding: 0;
+    font-size: 18px;
+    color: #555;
+}
+
+.search-button:hover .search-icon {
+    color: black;
 }
 
 .user-menu {
@@ -66,7 +86,9 @@ html {
     position: relative;
 }
 
-.account-link, .normal-link, .highlighted-link {
+.account-link,
+.normal-link,
+.highlighted-link {
     text-decoration: none;
     color: black;
 }
@@ -76,11 +98,13 @@ html {
     font-weight: bold;
 }
 
-.account-info, .cart-info {
+.account-info,
+.cart-info {
     text-align: center;
 }
 
-.account-text, .cart-text {
+.account-text,
+.cart-text {
     margin-top: 5px;
     font-size: 12px;
 }
