@@ -4,13 +4,29 @@
 <html lang="en">
 
 <head>
+
+    {% block meta %}
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Supplemint</title>
+    {% endblock %}
+
+    {% block extra_meta %}
+    {% endblock %}
+
+    {% block core_css %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% endblock %}
+    
+    {% block extra_css %}
+    {% endblock %}
+
+    <title>Supplemint {% block extra_title %}{% endblock %}</title>
+
 </head>
 
 <body>
+    <header></header>
     <h1>Hello, customer!</h1>
 </body>
 
