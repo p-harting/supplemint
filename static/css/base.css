@@ -1,3 +1,10 @@
+/* Wildcard to override default browser styles */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
 html {
     height: 100%;
 }
@@ -13,13 +20,30 @@ html {
     align-items: center;
 }
 
+#delivery-banner {
+    background: #ADEBB3;
+    width: 100vw;
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+#delivery-banner h4 {
+    margin: 0;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+}
+
 .header-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
     width: 100%;
     max-width: 1200px;
+    margin-bottom: 20px;
 }
 
 .logo-section,

@@ -30,8 +30,12 @@
 </head>
 
 <body>
-
     <header class="header-container">
+        <div id="delivery-banner">
+            <div>
+                <h4>Free delivery on orders over €{{ free_shipping_threshold }}!</h4>                
+            </div>            
+        </div>
         <div class="header-row">
             <div class="logo-section">
                 <a href="{% url 'home' %}" class="logo-link">
