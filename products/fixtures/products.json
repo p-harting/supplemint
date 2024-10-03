@@ -1,0 +1,276 @@
+[
+    {
+      "pk": 1,
+      "model": "products.product",
+      "fields": {
+        "sku": "764352",
+        "name": "Casein Protein",
+        "description": "High-quality slow-digesting casein protein powder.",
+        "price": 29.99,
+        "category": 2,
+        "rating": 4.8,
+        "image": "casein-protein.png"
+      }
+    },
+    {
+      "pk": 2,
+      "model": "products.product",
+      "fields": {
+        "sku": "278354",
+        "name": "Chia Seeds",
+        "description": "Organic chia seeds rich in omega-3 fatty acids.",
+        "price": 12.99,
+        "category": 3,
+        "rating": 4.5,
+        "image": "chia-seeds.png"
+      }
+    },
+    {
+      "pk": 3,
+      "model": "products.product",
+      "fields": {
+        "sku": "483276",
+        "name": "Coenzyme Q10",
+        "description": "A powerful antioxidant supplement.",
+        "price": 19.99,
+        "category": 4,
+        "rating": 4.7,
+        "image": "coenzyme-q10.png"
+      }
+    },
+    {
+      "pk": 4,
+      "model": "products.product",
+      "fields": {
+        "sku": "928345",
+        "name": "Curcumin",
+        "description": "Curcumin extract for joint and inflammatory support.",
+        "price": 15.99,
+        "category": 5,
+        "rating": 4.6,
+        "image": "curcumin.png"
+      }
+    },
+    {
+      "pk": 5,
+      "model": "products.product",
+      "fields": {
+        "sku": "183254",
+        "name": "Egg Protein",
+        "description": "Pure egg white protein for muscle building.",
+        "price": 24.99,
+        "category": 2,
+        "rating": 4.9,
+        "image": "egg-protein.png"
+      }
+    },
+    {
+      "pk": 6,
+      "model": "products.product",
+      "fields": {
+        "sku": "549836",
+        "name": "Epigallocatechin Gallate",
+        "description": "A potent antioxidant found in green tea extract.",
+        "price": 22.49,
+        "category": 4,
+        "rating": 4.4,
+        "image": "epigallocatechin-gallate.png"
+      }
+    },
+    {
+      "pk": 7,
+      "model": "products.product",
+      "fields": {
+        "sku": "387654",
+        "name": "Ginger",
+        "description": "Organic ginger root extract for digestive support.",
+        "price": 11.99,
+        "category": 5,
+        "rating": 4.5,
+        "image": "ginger.png"
+      }
+    },
+    {
+      "pk": 8,
+      "model": "products.product",
+      "fields": {
+        "sku": "465738",
+        "name": "Ginseng",
+        "description": "Premium ginseng extract for energy and focus.",
+        "price": 18.99,
+        "category": 5,
+        "rating": 4.7,
+        "image": "ginseng.png"
+      }
+    },
+    {
+      "pk": 9,
+      "model": "products.product",
+      "fields": {
+        "sku": "291847",
+        "name": "Lycopene",
+        "description": "Antioxidant supplement derived from tomatoes.",
+        "price": 14.99,
+        "category": 4,
+        "rating": 4.6,
+        "image": "lycopene.png"
+      }
+    },
+    {
+      "pk": 10,
+      "model": "products.product",
+      "fields": {
+        "sku": "753219",
+        "name": "Maca Root",
+        "description": "Organic maca root powder for energy and stamina.",
+        "price": 17.99,
+        "category": 5,
+        "rating": 4.5,
+        "image": "maca-root.png"
+      }
+    },
+    {
+      "pk": 11,
+      "model": "products.product",
+      "fields": {
+        "sku": "489732",
+        "name": "Plant-Based Protein",
+        "description": "High-quality plant-based protein blend.",
+        "price": 26.99,
+        "category": 2,
+        "rating": 4.8,
+        "image": "plant-based-protein.png"
+      }
+    },
+    {
+      "pk": 12,
+      "model": "products.product",
+      "fields": {
+        "sku": "572348",
+        "name": "Quinoa",
+        "description": "Organic quinoa, a protein-rich superfood.",
+        "price": 9.99,
+        "category": 3,
+        "rating": 4.6,
+        "image": "quinoa.png"
+      }
+    },
+    {
+      "pk": 13,
+      "model": "products.product",
+      "fields": {
+        "sku": "768543",
+        "name": "Resveratrol",
+        "description": "Powerful antioxidant found in grapes and berries.",
+        "price": 21.49,
+        "category": 4,
+        "rating": 4.7,
+        "image": "resveratrol.png"
+      }
+    },
+    {
+      "pk": 14,
+      "model": "products.product",
+      "fields": {
+        "sku": "987654",
+        "name": "Spirulina",
+        "description": "Nutrient-rich blue-green algae for overall health.",
+        "price": 13.49,
+        "category": 3,
+        "rating": 4.5,
+        "image": "spirulina.png"
+      }
+    },
+    {
+      "pk": 15,
+      "model": "products.product",
+      "fields": {
+        "sku": "456789",
+        "name": "Turmeric",
+        "description": "Turmeric extract for joint and inflammation support.",
+        "price": 16.99,
+        "category": 5,
+        "rating": 4.8,
+        "image": "turmeric.png"
+      }
+    },
+    {
+      "pk": 16,
+      "model": "products.product",
+      "fields": {
+        "sku": "234567",
+        "name": "Vitamin A",
+        "description": "Essential vitamin for vision and immune health.",
+        "price": 8.99,
+        "category": 1,
+        "rating": 4.6,
+        "image": "vitamin-a.png"
+      }
+    },
+    {
+      "pk": 17,
+      "model": "products.product",
+      "fields": {
+        "sku": "789654",
+        "name": "Vitamin B",
+        "description": "B-complex vitamins for energy and metabolism.",
+        "price": 10.99,
+        "category": 1,
+        "rating": 4.7,
+        "image": "vitamin-b.png"
+      }
+    },
+    {
+      "pk": 18,
+      "model": "products.product",
+      "fields": {
+        "sku": "345678",
+        "name": "Vitamin C",
+        "description": "Vitamin C for immune support and skin health.",
+        "price": 9.49,
+        "category": 1,
+        "rating": 4.8,
+        "image": "vitamin-c.png"
+      }
+    },
+    {
+      "pk": 19,
+      "model": "products.product",
+      "fields": {
+        "sku": "876543",
+        "name": "Vitamin D",
+        "description": "Vitamin D for bone and immune health.",
+        "price": 11.49,
+        "category": 1,
+        "rating": 4.9,
+        "image": "vitamin-d.png"
+      }
+    },
+    {
+      "pk": 20,
+      "model": "products.product",
+      "fields": {
+        "sku": "654321",
+        "name": "Vitamin E",
+        "description": "Vitamin E for skin and antioxidant support.",
+        "price": 12.49,
+        "category": 1,
+        "rating": 4.6,
+        "image": "vitamin-e.png"
+      }
+    },
+    {
+      "pk": 21,
+      "model": "products.product",
+      "fields": {
+        "sku": "123789",
+        "name": "Whey Protein",
+        "description": "Fast-digesting whey protein for muscle recovery.",
+        "price": 27.99,
+        "category": 2,
+        "rating": 4.9,
+        "image": "whey-protein.png"
+      }
+    }
+  ]
+  
