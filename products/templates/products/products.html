@@ -2,17 +2,35 @@
 {% load static %}
 
 {% block content %}
-    <div class="products-container">
-        <div>
-            {% for product in products %}
-            <div>
-                <h3>{{ product.name }}</h3>
-                <p>{{ product.description }}</p>
-                <p>Price: €{{ product.price }}</p>
-            </div>
-            {% empty %}
-            <p>No products available.</p>
-            {% endfor %}
-        </div>
+<div class="overlay"></div>
+<div class="products-container">
+    <div class="products-header">
+        <h2 class="products-title">Products</h2>
+        <div class="divider"></div>
     </div>
+    <div class="product-grid">
+        {% for product in products %}
+            <div class="product-card">
+                <a href="#">
+                    {% if product.image %}
+                        <img class="product-image" src="{{ product.image.url }}" alt="{{ product.name }}">
+                    {% else %}
+                        <img class="product-image" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+                    {% endif %}
+                </a>
+                <div class="product-details">
+                    <p class="product-name">{{ product.name }}</p>
+                    <p class="product-price">€{{ product.price }}</p>
+                    {% if product.rating %}
+                        <p class="product-rating">&#9733; {{ product.rating }} / 5</p>
+                    {% else %}
+                        <p class="product-rating">No Rating</p>
+                    {% endif %}
+                </div>
+            </div>
+        {% empty %}
+            <p>No products available.</p>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
