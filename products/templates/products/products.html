@@ -13,9 +13,13 @@
             <div class="product-card">
                 <a href="#">
                     {% if product.image %}
+                    <a href="{% url 'product_detail' product.id %}">
                         <img class="product-image" src="{{ product.image.url }}" alt="{{ product.name }}">
+                    </a>
                     {% else %}
+                    <a href="{% url 'product_detail' product.id %}"></a>
                         <img class="product-image" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+                    </a>
                     {% endif %}
                 </a>
                 <div class="product-details">
