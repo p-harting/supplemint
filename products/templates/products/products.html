@@ -25,6 +25,11 @@
                 <div class="product-details">
                     <p class="product-name">{{ product.name }}</p>
                     <p class="product-price">€{{ product.price }}</p>
+                    {% if product.category %}
+                        <p class="product-category">
+                            <a href="{ url 'products' }?category={{ product.category.name }}">{{ product.category.friendly_name }}</a>
+                        </p>
+                    {% endif %}
                     {% if product.rating %}
                         <p class="product-rating">&#9733; {{ product.rating }} / 5</p>
                     {% else %}

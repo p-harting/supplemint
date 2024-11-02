@@ -30,6 +30,11 @@
                 <div class="product-details">
                     <h2 class="product-name">{{ product.name }}</h2>
                     <p class="product-price">${{ product.price }}</p>
+                    {% if product.category %}
+                        <p class="product-category">
+                            <a href="{ url 'products' }?category={{ product.category.name }}">{{ product.category.friendly_name }}</a>
+                        </p>
+                    {% endif %}
                     {% if product.rating %}
                         <small class="product-rating"><i class="fas fa-star"></i> {{ product.rating }} / 5</small>
                     {% else %}
