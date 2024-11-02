@@ -1,5 +1,13 @@
 <div class="nav-container">
     <ul class="main-nav">
+        <li class="nav-item">
+            <a href="{% url 'products' %}" class="nav-link">All products</a>
+            <div class="dropdown-content" aria-labelledby="sort-menu">
+                <a href="{% url 'products' %}?sort=price&direction=asc" class="dropdown-link">By Price</a>
+                <a href="{% url 'products' %}?sort=rating&direction=desc" class="dropdown-link ">By Rating</a>
+                <a href="{% url 'products' %}?sort=category&direction=asc" class="dropdown-link ">By Category</a>
+            </div>
+        </li>
         <li class="nav-item dropdown">
             <a href="{% url 'products' %}?category=vitamins" class="nav-link" id="vitamins-menu">Vitamins</a>
             <div class="dropdown-content" aria-labelledby="vitamins-menu">
@@ -29,8 +37,8 @@
         <li class="nav-item dropdown">
             <a href="{% url 'products' %}?category=superfoods" class="nav-link" id="superfood-menu">Superfood</a>
             <div class="dropdown-content" aria-labelledby="superfood-menu">
-                <a href="{% url 'products' %}?subcategory=vitamin_a" class="dropdown-link">Chia Seeds</a>
-                <a href="{% url 'products' %}?subcategory=vitamin_a" class="dropdown-link">Quinoa</a>
+                <a href="{% url 'products' %}?subcategory=chia_seeds" class="dropdown-link">Chia Seeds</a>
+                <a href="{% url 'products' %}?subcategory=quinoa" class="dropdown-link">Quinoa</a>
                 <a href="{% url 'products' %}?subcategory=vitamin_a" class="dropdown-link">Spirulina</a>
                 <a href="{% url 'products' %}?subcategory=vitamin_a" class="dropdown-link">Maca Root</a>
             </div>
@@ -42,9 +50,6 @@
                 <a href="{% url 'products' %}?subcategory=vitamin_a" class="dropdown-link">Turmeric</a>
                 <a href="{% url 'products' %}?subcategory=vitamin_a" class="dropdown-link">Ginger</a>
             </div>
-        </li>
-        <li class="nav-item">
-            <a href="{% url 'products' %}" class="nav-link">All products</a>
         </li>
         <li class="nav-item">
             <a href="#" class="nav-link">Blog</a>
