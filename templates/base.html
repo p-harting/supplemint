@@ -34,7 +34,7 @@
     <header class="header-container">
         <div id="delivery-banner">
             <div>
-                <h4>Free delivery on orders over €{{ free_shipping_threshold }}!</h4>                
+                <h4>Free delivery on orders over €{{ free_delivery_threshold }}!</h4>                
             </div>            
         </div>
         <div class="header-row">
@@ -74,7 +74,7 @@
                         </div>
                     </li>
                     <li class="user-item">
-                        <a class="{% if grand_total %}highlighted-link{% else %}normal-link{% endif %}" href="">
+                        <a class="{% if grand_total %}highlighted-link{% else %}normal-link{% endif %}" href="{% url 'view_bag' %}">
                             <div class="cart-info">
                                 <div><i class="fas fa-shopping-bag fa-lg"></i></div>
                                 <p class="cart-text">
