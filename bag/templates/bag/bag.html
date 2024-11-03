@@ -22,6 +22,7 @@
                         <th>Price</th>
                         <th>Qty</th>
                         <th>Subtotal</th>
+                        <th></th>
                     </tr>
                 </thead>
 
@@ -44,6 +45,9 @@
                     <td class="quantity-cell">
                         <form method="POST" action="{% url 'adjust_bag' item.product.id %}">
                             {% csrf_token %}
+                            {% if item.size %}
+                            <input type="hidden" name="product_size" value="{{ item.size }}">
+                            {% endif %}
                             <input class="quantity-input" type="number" name="quantity" value="{{ item.quantity }}"
                                 min="1" max="99" data-item_id="{{ item.product.id }}" id="id_qty_{{ item.product.id }}">
                             <button type="submit" class="update-quantity-btn" style="display: none;">
@@ -54,26 +58,37 @@
                     <td class="subtotal-cell">
                         <p class="subtotal-text">${{ item.product.price | calc_subtotal:item.quantity }}</p>
                     </td>
+                    <td class="remove-item-cell">
+                        <form class="form" method="POST" action="{% url 'remove_from_bag' item.product.id %}">
+                            {% csrf_token %}
+                            {% if item.size %}
+                                <input type="hidden" name="product_size" value="{{ item.size }}">
+                            {% endif %}
+                            <button type="submit" class="remove-item">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </form>
+                    </td>
                 </tr>
                 {% endfor %}
 
                 <tr class="totals-row">
-                    <td colspan="3"></td>
+                    <td colspan="4"></td>
                     <td class="totals-label">Bag Total:</td>
                     <td class="totals-value">${{ bag_total }}</td>
                 </tr>
                 <tr class="totals-row">
-                    <td colspan="3"></td>
+                    <td colspan="4"></td>
                     <td class="totals-label">Delivery Fee:</td>
                     <td class="totals-value">${{ delivery_fee }}</td>
                 </tr>
                 <tr class="totals-row">
-                    <td colspan="3"></td>
+                    <td colspan="4"></td>
                     <td class="totals-label">Grand Total:</td>
                     <td class="totals-value">${{ grand_total }}</td>
                 </tr>
                 <tr class="checkout-buttons-row">
-                    <td colspan="5" class="checkout-buttons-cell">
+                    <td colspan="6" class="checkout-buttons-cell">
                         <a href="{% url 'products' %}" class="keep-shopping-btn">
                             <span class="icon"><i class="arrow-left-icon"></i></span>
                             <span class="button-text">Continue Shopping</span>
