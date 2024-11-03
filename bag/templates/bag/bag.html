@@ -46,12 +46,30 @@
                     </td>
                 </tr>
                 {% endfor %}
-                <tr>
-                    <td colspan="5" class="bag-total-cell">
-                    </td>
+                <tr class="totals-row">
+                    <td colspan="3"></td>
+                    <td class="totals-label">Bag Total:</td>
+                    <td class="totals-value">${{ bag_total }}</td>
                 </tr>
-                <tr>
+                <tr class="totals-row">
+                    <td colspan="3"></td>
+                    <td class="totals-label">Delivery Fee:</td>
+                    <td class="totals-value">${{ delivery_fee }}</td>
+                </tr>
+                <tr class="totals-row">
+                    <td colspan="3"></td>
+                    <td class="totals-label">Grand Total:</td>
+                    <td class="totals-value">${{ grand_total }}</td>
+                </tr>
+                <tr class="checkout-buttons-row">
                     <td colspan="5" class="checkout-buttons-cell">
+                        <a href="{% url 'products' %}" class="keep-shopping-btn">
+                            <span class="icon"><i class="arrow-left-icon"></i></span>
+                            <span class="button-text">Continue Shopping</span>
+                        </a>
+                        <a href="" class="secure-checkout-btn">
+                            <span class="button-text">Secure Checkout</span>
+                        </a>
                     </td>
                 </tr>
             </table>

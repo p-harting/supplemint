@@ -672,6 +672,59 @@ html {
     color: black;
 }
 
+/* Totals Row */
+.totals-row .totals-label {
+    text-align: right;
+    font-weight: bold;
+    padding: 10px;
+    color: #555;
+}
+
+.totals-row .totals-value {
+    text-align: right;
+    font-weight: bold;
+    padding: 10px;
+    color: #ADEBB3;
+}
+
+/* Checkout Buttons */
+.checkout-buttons-cell {
+    text-align: right;
+    padding-top: 20px;
+}
+
+.keep-shopping-btn,
+.secure-checkout-btn {
+    display: inline-block;
+    margin: 5px;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    text-transform: uppercase;
+}
+
+.keep-shopping-btn {
+    background-color: #f8f9fa;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+.keep-shopping-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.secure-checkout-btn {
+    background-color: #ADEBB3;
+    color: #fff;
+    border: none;
+}
+
+.secure-checkout-btn:hover {
+    background-color: #89b98e;
+}
+
 @media (min-width: 768px) {
     .hero-title {
         font-size: 2.5rem;
