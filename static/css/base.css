@@ -523,30 +523,18 @@ html {
 
 /* Bag Styles */
 
-/* Overlay */
-.bag-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.3);
-    z-index: -1;
-    display: none;
-}
-
-/* Bag Container */
 .bag-container {
     margin-top: 160px;
     padding: 20px;
     text-align: center;
-    max-width: 1200px;
+    width: 70vw;
+    margin-left: 15vw;
+    margin-right: 15vw;
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Header Section */
 .bag-header-section {
     text-align: center;
     margin-bottom: 20px;
@@ -559,12 +547,10 @@ html {
     margin: 10px 0;
 }
 
-/* Content Section */
 .bag-content {
     padding: 20px;
 }
 
-/* Product Row */
 .product-row {
     display: flex;
     align-items: center;
@@ -607,22 +593,6 @@ html {
     height: 1px;
     background-color: #ddd;
     width: 100%;
-}
-
-/* Scroll to Top Button */
-.scroll-top-button {
-    text-align: right;
-    margin-top: 20px;
-}
-
-.scroll-top-link {
-    color: #555;
-    text-decoration: none;
-    font-size: 1.5rem;
-}
-
-.arrow-icon {
-    color: #ADEBB3;
 }
 
 /* Desktop Table */
@@ -701,8 +671,6 @@ html {
     margin-right: 5px;
     color: black;
 }
-
-
 
 @media (min-width: 768px) {
     .hero-title {
