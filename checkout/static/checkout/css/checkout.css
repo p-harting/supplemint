@@ -276,3 +276,30 @@ body {
     color: #000;
     border: 1px solid #000;
 }
+
+#loading-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7); 
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.logo-font {
+    font-family: 'Arial', sans-serif;
+    color: white;
+    font-size: 3rem;
+}
+
+.loading-spinner {
+	display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    height: 100%;
+}
