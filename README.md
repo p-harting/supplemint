@@ -1,131 +1,214 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Supplemint
+## Introduction
+Welcome to **Supplemint**, the premier online destination for high-quality nutritional supplements! Our e-commerce platform, built with the robust capabilities of Django, is designed to provide health enthusiasts and wellness seekers with a seamless shopping experience. From vitamins to protein powders, we offer a curated range of products to support your journey toward optimal health and well-being.
 
-Welcome Pascal Harting,
+This project was developed as part of a full-stack web development course, showcasing a comprehensive application of Django, Python, the Stripe API for secure and efficient payment processing, and advanced web development best practices.
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
+![mockup](documentation/screenshots/mockup.png)
 
-You can safely delete this README.md file or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **June 18, 2024**
+### View the live website [here](https://google.com)
 
-## Gitpod Reminders
+## User Benefits
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+At **Supplemint**, we’re dedicated to enhancing your health journey with a diverse selection of high-quality supplements and a smooth, enjoyable shopping experience. Our platform caters to health and wellness enthusiasts, offering everything you need in one place. Here’s what makes Supplemint the ideal choice for your supplement needs:
 
-`python3 -m http.server`
+### Superior Product Selection
 
-A blue button should appear to click: _Make Public_,
+-   **Extensive Categories**: Discover a wide variety of supplements organized for easy browsing:
+    -   **Vitamins**: Essential nutrients to support your immune system and overall health.
+    -   **Proteins**: High-quality protein powders and bars to aid in muscle recovery and boost performance.
+    -   **Superfoods**: Nutrient-rich options like spirulina, acai, and chia seeds for overall wellness.
+    -   **Herbs & Extracts**: A selection of botanical extracts to promote energy and vitality.
+    -   **Vitalstoffe**: A comprehensive collection of essential micronutrients to enhance bodily functions.
+-   **Subcategories for Easy Navigation**: Further refine your search within each category to quickly locate specific supplements.
 
-Another blue button should appear to click: _Open Browser_.
+### Detailed Product Information
 
-To run a backend Python file, type `python3 app.py` if your Python file is named `app.py`, of course.
+-   **Comprehensive Product Details**: Each product page includes essential information, such as a descriptive title, thorough overview, price, available sizes, current stock levels, and user ratings. This way, you can make well-informed decisions.
+-   **Customer Ratings and Reviews**: Read real reviews and ratings from other customers to better understand each product's benefits and effectiveness.
 
-A blue button should appear to click: _Make Public_,
+### Effortless Search and Sorting
 
-Another blue button should appear to click: _Open Browser_.
+-   **Smart Search Bar**: Quickly find what you’re looking for with our efficient search functionality.
+-   **Flexible Sorting Options**: Organize products by name, price, or rating to streamline your shopping experience and discover what suits your needs.
 
-By Default, Gitpod gives you superuser security privileges. Therefore, you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+### Personalized User Experience
 
-To log into the Heroku toolbelt CLI:
+-   **User Accounts**: Create a personalized account to unlock a range of features, including:
+    -   Viewing and editing your profile.
+    -   Checking your order history and tracking past purchases.
+    -   Saving products to your wishlist for future consideration.
 
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
+### Convenient Cart and Checkout
 
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you, so do not share it. If you accidentally make it public, you can create a new one with _Regenerate API Key_.
+-   **Efficient Cart Management**: Add items to your cart, adjust quantities, or remove products with ease. Our intuitive checkout process ensures a smooth and secure transaction.
+-   **Secure Payment Processing**: We use Stripe API to provide a fast and secure payment experience, safeguarding your personal and financial information.
 
-### Connecting your Mongo database
+### Engaging Community Features
 
-- **Connect to Mongo CLI on a IDE**
-- navigate to your MongoDB Clusters Sandbox
-- click **"Connect"** button
-- select **"Connect with the MongoDB shell"**
-- select **"I have the mongo shell installed"**
-- choose **mongosh (2.0 or later)** for : **"Select your mongo shell version"**
-- choose option: **"Run your connection string in your command line"**
-- in the terminal, paste the copied code `mongo "mongodb+srv://<CLUSTER-NAME>.mongodb.net/<DBname>" --apiVersion 1 --username <USERNAME>`
-  - replace all `<angle-bracket>` keys with your own data
-- enter password _(will not echo **\*\*\*\*** on screen)_
+-   **Custom Reviews and Ratings**: Share your experience and rate products to guide fellow shoppers. Your feedback helps create a trusted community of health-conscious individuals.
+-   **Newsletter Subscription**: Stay informed and inspired by signing up for our newsletter. Receive health tips, product reviews, and exclusive deals directly to your inbox. Be the first to know about new arrivals and special promotions.
 
-------
+### Comprehensive Customer Support
 
-## Release History
+-   **FAQ Section**: Access quick answers to common questions about our products, shipping, returns, and more through our extensive FAQ page.
+-   **Contact Us**: If you need further assistance, our responsive support team is ready to help. Reach out via our Contact Us page to get personalized support.
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
+### Transparent and Secure Policies
 
-**June 18, 2024,** Add Mongo back into template
+-   **Terms and Conditions & Privacy Policy**: We prioritize your privacy and security. Our terms, conditions, and privacy policy are clearly outlined to ensure a transparent and trustworthy shopping environment.
+-   **Legal Standards**: Our policies are crafted to protect your rights and provide you with a safe, reliable experience on our platform.
 
-**June 14, 2024,** Temporarily remove Mongo until the key issue is resolved
+## Persona: Alex Martinez - The Wellness-Oriented Fitness Enthusiast
 
-**May 28 2024:** Fix Mongo and Links installs
+**Basic Information:**
 
-**April 26 2024:** Update node version to 16
+-   **Name:** Alex Martinez
+-   **Age:** 29
+-   **Occupation:** Software Engineer
+-   **Location:** Denver, Colorado
+-   **Family Status:** Single, lives with a Labrador named Luna
 
-**September 20 2023:** Update Python version to 3.9.17.
+**Background:**  
+Alex is a software engineer at a growing tech startup, working a hybrid schedule that allows him to balance his passion for health and fitness with his demanding job. He has been a fitness enthusiast for years, with a particular interest in weightlifting, outdoor sports, and nutrition. Alex dedicates time every day to working out, meal prepping, and researching the best ways to enhance his well-being through diet and lifestyle. He often shares fitness and supplement advice on social media and stays active in online wellness forums to keep up with new trends and products.
 
-**September 1 2021:** Remove `PGHOSTADDR` environment variable.
+**Demographics:**
 
-**July 19 2021:** Remove `font_fix` script now that the terminal font issue is fixed.
+-   **Income:** $90,000 annually
+-   **Education:** Bachelor’s degree in Computer Science
+-   **Lifestyle:** Health-focused, environmentally conscious, tech-savvy, and socially active
+-   **Shopping Preferences:** Prefers online shopping for convenience and wide selection; values high-quality, trustworthy brands that align with his healthy lifestyle
 
-**July 2 2021:** Remove extensions that are not available in Open VSX.
+**Goals and Needs:**
 
-**June 30 2021:** Combined the P4 and P5 templates into one file, added the uptime script. See the FAQ at the end of this file.
+-   **Goals:**
+    -   To discover effective, science-backed supplements that boost his athletic performance and overall health.
+    -   To integrate sustainable products into his lifestyle, from supplements to environmentally-friendly packaging.
+    -   To simplify his shopping experience with a well-designed website that provides detailed information, making it easy to choose the right products.
+-   **Needs:**
+    -   Access to a comprehensive range of supplements, including proteins, vitamins, superfoods, and herbal extracts, all in one place.
+    -   Clear, science-based product descriptions and trustworthy customer reviews to guide his purchase decisions.
+    -   User-friendly filtering options that help him sort supplements based on specific goals like muscle gain, energy, or immune support.
 
-**June 10 2021:** Added: `font_fix` script and alias to fix the Terminal font issue
+**Pain Points:**
 
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
+-   Frustration with websites that offer poor navigation, making it hard to compare products or find what he needs.
+-   Concern about the environmental impact of supplement packaging and ingredients sourced unsustainably.
+-   Difficulty finding reliable information about the ingredients and benefits of supplements, leading to hesitation in trying new products.
 
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
+**Interests and Hobbies:**
 
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
+-   Enjoys outdoor activities like hiking, rock climbing, and mountain biking, especially in the beautiful Colorado landscapes.
+-   Avid weightlifter who follows a strict workout and dietary plan.
+-   Interested in biohacking and regularly reads up on the latest research in health, fitness, and nutrition.
+-   Volunteers occasionally at local community events focused on promoting health and wellness.
 
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
+**Technology and Online Behavior:**
 
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
+-   Regularly uses platforms like Instagram, Reddit, and YouTube to stay updated on health trends, new supplement launches, and workout tips.
+-   Relies heavily on smartphone and tablet for browsing, making purchases, and tracking fitness progress through health apps.
+-   Values in-depth product reviews and user testimonials to make informed decisions about what to buy.
 
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
+**Reasons for Visiting the Website:**
 
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
+-   **Comprehensive Product Range:** Alex is drawn to the diverse selection of high-quality supplements, from protein powders and vitamins to niche superfoods and herbal extracts, all in one convenient online store.
+-   **Efficient and Smooth Experience:** He appreciates the intuitive search and sorting features, making it simple to filter products by goals, ratings, or ingredients.
+-   **Detailed Insights and Transparency:** The site’s clear and comprehensive product descriptions, along with reviews from fellow health enthusiasts, give him confidence in his choices.
 
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
+**Marketing Messages:**
 
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
+-   "Fuel your fitness journey with our premium selection of supplements, crafted for maximum performance and well-being."
+-   "Stay ahead of the health curve with our sustainable, science-backed products designed for the wellness-focused lifestyle."
+-   "Shop smarter and healthier with a seamless online experience that delivers in-depth product insights and trustworthy reviews from fellow enthusiasts."
+- 
+This persona captures a typical Supplemint customer, focusing on their health-oriented mindset, online behaviors, and the seamless, transparent experience they seek from a supplement e-commerce platform.
 
-------
+## Technologies Used
 
-## FAQ about the uptime script
+### Backend
 
-**Why have you added this script?**
+-   **Django (v5.1.1)**: The core framework for building our robust and scalable e-commerce platform, powering the entire backend infrastructure.
+-   **ASGIref (v3.8.1)**: Ensures efficient asynchronous server and gateway interface functionality, enhancing real-time features and performance.
+-   **Django Allauth (v64.2.1)**: A powerful authentication package that handles user sign-ups, logins, and account management with ease and security.
+-   **Stripe**: Integrated for seamless and secure payment processing, enabling efficient handling of customer transactions.
+-   **Standard Django Database**: Utilizing Django’s built-in database system for managing models, queries, and data efficiently.
 
-It will help us to calculate how many running workspaces there are at any one time, which greatly helps us with cost and capacity planning. It will help us decide on the future direction of our cloud-based IDE strategy.
+### Image Generation
 
-**How will this affect me?**
+-   **SD-XL (Stability AI Model)**: Leveraged for AI-driven image generation, enhancing our product imagery and visual content. SD-XL is a state-of-the-art image synthesis model, bringing dynamic and high-quality visuals to our site.
 
-For everyday usage of Gitpod, it doesn’t have any effect at all. The script only captures the following data:
+### Database
 
-- An ID that is randomly generated each time the workspace is started.
-- The current date and time
-- The workspace status of “started” or “running”, which is sent every 5 minutes.
+-   **Django Internal Database**: A default and reliable database setup provided by Django, suitable for development and lightweight operations. It efficiently manages all backend data, from user information to product catalogs.
+-   **SQLparse (v0.5.1)**: A non-GUI SQL parser used to format and analyze SQL queries within the project, aiding in cleaner database operations.
 
-It is not possible for us or anyone else to trace the random ID back to an individual, and no personal data is being captured. It will not slow down the workspace or affect your work.
+### Frontend
 
-**So….?**
+-   **Custom CSS and JavaScript**: Tailored styles and interactive features have been developed to provide a unique, engaging, and user-friendly interface.
+-   **HTML and Responsive Design**: Focused on crafting a visually appealing and adaptive layout that looks great on any device without relying on frameworks like Bootstrap.
 
-We want to tell you this so that we are being completely transparent about the data we collect and what we do with it.
+### Other Libraries & Tools
 
-**Can I opt out?**
+-   **pytz (v2024.2)**: Provides accurate and up-to-date time zone calculations, essential for managing time-based data across different regions.
+-   **Stripe**: Secure and efficient API integration for processing payments, managing subscriptions, and ensuring financial data security.
+-   **Pillow**: Used for image processing, handling tasks such as resizing and optimizing images uploaded to the platform.
+-   **python-decouple**: Simplifies environment variable management, making configuration more secure and maintainable.
+-   **Cryptography**: Implements secure data encryption and decryption, critical for protecting sensitive information.
 
-Yes, you can. Since no personally identifiable information is being captured, we'd appreciate it if you let the script run; however if you are unhappy with the idea, simply run the following commands from the terminal window after creating the workspace, and this will remove the uptime script:
+### Deployment & Static File Management
 
-```
-pkill uptime.sh
-rm .vscode/uptime.sh
-```
+-   **Whitenoise**: Enhances static file serving in production environments, ensuring fast and efficient delivery of CSS, JavaScript, and image assets.
 
-**Anything more?**
+## Features
 
-Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` file so that you know what it's doing. As future software developers, it will be great practice to see how these shell scripts work.
+### Product Categories
 
----
+Explore our extensive selection of supplements, organized into intuitive categories and subcategories to help you quickly find what you’re looking for:
 
-Happy coding!
+-   **Vitamins**: Essential nutrients like Vitamin D, Multivitamins, and specialty blends for immune support.
+-   **Proteins**: High-quality whey, plant-based, and casein proteins in multiple flavors and formulations.
+-   **Superfoods**: Nutrient-dense options including spirulina, matcha, acai, and chia seeds to boost your daily nutrition.
+-   **Herbs & Extracts**: Natural botanicals such as Ashwagandha, Ginseng, and Turmeric for overall wellness.
+-   **Vitalstoffe**: Comprehensive micronutrient solutions, like Magnesium, Zinc, and Omega-3 supplements.
+
+Each category includes subcategories to refine your search, making it easy to locate specific types of supplements tailored to your health and fitness goals.
+
+### Shopping Experience
+
+Enjoy a seamless and efficient shopping journey with features designed to simplify your online experience:
+
+-   **Product Sorting**: Easily sort products by name, price, and user rating in both ascending and descending order, ensuring you can view options that suit your preferences.
+-   **Search Functionality**: Use our intuitive search bar to quickly find products by keyword, ensuring a smooth and efficient search experience.
+
+### User Accounts
+
+Manage your profile and keep track of your orders effortlessly:
+
+-   **Profile Management**: Users can register, log in, and manage their personal details. Update or delete profile information as needed, and easily view a complete history of your orders.
+-   **Order Details**: Get a detailed overview of each order, including product information, status, and payment confirmation.
+
+### Cart and Checkout
+
+A streamlined and user-friendly checkout process ensures a stress-free purchasing experience:
+
+-   **Cart Details**: View all items in your cart at a glance, adjust quantities, remove products, or save items for later.
+-   **Checkout**: A simple and secure checkout process that lets you enter shipping and payment information to complete your purchase efficiently.
+-   **Order Confirmation**: Receive a comprehensive summary of your order, complete with an order number and the total amount paid, along with confirmation emails to keep you informed.
+
+### Content Pages
+
+Gain valuable insights and understand our policies to make informed shopping decisions:
+
+-   **About Us**: Discover the mission behind Supplemint, our commitment to quality, and our passion for supporting a healthy lifestyle.
+-   **Contact Us**: A simple contact form to reach out to our support team for any inquiries, concerns, or feedback.
+-   **FAQ**: A comprehensive list of frequently asked questions to address common concerns about products, shipping, returns, and more.
+-   **Terms and Conditions**: Review the terms governing the use of our website, from purchases to user conduct.
+-   **Privacy Policies**: Learn how we handle and protect your personal data, emphasizing transparency and security.
+
+### Loyalty Points System
+
+Enjoy rewards for your loyalty with our exclusive points program:
+
+-   **Earn Points**: Accumulate points for every purchase you make, rewarding you for investing in your health and wellness.
+-   **Redeem Points**: Use your points for discounts on future orders, making it even more rewarding to shop with us.
+-   **Track Points**: View your points balance and redemption history directly from your user profile.
