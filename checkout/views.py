@@ -6,6 +6,7 @@ from .models import Order, OrderLineItem
 from products.models import Product
 from bag.contexts import bag_contents
 import stripe
+import random
 
 
 def checkout(request):
@@ -105,9 +106,12 @@ def checkout_success(request, order_number):
     if 'bag' in request.session:
         del request.session['bag']
 
+    all_products = list(Product.objects.all())
+    recommended_products = random.sample(all_products, min(len(all_products), 5))
     template = 'checkout/checkout_success.html'
     context = {
         'order': order,
+        'recommended_products': recommended_products,
     }
 
     return render(request, template, context)
