@@ -28,6 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '8000-pharting-supplemint-evq9f9h4spd.ws.codeinstitute-ide.net']
 
+CSRF_TRUSTED_ORIGINS = ['https://8000-pharting-supplemint-evq9f9h4spd.ws.codeinstitute-ide.net',]
+
 
 # Application definition
 
