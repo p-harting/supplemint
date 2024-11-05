@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="overlay"></div>
+<div class="checkout-container">
+    <div class="checkout-header-section">
+        <hr>
+        <h2 class="bag-title">Checkout</h2>
+        <hr>
+    </div>
+
+    <div class="checkout-content">
+        <p>Please fill out the form below:</p>
+    </div>
+</div>
+{% endblock %}
