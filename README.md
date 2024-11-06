@@ -6,7 +6,7 @@ This project was developed as part of a full-stack web development course, showc
 
 ![mockup](documentation/screenshots/mockup.png)
 
-### View the live website [here](https://google.com)
+### View the live website [here](https://supplemint-91663a1226fd.herokuapp.com/)
 
 ## User Benefits
 
