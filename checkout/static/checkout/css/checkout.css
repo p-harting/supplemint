@@ -140,6 +140,32 @@ body {
     margin-bottom: 5px;
 }
 
+.form-group input[required] + label::after,
+.form-group select[required] + label::after {
+    content: '*';
+    color: #e74c3c;
+    margin-left: 4px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.form-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    background-color: #fff;
+    color: #555;
+    transition: border-color 0.3s;
+}
+
+.form-group select:focus {
+    border-color: #76a792;
+    outline: none;
+    box-shadow: 0 0 5px rgba(65, 150, 90, 0.25);
+}
+
 .form-group input {
     width: 100%;
     padding: 8px;
