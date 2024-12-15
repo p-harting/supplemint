@@ -1,0 +1,125 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9fafc;
+    margin: 0;
+    padding: 0;
+}
+
+.referral-dashboard {
+    max-width: 800px;
+    margin: 160px auto;
+    padding: 20px;
+    background: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.dashboard-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    font-size: 22px;
+    color: #555;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+}
+
+.code-display, .referral-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f3f4f6;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.code-text, .link-text {
+    font-size: 16px;
+    font-weight: bold;
+    color: #444;
+}
+
+.copy-btn {
+    background: #4CAF50;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.copy-btn:hover {
+    background: #45a049;
+}
+
+.referral-stats {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.stat-box {
+    flex: 1;
+    margin: 0 10px;
+    background: #e8f5e9;
+    padding: 15px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stat-box h3 {
+    font-size: 18px;
+    color: #2e7d32;
+    margin-bottom: 10px;
+}
+
+.stat-value {
+    font-size: 20px;
+    font-weight: bold;
+    color: #1b5e20;
+}
+
+.transactions-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.transactions-table th, .transactions-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.transactions-table th {
+    background: #f1f1f1;
+    font-size: 14px;
+    color: #555;
+}
+
+.transactions-table td {
+    font-size: 14px;
+    color: #333;
+}
+
+.no-transactions {
+    text-align: center;
+    font-size: 14px;
+    color: #999;
+}
+
+.error-message {
+    font-size: 16px;
+    color: #d32f2f;
+    text-align: center;
+    margin-top: 20px;
+}
