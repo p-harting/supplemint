@@ -1,5 +1,7 @@
 from django import forms
 from allauth.account.forms import SignupForm
+from .models import ReferralCode
+from profiles.models import UserProfile
 
 class CustomSignupForm(SignupForm):
     referral_code = forms.CharField(max_length=12, required=False)
@@ -11,8 +13,9 @@ class CustomSignupForm(SignupForm):
         if referral_code:
             try:
                 referrer_code = ReferralCode.objects.get(code=referral_code)
-                user.referred_by = referrer_code.user
-                user.save()
+                profile = UserProfile.objects.get(user=user)
+                profile.referred_by = referrer_code.user
+                profile.save()
             except ReferralCode.DoesNotExist:
                 pass
                 
