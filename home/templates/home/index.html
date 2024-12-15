@@ -14,4 +14,61 @@
         </div>
     </div>
 </div>
+
+<!-- Categories -->
+<h2>Categories</h2>
+<div class="categories-container">
+    <div class="category-card">
+        <h3 class="category-title">Vitamins</h3>
+        <p class="category-description">Reach your health goals with high-quality vitamins.</p>
+    </div>
+    <div class="category-card">
+        <h3 class="category-title">Proteins</h3>
+        <p class="category-description">Build muscle mass with high-quality protein sources.</p>
+    </div>
+    <div class="category-card">
+        <h3 class="category-title">Vital Substances</h3>
+        <p class="category-description">Boost your vitality with essential nutrients.</p>
+    </div>
+    <div class="category-card">
+        <h3 class="category-title">Superfoods</h3>
+        <p class="category-description">Harness the power of nature with superfoods for your health.</p>
+    </div>
+</div>
+
+<!-- Random Product Suggestions -->
+<h2>Recommended Products</h2>
+<div class="product-tile-container">
+    <div class="product-tile-grid">
+        {% for product in random_products %}
+            <div class="product-tile">
+                <a href="{% url 'product_detail' product.id %}">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-tile-image">
+                    {% else %}
+                        <img src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}" class="product-tile-image">
+                    {% endif %}
+                </a>
+                <div class="product-tile-details">
+                    <h3 class="product-tile-name">{{ product.name }}</h3>
+                    <p class="product-tile-price">${{ product.price }}</p>
+                </div>
+            </div>
+        {% empty %}
+            <p>No products available.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Newsletter Signup -->
+<h2>Newsletter</h2>
+<div class="newsletter-container">
+    <h2 class="newsletter-title">Sign up for our Newsletter!</h2>
+    <p class="newsletter-description">Get exclusive offers and news directly to your inbox.</p>
+    <form class="newsletter-form">
+        <input type="email" class="newsletter-input" placeholder="Your email address" required>
+        <button type="submit" class="newsletter-button">Sign Up</button>
+    </form>
+</div>
+
 {% endblock %}
