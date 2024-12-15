@@ -5,3 +5,5 @@ from .models import Post
 class PostAdmin(admin.ModelAdmin):
     list_display = ('title', 'author', 'created_at')
     prepopulated_fields = {'slug': ('title',)}
+    fields = ('title', 'slug', 'author', 'content', 'created_at', 'updated_at')
+    readonly_fields = ('created_at', 'updated_at')
