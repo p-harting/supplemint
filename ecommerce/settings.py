@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'storages',
     'contact',
     'blog',
+    'referrals',
 ]
 
 MIDDLEWARE = [
@@ -167,6 +168,9 @@ USE_L10N = True
 
 USE_TZ = True
 
+ACCOUNT_FORMS = {
+    'signup': 'referrals.forms.CustomSignupForm',
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
