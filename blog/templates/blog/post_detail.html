@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="post-detail-container">
+    <article class="post-detail">
+        <header class="post-detail-header">
+            <h1 class="post-detail-title">{{ post.title }}</h1>
+            <p class="post-detail-meta">
+                By <span class="post-detail-author">{{ post.author }}</span> 
+                on <span class="post-detail-date">{{ post.created_at|date:"F j, Y" }}</span>
+            </p>
+        </header>
+        <section class="post-detail-content">
+            <p>{{ post.content }}</p>
+        </section>
+    </article>
+</div>
+{% endblock %}

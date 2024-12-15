@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="post-list-container">
+    <h1 class="post-list-title">Blog Posts</h1>
+    <ul class="post-list">
+        {% for post in posts %}
+        <li class="post-list-item">
+            <a class="post-list-link" href="{{ post.get_absolute_url }}">
+                <h2 class="post-list-item-title">{{ post.title }}</h2>
+            </a>
+            <p class="post-list-item-meta">
+                By <span class="post-list-author">{{ post.author }}</span> 
+                on <span class="post-list-date">{{ post.created_at|date:"F j, Y" }}</span>
+            </p>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
