@@ -13,6 +13,7 @@ urlpatterns = [
     path('profile/', include('profiles.urls')),
     path('contact/', include('contact.urls')),
     path('blog/', include('blog.urls')),
+    path('referrals/', include('referrals.urls')),
 ]
 
 if settings.DEBUG:

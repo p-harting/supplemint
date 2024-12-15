@@ -18,6 +18,7 @@ class UserProfile(models.Model):
     default_street_address2 = models.CharField(max_length=80, null=True, blank=True)
     default_county = models.CharField(max_length=80, null=True, blank=True)
     points = models.IntegerField(default=0)
+    referred_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='referrals')
 
     def __str__(self):
         return self.user.username

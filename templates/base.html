@@ -71,6 +71,7 @@
                             <a href="" class="dropdown-link">Product Management</a>
                             {% endif %}
                             <a href="" class="dropdown-link">My Profile</a>
+                            <a href="{% url 'referrals:dashboard' %}" class="dropdown-link">Referral Dashboard</a>
                             <a href="{% url 'account_logout' %}" class="dropdown-link">Logout</a>
                             {% else %}
                             <a href="{% url 'account_signup' %}" class="dropdown-link">Register</a>
