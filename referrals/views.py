@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
+from django.contrib.auth.models import User
 from .models import ReferralCode, ReferralTransaction
+from profiles.models import UserProfile
 
 @login_required
 def referral_dashboard(request):
@@ -9,7 +11,7 @@ def referral_dashboard(request):
         referral_code = ReferralCode.objects.get(user=request.user)
         transactions = ReferralTransaction.objects.filter(referrer=request.user)
         total_earnings = transactions.aggregate(Sum('commission'))['commission__sum'] or 0
-        referred_users = User.objects.filter(referred_by=request.user).count()
+        referred_users = UserProfile.objects.filter(referred_by=request.user).count()
 
         context = {
             'referral_code': referral_code,

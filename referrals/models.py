@@ -13,14 +13,6 @@ class ReferralCode(models.Model):
     def __str__(self):
         return f"{self.user.username}'s referral code: {self.code}"
 
-    @receiver(post_save, sender=User)
-    def create_referral_code(sender, instance, created, **kwargs):
-        if created:
-            ReferralCode.objects.create(
-                user=instance,
-                code=str(uuid.uuid4())[:8].upper()
-            )
-
 class ReferralTransaction(models.Model):
     referrer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='referral_earnings')
     referred_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='referral_purchases')
@@ -31,3 +23,11 @@ class ReferralTransaction(models.Model):
 
     def __str__(self):
         return f"Referral commission for order {self.order_number}"
+
+@receiver(post_save, sender=User)
+def create_referral_code(sender, instance, created, **kwargs):
+    if created:
+        ReferralCode.objects.create(
+            user=instance,
+            code=str(uuid.uuid4())[:8].upper()
+        )

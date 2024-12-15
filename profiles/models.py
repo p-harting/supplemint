@@ -10,6 +10,7 @@ class UserProfile(models.Model):
     delivery information and order history
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    referred_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='referred_profiles')
     default_phone_number = models.CharField(max_length=20, null=True, blank=True)
     country = models.CharField(max_length=40, null=True, blank=True)
     default_postcode = models.CharField(max_length=20, null=True, blank=True)
@@ -18,7 +19,6 @@ class UserProfile(models.Model):
     default_street_address2 = models.CharField(max_length=80, null=True, blank=True)
     default_county = models.CharField(max_length=80, null=True, blank=True)
     points = models.IntegerField(default=0)
-    referred_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='referrals')
 
     def __str__(self):
         return self.user.username
