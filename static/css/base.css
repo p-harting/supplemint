@@ -165,55 +165,58 @@ html {
 }
 
 .main-nav {
-    display: flex;
-    justify-content: center;
+    display: none;
     list-style: none;
-    padding: 10px 0;
+    padding: 0;
     margin: 0;
-    max-width: 1200px;
+    flex-direction: column;
+    width: 100%;
+}
+
+.nav-toggle {
+    display: block;
+    padding: 1rem;
+    cursor: pointer;
+    background: none;
+    border: none;
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+}
+
+.main-nav.active {
+    display: flex;
 }
 
 .nav-item {
+    width: 100%;
     position: relative;
-    margin: 0 15px;
 }
 
 .nav-link {
+    display: block;
+    padding: 1rem;
     text-decoration: none;
-    color: black;
-    font-weight: bold;
-    padding: 10px 15px;
-    transition: background-color 0.3s;
-}
-
-.nav-link:hover {
-    background-color: #f8f9fa;
-    border-radius: 4px;
+    color: #333;
+    border-bottom: 1px solid #eee;
 }
 
 .dropdown-content {
     display: none;
-    position: absolute;
-    background-color: white;
-    border: 1px solid #ccc;
-    z-index: 2000;
-    min-width: 150px;
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    background-color: #f9f9f9;
+}
+
+.nav-item:hover .dropdown-content,
+.nav-item:focus-within .dropdown-content {
+    display: block;
 }
 
 .dropdown-link {
     display: block;
-    padding: 10px 20px;
+    padding: 0.8rem 1rem;
     text-decoration: none;
-    color: black;
-}
-
-.nav-item:hover .dropdown-content {
-    display: block;
-}
-
-.dropdown-link:hover {
-    background-color: #f8f9fa;
+    color: #333;
 }
 
 /* Index */
@@ -807,6 +810,34 @@ html {
     .btn {
         font-size: 1.2rem;
         padding: 0.75rem 1.5rem;
+    }
+
+    .nav-toggle {
+        display: none;
+    }
+
+    .main-nav {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .nav-item {
+        width: auto;
+        position: relative;
+    }
+
+    .dropdown-content {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        min-width: 200px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .nav-link {
+        border-bottom: none;
     }
 }
 
