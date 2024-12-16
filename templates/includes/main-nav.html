@@ -24,36 +24,35 @@
         <li class="nav-item dropdown">
             <a href="{% url 'category_products' 'proteins' %}" class="nav-link" id="proteins-menu">Proteins</a>
             <div class="dropdown-content" aria-labelledby="proteins-menu">
-                <a href="{% url 'products' %}?subcategory=whey_protein" class="dropdown-link">Whey Protein</a>
-                <a href="{% url 'products' %}?subcategory=plant_base_protein" class="dropdown-link">Plant-Based
-                    Protein</a>
-                <a href="{% url 'products' %}?subcategory=casein_protein" class="dropdown-link">Casein Protein</a>
-                <a href="{% url 'products' %}?subcategory=egg_protein" class="dropdown-link">Egg Protein</a>
+                <a href="{% url 'subcategory_products' 'proteins' 'whey_protein' %}" class="dropdown-link">Whey Protein</a>
+                <a href="{% url 'subcategory_products' 'proteins' 'plant_base_protein' %}" class="dropdown-link">Plant-Based</a>
+                <a href="{% url 'subcategory_products' 'proteins' 'casein_protein' %}" class="dropdown-link">Casein Protein</a>
+                <a href="{% url 'subcategory_products' 'proteins' 'egg_protein' %}" class="dropdown-link">Egg Protein</a>
             </div>
         </li>
         <li class="nav-item dropdown">
             <a href="{% url 'category_products' 'bioactives' %}" class="nav-link" id="vitalstoffe-menu">Vitalstoffe</a>
             <div class="dropdown-content" aria-labelledby="vitalstoffe-menu">
-                <a href="{% url 'products' %}?subcategory=minerals" class="dropdown-link">Minerals</a>
-                <a href="{% url 'products' %}?subcategory=trace_elements" class="dropdown-link">Trace Elements</a>
+                <a href="{% url 'subcategory_products' 'bioactives' 'minerals' %}" class="dropdown-link">Minerals</a>
+                <a href="{% url 'subcategory_products' 'bioactives' 'trace_elements' %}" class="dropdown-link">Trace Elements</a>
             </div>
         </li>
         <li class="nav-item dropdown">
             <a href="{% url 'category_products' 'superfoods' %}" class="nav-link" id="superfood-menu">Superfood</a>
             <div class="dropdown-content" aria-labelledby="superfood-menu">
-                <a href="{% url 'products' %}?subcategory=chia_seeds" class="dropdown-link">Chia Seeds</a>
-                <a href="{% url 'products' %}?subcategory=quinoa" class="dropdown-link">Quinoa</a>
-                <a href="{% url 'products' %}?subcategory=vitamin_a" class="dropdown-link">Spirulina</a>
-                <a href="{% url 'products' %}?subcategory=vitamin_a" class="dropdown-link">Maca Root</a>
+                <a href="{% url 'subcategory_products' 'superfoods' 'chia_seeds' %}" class="dropdown-link">Chia Seeds</a>
+                <a href="{% url 'subcategory_products' 'superfoods' 'quinoa' %}" class="dropdown-link">Quinoa</a>
+                <a href="{% url 'subcategory_products' 'superfoods' 'spirulina' %}" class="dropdown-link">Spirulina</a>
+                <a href="{% url 'subcategory_products' 'superfoods' 'maca_root' %}" class="dropdown-link">Maca Root</a>
             </div>
         </li>
         <li class="nav-item dropdown">
             <a href="{% url 'category_products' 'herbs_extracts' %}" class="nav-link" id="herbs-menu">Herbs &
                 Extracts</a>
             <div class="dropdown-content" aria-labelledby="herbs-menu">
-                <a href="{% url 'products' %}?subcategory=vitamin_a" class="dropdown-link">Ginseng</a>
-                <a href="{% url 'products' %}?subcategory=vitamin_a" class="dropdown-link">Turmeric</a>
-                <a href="{% url 'products' %}?subcategory=vitamin_a" class="dropdown-link">Ginger</a>
+                <a href="{% url 'subcategory_products' 'herbs_extracts' 'ginseng' %}" class="dropdown-link">Ginseng</a>
+                <a href="{% url 'subcategory_products' 'herbs_extracts' 'turmeric' %}" class="dropdown-link">Turmeric</a>
+                <a href="{% url 'subcategory_products' 'herbs_extracts' 'ginger' %}" class="dropdown-link">Ginger</a>
             </div>
         </li>
         <li class="nav-item">
