@@ -14,18 +14,19 @@
         <li class="nav-item dropdown">
             <a href="{% url 'category_products' 'vitamins' %}" class="nav-link" id="vitamins-menu">Vitamins</a>
             <div class="dropdown-content" aria-labelledby="vitamins-menu">
-                <a href="{% url 'products' %}?subcategory=vitamin_a" class="dropdown-link">Vitamin A</a>
-                <a href="{% url 'products' %}?subcategory=vitamin_b" class="dropdown-link">Vitamin B Complex</a>
-                <a href="{% url 'products' %}?subcategory=vitamin_c" class="dropdown-link">Vitamin C</a>
-                <a href="{% url 'products' %}?subcategory=vitamin_d" class="dropdown-link">Vitamin D</a>
-                <a href="{% url 'products' %}?subcategory=vitamin_e" class="dropdown-link">Vitamin E</a>
+                <a href="{% url 'subcategory_products' 'vitamins' 'vitamin_a' %}" class="dropdown-link">Vitamin A</a>
+                <a href="{% url 'subcategory_products' 'vitamins' 'vitamin_b' %}" class="dropdown-link">Vitamin B</a>
+                <a href="{% url 'subcategory_products' 'vitamins' 'vitamin_c' %}" class="dropdown-link">Vitamin C</a>
+                <a href="{% url 'subcategory_products' 'vitamins' 'vitamin_d' %}" class="dropdown-link">Vitamin D</a>
+                <a href="{% url 'subcategory_products' 'vitamins' 'vitamin_e' %}" class="dropdown-link">Vitamin E</a>
             </div>
         </li>
         <li class="nav-item dropdown">
             <a href="{% url 'category_products' 'proteins' %}" class="nav-link" id="proteins-menu">Proteins</a>
             <div class="dropdown-content" aria-labelledby="proteins-menu">
                 <a href="{% url 'products' %}?subcategory=whey_protein" class="dropdown-link">Whey Protein</a>
-                <a href="{% url 'products' %}?subcategory=plant_base_protein" class="dropdown-link">Plant-Based Protein</a>
+                <a href="{% url 'products' %}?subcategory=plant_base_protein" class="dropdown-link">Plant-Based
+                    Protein</a>
                 <a href="{% url 'products' %}?subcategory=casein_protein" class="dropdown-link">Casein Protein</a>
                 <a href="{% url 'products' %}?subcategory=egg_protein" class="dropdown-link">Egg Protein</a>
             </div>
@@ -47,7 +48,8 @@
             </div>
         </li>
         <li class="nav-item dropdown">
-            <a href="{% url 'category_products' 'herbs_extracts' %}" class="nav-link" id="herbs-menu">Herbs & Extracts</a>
+            <a href="{% url 'category_products' 'herbs_extracts' %}" class="nav-link" id="herbs-menu">Herbs &
+                Extracts</a>
             <div class="dropdown-content" aria-labelledby="herbs-menu">
                 <a href="{% url 'products' %}?subcategory=vitamin_a" class="dropdown-link">Ginseng</a>
                 <a href="{% url 'products' %}?subcategory=vitamin_a" class="dropdown-link">Turmeric</a>

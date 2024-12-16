@@ -42,7 +42,7 @@
     <div class="product-tile-grid">
         {% for product in random_products %}
             <div class="product-tile">
-                <a href="{% url 'product_detail' product.category.name product.slug %}">
+                <a href="{% url 'product_detail' product.category.name product.subcategory.name product.slug %}">
                     {% if product.image %}
                         <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-tile-image">
                     {% else %}

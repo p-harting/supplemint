@@ -71,8 +71,33 @@ def category_products(request, category_name):
     }
     return render(request, 'products/products.html', context)
 
-def product_detail(request, category_name, product_slug):
-    product = get_object_or_404(Product, slug=product_slug, category__name=category_name)
+def subcategory_products(request, category_name, subcategory_name):
+    category = get_object_or_404(Category, name=category_name)
+    subcategory = get_object_or_404(SubCategory, name=subcategory_name, category=category)
+    products = Product.objects.filter(subcategory=subcategory)
+    
+    context = {
+        'category': category,
+        'subcategory': subcategory,
+        'products': products,
+    }
+    return render(request, 'products/products.html', context)
+
+def product_detail(request, category_name, product_slug, subcategory_name=None):
+    if subcategory_name:
+        product = get_object_or_404(
+            Product,
+            slug=product_slug,
+            category__name=category_name,
+            subcategory__name=subcategory_name
+        )
+    else:
+        product = get_object_or_404(
+            Product,
+            slug=product_slug,
+            category__name=category_name,
+        )
+    
     context = {
         'product': product,
     }
