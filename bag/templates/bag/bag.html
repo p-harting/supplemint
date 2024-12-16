@@ -75,17 +75,17 @@
                 <tr class="totals-row">
                     <td colspan="4"></td>
                     <td class="totals-label">Bag Total:</td>
-                    <td class="totals-value">${{ total }}</td>
+                    <td class="totals-value">${{ total|floatformat:2 }}</td>
                 </tr>
                 <tr class="totals-row">
                     <td colspan="4"></td>
                     <td class="totals-label">Delivery Fee:</td>
-                    <td class="totals-value">${{ delivery }}</td>
+                    <td class="totals-value">${{ delivery|floatformat:2 }}</td>
                 </tr>
                 <tr class="totals-row">
                     <td colspan="4"></td>
                     <td class="totals-label">Grand Total:</td>
-                    <td class="totals-value">${{ grand_total }}</td>
+                    <td class="totals-value">${{ grand_total|floatformat:2 }}</td>
                 </tr>
                 <tr class="checkout-buttons-row">
                     <td colspan="6" class="checkout-buttons-cell">
