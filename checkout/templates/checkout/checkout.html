@@ -3,7 +3,7 @@
 {% load bag_tools %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
+<link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -20,25 +20,31 @@
             <p>Order Summary ({{ product_count }})</p>
             <div class="item-list">
                 {% for item in bag_items %}
-                    <div class="item-row">
-                        <div class="item-image">
-                            <a href="{% url 'product_detail' item.product.id %}">
+                <div class="item-row">
+                    <div class="item-image">
+                        {% if item.product.subcategory %}
+                        <a
+                            href="{% url 'product_detail' item.product.category.name item.product.subcategory.name item.product.slug %}">
+                            {% else %}
+                            <a
+                                href="{% url 'product_detail_no_subcategory' item.product.category.name item.product.slug %}">
+                                {% endif %}
                                 {% if item.product.image %}
-                                    <img src="{{ item.product.image.url }}" alt="{{ product.name }}">
+                                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
                                 {% else %}
-                                    <img src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+                                <img src="{{ MEDIA_URL }}noimage.png" alt="{{ item.product.name }}">
                                 {% endif %}
                             </a>
-                        </div>
-                        <div class="item-details">
-                            <p><strong>{{ item.product.name }}</strong></p>
-                            <p>Size: {% if item.product.has_sizes %}{{ item.size|upper }}{% else %}N/A{% endif %}</p>
-                            <p>Qty: {{ item.quantity }}</p>
-                        </div>
-                        <div class="item-subtotal">
-                            <p>${{ item.product.price | calc_subtotal:item.quantity }}</p>
-                        </div>
                     </div>
+                    <div class="item-details">
+                        <p><strong>{{ item.product.name }}</strong></p>
+                        <p>Size: {% if item.product.has_sizes %}{{ item.size|upper }}{% else %}N/A{% endif %}</p>
+                        <p>Qty: {{ item.quantity }}</p>
+                    </div>
+                    <div class="item-subtotal">
+                        <p>${{ item.product.price | calc_subtotal:item.quantity }}</p>
+                    </div>
+                </div>
                 {% endfor %}
             </div>
             <hr>
@@ -60,7 +66,7 @@
             <p>Please fill out the form below to complete your order:</p>
             <form action="{% url 'checkout' %}" method="POST" id="payment-form">
                 {% csrf_token %}
-                
+
                 <fieldset class="form-section">
                     <legend>Details</legend>
                     <div class="form-group">
@@ -339,16 +345,16 @@
                         <label for="county">County</label>
                         <input type="text" id="county" name="county">
                     </div>
-                    
+
                     <div class="save-info">
                         {% if user.is_authenticated %}
-                            <input type="checkbox" id="save-info" name="save-info" checked>
-                            <label for="save-info">Save this delivery information to my profile</label>
+                        <input type="checkbox" id="save-info" name="save-info" checked>
+                        <label for="save-info">Save this delivery information to my profile</label>
                         {% else %}
-                            <p>
-                                <a href="{% url 'account_signup' %}">Create an account</a> or 
-                                <a href="{% url 'account_login' %}">login</a> to save this information.
-                            </p>
+                        <p>
+                            <a href="{% url 'account_signup' %}">Create an account</a> or
+                            <a href="{% url 'account_login' %}">login</a> to save this information.
+                        </p>
                         {% endif %}
                     </div>
                 </fieldset>
@@ -383,8 +389,8 @@
 {% endblock %}
 
 {% block postloadjs %}
-    {{ block.super }}
-    {{ stripe_public_key|json_script:"id_stripe_public_key" }}
-    {{ client_secret|json_script:"id_client_secret" }}
-    <script src="{% static 'checkout/js/stripe_elements.js' %}"></script>
+{{ block.super }}
+{{ stripe_public_key|json_script:"id_stripe_public_key" }}
+{{ client_secret|json_script:"id_client_secret" }}
+<script src="{% static 'checkout/js/stripe_elements.js' %}"></script>
 {% endblock %}

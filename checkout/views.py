@@ -6,10 +6,13 @@ from django.conf import settings
 from .forms import OrderForm
 from .models import Order, OrderLineItem
 from products.models import Product
+from profiles.models import UserProfile
+from profiles.forms import UserProfileForm
 from bag.contexts import bag_contents
 import stripe
 import random
 import json
+from decimal import Decimal
 
 @require_POST
 def cache_checkout_data(request):
@@ -116,30 +119,27 @@ def checkout(request):
 
 
 def checkout_success(request, order_number):
-    """
-    Handle successful checkouts
-    """
     save_info = request.session.get('save_info')
     order = get_object_or_404(Order, order_number=order_number)
-
-    # Calculate and save referral commission if applicable
-    if request.user.referred_by:
-        commission_rate = 0.05  # 5% commission
-        commission_amount = order.grand_total * commission_rate
-        
-        ReferralTransaction.objects.create(
-            referrer=request.user.referred_by,
-            referred_user=request.user,
-            order_number=order.order_number,
-            amount=order.grand_total,
-            commission=commission_amount
-        )
 
     if request.user.is_authenticated:
         profile = UserProfile.objects.get(user=request.user)
         # Attach the user's profile to the order
         order.user_profile = profile
         order.save()
+
+        # Check for referral and create transaction
+        if profile.referred_by:
+            commission_rate = Decimal('0.05')
+            commission_amount = order.grand_total * commission_rate
+            
+            ReferralTransaction.objects.create(
+                referrer=profile.referred_by,
+                referred_user=request.user,
+                order_number=order.order_number,
+                amount=order.grand_total,
+                commission=commission_amount
+            )
 
         # Save the user's info
         if save_info:
