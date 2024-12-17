@@ -5,6 +5,8 @@ from django.db.models import Avg
 from products.models import Product
 from .models import Review
 from .forms import ReviewForm
+from django.http import JsonResponse
+from django.template.loader import render_to_string
 
 @login_required
 def add_review(request, product_id):
@@ -52,3 +54,42 @@ def add_review(request, product_id):
         'form': form,
         'product': product
     })
+
+@login_required
+def edit_review(request, review_id):
+    review = get_object_or_404(Review, id=review_id, user=request.user)
+    
+    if request.method == 'POST':
+        form = ReviewForm(request.POST, instance=review)
+        if form.is_valid():
+            form.save()
+            avg_rating = Review.objects.filter(product=review.product).aggregate(
+                Avg('rating'))['rating__avg']
+            review.product.rating = round(avg_rating, 1)
+            review.product.save()
+            
+            messages.success(request, 'Review updated successfully!')
+            return JsonResponse({'success': True})
+    else:
+        form = ReviewForm(instance=review)
+    
+    context = {'form': form, 'review': review}
+    form_html = render_to_string('reviews/review_form.html', context, request=request)
+    return JsonResponse({'form_html': form_html})
+
+@login_required
+def delete_review(request, review_id):
+    review = get_object_or_404(Review, id=review_id, user=request.user)
+    
+    if request.method == 'POST':
+        product = review.product
+        review.delete()
+        avg_rating = Review.objects.filter(product=product).aggregate(
+            Avg('rating'))['rating__avg']
+        product.rating = round(avg_rating or 0, 1)
+        product.save()
+        
+        messages.success(request, 'Review deleted successfully!')
+        return JsonResponse({'success': True})
+    
+    return JsonResponse({'success': False}, status=400)
