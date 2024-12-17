@@ -27,8 +27,7 @@ def add_review(request, product_id):
             review.product = product
             review.save()
 
-            avg_rating = Review.objects.filter(product=product).aggregate(
-                Avg('rating'))['rating__avg']
+            avg_rating = Review.objects.filter(product=product, approved=True).aggregate(Avg('rating'))['rating__avg']
             product.rating = round(avg_rating, 1)
             product.save()
             
@@ -50,8 +49,7 @@ def edit_review(request, review_id):
         if form.is_valid():
             form.save()
 
-            avg_rating = Review.objects.filter(product=review.product).aggregate(
-                Avg('rating'))['rating__avg']
+            avg_rating = Review.objects.filter(product=product, approved=True).aggregate(Avg('rating'))['rating__avg']
             review.product.rating = round(avg_rating, 1)
             review.product.save()
             
@@ -73,8 +71,7 @@ def delete_review(request, review_id):
     if request.method == 'POST':
         product = review.product
         review.delete()
-        avg_rating = Review.objects.filter(product=product).aggregate(
-            Avg('rating'))['rating__avg']
+        avg_rating = Review.objects.filter(product=product, approved=True).aggregate(Avg('rating'))['rating__avg']
         product.rating = round(avg_rating or 0, 1)
         product.save()
         
