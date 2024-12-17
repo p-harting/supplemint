@@ -99,6 +99,237 @@ body {
     border-radius: 4px;
 }
 
+/* Product Detail Page */
+
+.product-detail-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 180px;
+}
+
+.product-detail-row {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 20px;
+    justify-content: center;
+    max-width: 1200px;
+    padding: 40px;
+}
+
+.product-image-section {
+    flex: 1 1 45%;
+    max-width: 400px;
+    display: flex;
+    justify-content: center;
+}
+
+.image-wrapper {
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
+    overflow: hidden;
+}
+
+.product-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.product-image:hover {
+    transform: scale(1.05);
+}
+
+.product-info-section {
+    flex: 1 1 45%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 20px;
+}
+
+.product-details {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-name {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: start;
+}
+
+.product-price {
+    font-size: 1.5rem;
+    color: #ADEBB3;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.product-rating {
+    font-size: 1rem;
+    color: #888;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.product-description {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
+}
+
+.product-detailed-description {
+    max-width: 1000px;
+    padding: 20px;
+}
+
+.product-ingredients-dropdown-container {
+    width: 100%;
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+.dropdown-button {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    padding: 15px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 0 0 8px 8px;
+    margin-top: -5px;
+    position: relative;
+    z-index: 1;
+}
+
+.info-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.nutritional-info,
+.consumption-info {
+    flex: 1;
+    padding: 15px;
+}
+
+.nutritional-info h4,
+.consumption-info h4 {
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.divider-vertical {
+    display: none;
+}
+
+.nutritional-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.nutritional-table th,
+.nutritional-table td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.nutritional-table th {
+    font-weight: 600;
+    width: 40%;
+}
+
+.product-key-facts {
+    width: 100%;
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 0 15px;
+}
+
+.facts-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.fact-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.fact-card i {
+    font-size: 2rem;
+    color: #ADEBB3;
+    margin-bottom: 10px;
+}
+
+.product-reviews {
+    width: 100%;
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 0 15px;
+}
+
+.reviews-container {
+    margin-top: 20px;
+}
+
+.review-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.review-stars {
+    color: #ffd700;
+}
+
+.product-bought-together {
+    width: 100%;
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 0 15px;
+}
+
 @media (max-width: 600px) {
     .products-title {
         font-size: 1.5rem;
@@ -110,5 +341,40 @@ body {
 
     .sort-section {
         text-align: center;
+    }
+}
+
+@media (min-width: 768px) {
+    .facts-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .info-grid {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .divider-vertical {
+        display: block;
+        width: 1px;
+        align-self: stretch;
+        background-color: #ddd;
+        margin: 0 20px;
+    }
+
+    .nutritional-info,
+    .consumption-info {
+        flex: 1;
+        padding: 20px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .facts-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .review-card {
+        padding: 30px;
     }
 }

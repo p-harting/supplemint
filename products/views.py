@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.db.models import Q
 from .models import Product, Category, SubCategory
 from django.db.models.functions import Lower
+import random
 
 def all_products(request):
     """ A view to show all products, including sorting and search queries """
@@ -98,7 +99,21 @@ def product_detail(request, category_name, product_slug, subcategory_name=None):
             category__name=category_name,
         )
     
+    category_products = Product.objects.filter(
+        category__name=category_name
+    ).exclude(id=product.id)
+    
+    if category_products.count() < 3:
+        other_products = Product.objects.exclude(
+            Q(id=product.id) | Q(category__name=category_name)
+        )
+        all_products = list(category_products) + list(other_products)
+        random_products = random.sample(all_products, min(3, len(all_products)))
+    else:
+        random_products = random.sample(list(category_products), min(3, category_products.count()))
+
     context = {
         'product': product,
+        'random_products': random_products,
     }
     return render(request, 'products/product_detail.html', context)
