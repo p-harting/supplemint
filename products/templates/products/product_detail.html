@@ -80,7 +80,7 @@
             <span>Product Information</span>
             <i class="fas fa-chevron-down"></i>
         </button>
-        <div id="info-content" class="dropdown-content">
+        <div id="info-content" class="dropdown-product-content">
             <div class="info-grid">
                 <div class="nutritional-info">
                     <h4>Nutritional Information</h4>
@@ -190,7 +190,7 @@
 <script type="text/javascript">
     function toggleDropdown(id) {
         const content = document.getElementById(id);
-        const allDropdowns = document.querySelectorAll('.dropdown-content');
+        const allDropdowns = document.querySelectorAll('.dropdown-product-content');
         const button = content.previousElementSibling;
         const icon = button.querySelector('i');
 
