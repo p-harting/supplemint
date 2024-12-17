@@ -444,6 +444,19 @@ body {
     margin-left: 10px;
 }
 
+.reviews-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.form-select {
+    padding: 8px;
+    border-radius: 30px;
+    border: 1px solid #ddd;
+}
+
 @media (max-width: 600px) {
     .products-title {
         font-size: 1.5rem;
