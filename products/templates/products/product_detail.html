@@ -73,12 +73,7 @@
     </div>
     <div class="product-detailed-description">
         <h3>Description</h3>
-        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-            dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
-            clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,
-            consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-            sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no
-            sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+        <p>{{ product.detailed_description|safe }}</p>
     </div>
     <div class="product-ingredients-dropdown-container">
         <button class="dropdown-button" onclick="toggleDropdown('info-content')">
@@ -89,23 +84,14 @@
             <div class="info-grid">
                 <div class="nutritional-info">
                     <h4>Nutritional Information</h4>
-                    <table class="nutritional-table">
-                        <tr>
-                            <th>Serving Size:</th>
-                            <td>1 scoop (30g)</td>
-                        </tr>
-                        <tr>
-                            <th>Protein:</th>
-                            <td>24g</td>
-                        </tr>
-                    </table>
+                    <div>{{ product.nutritional_info|safe }}</div>
                 </div>
 
                 <div class="divider-vertical"></div>
 
                 <div class="consumption-info">
                     <h4>How to Use</h4>
-                    <p>Mix one scoop with 250ml of water or milk. Take 1-2 servings daily.</p>
+                    <p>{{ product.how_to_use }}</p>
                 </div>
             </div>
         </div>
@@ -114,21 +100,13 @@
     <div class="product-key-facts">
         <h3>Key Benefits</h3>
         <div class="facts-grid">
-            <div class="fact-card">
-                <i class="fas fa-dumbbell"></i>
-                <h4>Muscle Growth</h4>
-                <p>Supports muscle protein synthesis</p>
-            </div>
-            <div class="fact-card">
-                <i class="fas fa-dumbbell"></i>
-                <h4>Muscle Growth</h4>
-                <p>Supports muscle protein synthesis</p>
-            </div>
-            <div class="fact-card">
-                <i class="fas fa-dumbbell"></i>
-                <h4>Muscle Growth</h4>
-                <p>Supports muscle protein synthesis</p>
-            </div>
+            {% for fact in product.key_facts %}
+                <div class="fact-card">
+                    <i class="fas {{ fact.icon }}"></i>
+                    <h4>{{ fact.heading }}</h4>
+                    <p>{{ fact.text }}</p>
+                </div>
+            {% endfor %}
         </div>
     </div>
 
