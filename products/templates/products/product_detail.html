@@ -120,7 +120,7 @@
         <h3>Customer Reviews</h3>
         {% if user.is_authenticated %}
         {% if not user_has_reviewed %}
-        <a href="{% url 'reviews:add_review' product.id %}" class="btn btn-primary">Write a Review</a>
+        <button onclick="addReview('{{ product.id }}')" class="btn btn-primary">Write a Review</button>
         {% endif %}
         {% endif %}
 
@@ -141,10 +141,10 @@
                     <span class="review-date">{{ review.created_at|date:"F d, Y" }}</span>
                     {% if review.user == request.user %}
                     <div class="review-actions">
-                        <button onclick="editReview({{ review.id }})" class="btn-edit">
+                        <button onclick="editReview('{{ review.id }}')" class="btn-edit">
                             <i class="fas fa-edit"></i>
                         </button>
-                        <button onclick="deleteReview({{ review.id }})" class="btn-delete">
+                        <button onclick="deleteReview('{{ review.id }}')" class="btn-delete">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>
@@ -219,6 +219,7 @@
 <script>
     const modal = document.getElementById("reviewModal");
     const span = document.getElementsByClassName("close")[0];
+    const csrfToken = "{{ csrf_token }}";
 
     function openModal() {
         modal.style.display = "block";
@@ -236,44 +237,6 @@
         }
     }
 
-    function addReview(productId) {
-    fetch(`/reviews/add/${productId}/`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.form_html) {
-                document.getElementById('modalContent').innerHTML = data.form_html;
-                openModal();
-            }
-        })
-        .catch(error => console.error('Error:', error));
-}
-
-    function editReview(reviewId) {
-        fetch(`/reviews/edit/${reviewId}/`)
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('modalContent').innerHTML = data.form_html;
-                openModal();
-            });
-    }
-
-    function deleteReview(reviewId) {
-        if (confirm('Are you sure you want to delete this review?')) {
-            fetch(`/reviews/delete/${reviewId}/`, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRFToken': getCookie('csrftoken')
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        location.reload();
-                    }
-                });
-        }
-    }
-
     function getCookie(name) {
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {
@@ -287,6 +250,101 @@
             }
         }
         return cookieValue;
+    }
+
+    function addReview(productId) {
+        fetch(`/reviews/add/${productId}/`)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                if (data.form_html) {
+                    document.getElementById('modalContent').innerHTML = data.form_html;
+                    openModal();
+                    setupFormSubmitHandler(productId);
+                }
+            });
+    }
+
+    function setupFormSubmitHandler(productId) {
+        const form = document.getElementById('reviewForm');
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+
+            fetch(`/reviews/add/${productId}/`, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken')
+                    }
+                })
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (data) {
+                    if (data.success) {
+                        closeModal();
+                        location.reload();
+                    }
+                });
+        });
+    }
+
+    function editReview(reviewId) {
+    fetch(`/reviews/edit/${reviewId}/`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.form_html) {
+                document.getElementById('modalContent').innerHTML = data.form_html;
+                openModal();
+                setupEditFormSubmitHandler(reviewId);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+function setupEditFormSubmitHandler(reviewId) {
+    const form = document.getElementById('reviewForm');
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        
+        fetch(`/reviews/edit/${reviewId}/`, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                closeModal();
+                location.reload();
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+}
+
+    function deleteReview(reviewId) {
+        if (confirm('Are you sure you want to delete this review?')) {
+            fetch(`/reviews/delete/${reviewId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken')
+                    }
+                })
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (data) {
+                    if (data.success) {
+                        location.reload();
+                    }
+                });
+        }
     }
 </script>
 {% endblock %}

@@ -1,8 +1,11 @@
-<form method="POST" class="review-form" id="reviewForm" data-product-id="{{ product.id }}">
+<form method="POST" class="review-form" id="reviewForm" {% if is_edit %}data-review-id="{{ review.id }}"{% else %}data-product-id="{{ product.id }}"{% endif %}>
     {% csrf_token %}
+    <h3>{% if is_edit %}Edit Your Review{% else %}Write a Review{% endif %}</h3>
     {{ form.as_p }}
     <div class="form-buttons">
-        <button type="submit" class="btn btn-primary">Submit Review</button>
+        <button type="submit" class="btn btn-primary">
+            {% if is_edit %}Update Review{% else %}Submit Review{% endif %}
+        </button>
         <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
     </div>
 </form>
@@ -11,22 +14,36 @@
 document.getElementById('reviewForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const formData = new FormData(this);
+    const reviewId = this.dataset.reviewId;
     const productId = this.dataset.productId;
     
-    fetch(`/reviews/add/${productId}/`, {
+    const url = reviewId 
+        ? `/reviews/edit/${reviewId}/`
+        : `/reviews/add/${productId}/`;
+    
+    fetch(url, {
         method: 'POST',
         body: formData,
         headers: {
             'X-CSRFToken': getCookie('csrftoken')
         }
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
     .then(data => {
         if (data.success) {
             closeModal();
             location.reload();
+        } else if (data.errors) {
+            console.error('Form errors:', data.errors);
         }
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => {
+        console.error('Error:', error);
+    });
 });
 </script>

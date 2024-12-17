@@ -12,17 +12,12 @@ from django.template.loader import render_to_string
 def add_review(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     
-    if Review.objects.filter(user=request.user, product=product).exists():
-        messages.error(request, 'You have already reviewed this product.')
-        if product.subcategory:
-            return redirect('product_detail', 
-                          category_name=product.category.name,
-                          subcategory_name=product.subcategory.name,
-                          product_slug=product.slug)
-        else:
-            return redirect('product_detail_no_subcategory',
-                          category_name=product.category.name,
-                          product_slug=product.slug)
+    existing_review = Review.objects.filter(user=request.user, product=product).first()
+    if existing_review:
+        form = ReviewForm(instance=existing_review)
+        context = {'form': form, 'review': existing_review, 'is_edit': True}
+        form_html = render_to_string('reviews/review_form.html', context, request=request)
+        return JsonResponse({'form_html': form_html, 'is_edit': True, 'review_id': existing_review.id})
 
     if request.method == 'POST':
         form = ReviewForm(request.POST)
@@ -31,29 +26,20 @@ def add_review(request, product_id):
             review.user = request.user
             review.product = product
             review.save()
-            
+
             avg_rating = Review.objects.filter(product=product).aggregate(
                 Avg('rating'))['rating__avg']
             product.rating = round(avg_rating, 1)
             product.save()
             
             messages.success(request, 'Thank you for your review!')
-            if product.subcategory:
-                return redirect('product_detail', 
-                              category_name=product.category.name,
-                              subcategory_name=product.subcategory.name,
-                              product_slug=product.slug)
-            else:
-                return redirect('product_detail_no_subcategory',
-                              category_name=product.category.name,
-                              product_slug=product.slug)
+            return JsonResponse({'success': True})
     else:
         form = ReviewForm()
 
-    return render(request, 'reviews/add_review.html', {
-        'form': form,
-        'product': product
-    })
+    context = {'form': form, 'product': product}
+    form_html = render_to_string('reviews/review_form.html', context, request=request)
+    return JsonResponse({'form_html': form_html})
 
 @login_required
 def edit_review(request, review_id):
@@ -63,6 +49,7 @@ def edit_review(request, review_id):
         form = ReviewForm(request.POST, instance=review)
         if form.is_valid():
             form.save()
+
             avg_rating = Review.objects.filter(product=review.product).aggregate(
                 Avg('rating'))['rating__avg']
             review.product.rating = round(avg_rating, 1)
@@ -70,10 +57,12 @@ def edit_review(request, review_id):
             
             messages.success(request, 'Review updated successfully!')
             return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
     else:
         form = ReviewForm(instance=review)
     
-    context = {'form': form, 'review': review}
+    context = {'form': form, 'review': review, 'is_edit': True}
     form_html = render_to_string('reviews/review_form.html', context, request=request)
     return JsonResponse({'form_html': form_html})
 
