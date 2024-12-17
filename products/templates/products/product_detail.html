@@ -101,85 +101,72 @@
         <h3>Key Benefits</h3>
         <div class="facts-grid">
             {% for fact in product.key_facts %}
-                <div class="fact-card">
-                    <i class="fas {{ fact.icon }}"></i>
-                    <h4>{{ fact.heading }}</h4>
-                    <p>{{ fact.text }}</p>
-                </div>
+            <div class="fact-card">
+                <i class="fas {{ fact.icon }}"></i>
+                <h4>{{ fact.heading }}</h4>
+                <p>{{ fact.text }}</p>
+            </div>
             {% endfor %}
         </div>
     </div>
 
     <div class="product-reviews">
         <h3>Customer Reviews</h3>
+        {% if user.is_authenticated %}
+        {% if not user_has_reviewed %}
+        <a href="{% url 'reviews:add_review' product.id %}" class="btn btn-primary">Write a Review</a>
+        {% endif %}
+        {% endif %}
+
         <div class="reviews-container">
+            {% for review in product.reviews.all %}
             <div class="review-card">
                 <div class="review-header">
-                    <span class="reviewer-name">John D.</span>
+                    <span class="reviewer-name">{{ review.user.username }}</span>
                     <div class="review-stars">
+                        {% for i in "12345" %}
+                        {% if forloop.counter <= review.rating %}
                         <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
+                        {% else %}
+                        <i class="far fa-star"></i>
+                        {% endif %}
+                        {% endfor %}
                     </div>
+                    <span class="review-date">{{ review.created_at|date:"F d, Y" }}</span>
                 </div>
-                <p class="review-text">Great product! Really helped with my training.</p>
+                <p class="review-text">{{ review.text }}</p>
             </div>
-            <div class="review-card">
-                <div class="review-header">
-                    <span class="reviewer-name">John D.</span>
-                    <div class="review-stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                </div>
-                <p class="review-text">Great product! Really helped with my training.</p>
-            </div>
-            <div class="review-card">
-                <div class="review-header">
-                    <span class="reviewer-name">John D.</span>
-                    <div class="review-stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                </div>
-                <p class="review-text">Great product! Really helped with my training.</p>
-            </div>
+            {% empty %}
+            <p>No reviews yet. Be the first to review this product!</p>
+            {% endfor %}
         </div>
     </div>
     <div class="product-bought-together">
         <h3>Frequently Bought Together</h3>
         <div class="product-grid">
             {% for product in random_products %}
-                <div class="product-card">
-                    {% if product.image %}
-                        <a href="{% url 'product_detail' product.category.name product.subcategory.name product.slug %}">
-                            <img class="product-image" src="{{ product.image.url }}" alt="{{ product.name }}">
-                        </a>
+            <div class="product-card">
+                {% if product.image %}
+                <a href="{% url 'product_detail' product.category.name product.subcategory.name product.slug %}">
+                    <img class="product-image" src="{{ product.image.url }}" alt="{{ product.name }}">
+                </a>
+                {% else %}
+                <a href="{% url 'product_detail' product.category.name product.subcategory.name product.slug %}">
+                    <img class="product-image" src="{{ MEDIA_URL }}noimage.png" alt="No image available">
+                </a>
+                {% endif %}
+                <div class="product-details">
+                    <h4 class="product-name">{{ product.name }}</h4>
+                    <p class="product-price">${{ product.price }}</p>
+                    {% if product.rating %}
+                    <small class="product-rating">
+                        <i class="fas fa-star"></i> {{ product.rating }} / 5
+                    </small>
                     {% else %}
-                        <a href="{% url 'product_detail' product.category.name product.subcategory.name product.slug %}">
-                            <img class="product-image" src="{{ MEDIA_URL }}noimage.png" alt="No image available">
-                        </a>
+                    <small class="product-rating">No Rating</small>
                     {% endif %}
-                    <div class="product-details">
-                        <h4 class="product-name">{{ product.name }}</h4>
-                        <p class="product-price">${{ product.price }}</p>
-                        {% if product.rating %}
-                            <small class="product-rating">
-                                <i class="fas fa-star"></i> {{ product.rating }} / 5
-                            </small>
-                        {% else %}
-                            <small class="product-rating">No Rating</small>
-                        {% endif %}
-                    </div>
                 </div>
+            </div>
             {% endfor %}
         </div>
     </div>

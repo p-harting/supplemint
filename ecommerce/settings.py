@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'contact',
     'blog',
     'referrals',
+    'reviews',
     'ckeditor',
     'ckeditor_uploader',
 ]
