@@ -1,0 +1,35 @@
+{% for review in reviews %}
+    {% if review.approved or review.user == request.user %}
+    <div class="review-card {% if not review.approved %}pending-review{% endif %}">
+        <div class="review-header">
+            <span class="reviewer-name">{{ review.user.username }}</span>
+            <div class="review-stars">
+                {% for i in "12345" %}
+                {% if forloop.counter <= review.rating %}
+                <i class="fas fa-star"></i>
+                {% else %}
+                <i class="far fa-star"></i>
+                {% endif %}
+                {% endfor %}
+            </div>
+            <span class="review-date">{{ review.created_at|date:"F d, Y" }}</span>
+            {% if not review.approved %}
+            <span class="pending-badge">Pending Approval</span>
+            {% endif %}
+            {% if review.user == request.user %}
+            <div class="review-actions">
+                <button onclick="editReview('{{ review.id }}')" class="btn-edit">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button onclick="deleteReview('{{ review.id }}')" class="btn-delete">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+            {% endif %}
+        </div>
+        <p class="review-text">{{ review.text }}</p>
+    </div>
+    {% endif %}
+{% empty %}
+    <p>No reviews yet. Be the first to review this product!</p>
+{% endfor %}

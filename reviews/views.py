@@ -79,3 +79,28 @@ def delete_review(request, review_id):
         return JsonResponse({'success': True})
     
     return JsonResponse({'success': False}, status=400)
+
+def sort_reviews(request, product_id):
+    product = get_object_or_404(Product, pk=product_id)
+    sort_option = request.GET.get('sort', 'newest')
+    
+    reviews = product.reviews.all()
+    
+    if sort_option == 'oldest':
+        reviews = reviews.order_by('created_at')
+    elif sort_option == 'rating_high':
+        reviews = reviews.order_by('-rating')
+    elif sort_option == 'rating_low':
+        reviews = reviews.order_by('rating')
+    else:
+        reviews = reviews.order_by('-created_at')
+        
+    context = {
+        'product': product,
+        'reviews': reviews,
+        'user': request.user,
+        'user_has_reviewed': product.reviews.filter(user=request.user).exists() if request.user.is_authenticated else False
+    }
+    
+    html = render_to_string('reviews/partials/review_list.html', context, request=request)
+    return JsonResponse({'html': html})
