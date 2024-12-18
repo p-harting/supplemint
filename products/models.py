@@ -8,13 +8,16 @@ class Category(models.Model):
 
     name = models.CharField(max_length=254)
     friendly_name = models.CharField(max_length=254, null=True, blank=True)
+    description = RichTextField(null=True, blank=True)
+    seo_title = models.CharField(max_length=60, null=True, blank=True)
+    seo_meta_description = models.CharField(max_length=160, null=True, blank=True)
+    seo_keywords = models.CharField(max_length=254, null=True, blank=True)
 
     def __str__(self):
         return self.name
 
     def get_friendly_name(self):
         return self.friendly_name
-
 
 class SubCategory(models.Model):
     category = models.ForeignKey(Category, related_name='subcategories', on_delete=models.CASCADE)

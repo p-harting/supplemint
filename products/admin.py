@@ -10,10 +10,6 @@ class ProductAdmin(admin.ModelAdmin):
         'price',
         'rating',
         'image',
-        'detailed_description',
-        'nutritional_info',
-        'how_to_use',
-        'key_facts',
     )
     ordering = ('sku',)
 
@@ -39,6 +35,19 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = (
         'friendly_name',
         'name',
+        'seo_title',
+        'seo_meta_description',
+    )
+    search_fields = ('name', 'friendly_name', 'seo_title', 'seo_meta_description')
+    ordering = ('name',)
+
+    fields = (
+        'name',
+        'friendly_name',
+        'description',
+        'seo_title',
+        'seo_meta_description',
+        'seo_keywords',
     )
 
 
@@ -48,7 +57,9 @@ class SubCategoryAdmin(admin.ModelAdmin):
         'name',
         'category',
     )
-
+    search_fields = ('name', 'friendly_name')
+    ordering = ('name',)
+    list_filter = ('category',)
 
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)

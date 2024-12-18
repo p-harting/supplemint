@@ -6,9 +6,7 @@
 <div class="products-container">
     <div class="products-header">
         <h1 class="products-title">{{ category.friendly_name }}</h1>
-        <p class="category-description">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vitae eros eget tellus tristique bibendum. Donec rutrum sed sem quis venenatis.
-        </p>
+        <p class="category-description">{{ category.description|safe }}</p>
         <div class="divider"></div>
     </div>
     <div>
