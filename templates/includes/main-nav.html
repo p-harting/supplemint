@@ -3,14 +3,6 @@
         <i class="fas fa-bars"></i>
     </button>
     <ul class="main-nav">
-        <li class="nav-item">
-            <a href="{% url 'products' %}" class="nav-link">All products</a>
-            <div class="dropdown-content" aria-labelledby="sort-menu">
-                <a href="{% url 'products' %}?sort=price&direction=asc" class="dropdown-link">By Price</a>
-                <a href="{% url 'products' %}?sort=rating&direction=desc" class="dropdown-link ">By Rating</a>
-                <a href="{% url 'products' %}?sort=category&direction=asc" class="dropdown-link ">By Category</a>
-            </div>
-        </li>
         <li class="nav-item dropdown">
             <a href="{% url 'category_products' 'vitamins' %}" class="nav-link" id="vitamins-menu">Vitamins</a>
             <div class="dropdown-content" aria-labelledby="vitamins-menu">
