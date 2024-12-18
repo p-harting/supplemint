@@ -83,18 +83,19 @@
             </a>
             <div class="product-details">
                 <p class="product-name">{{ product.name }}</p>
-                <p class="product-price">€{{ product.price }}</p>
-                {% if product.category %}
-                <p class="product-category">
-                    <a
-                        href="{% url 'products' %}?category={{ product.category.name }}">{{ product.category.friendly_name }}</a>
-                </p>
-                {% endif %}
+                <p class="product-description">{{ product.description }}</p>
                 {% if product.rating %}
-                <p class="product-rating">&#9733; {{ product.rating }} / 5</p>
+                <p class="product-rating" data-rating="{{ product.rating }}"></p>
                 {% else %}
                 <p class="product-rating">No Rating</p>
                 {% endif %}
+                <div class="price-bag-container">
+                    <p class="product-price">€{{ product.price }}</p>
+                    <form class="add-to-cart-form" action="{% url 'add_to_bag' product.id %}" method="POST">
+                        {% csrf_token %}
+                        <input type="submit" class="custom-button add-to-bag" value="+">
+                    </form>
+                </div>
             </div>
         </div>
         {% empty %}
@@ -134,5 +135,30 @@
             window.location.replace(currentUrl);
         }
     })
+</script>
+
+<script type="text/javascript">
+    document.querySelectorAll('.product-rating').forEach(function (ratingElement) {
+        var rating = parseFloat(ratingElement.getAttribute('data-rating'));
+        var fullStars = Math.floor(rating);
+        var halfStar = (rating - fullStars) >= 0.5;
+        var emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+
+        var starsHTML = '';
+
+        for (var i = 0; i < fullStars; i++) {
+            starsHTML += '<i class="fas fa-star" style="color: gold;"></i>';
+        }
+
+        if (halfStar) {
+            starsHTML += '<i class="fas fa-star-half-alt" style="color: gold;"></i>';
+        }
+
+        for (var i = 0; i < emptyStars; i++) {
+            starsHTML += '<i class="far fa-star" style="color: gray;"></i>';
+        }
+
+        ratingElement.innerHTML = starsHTML;
+    });
 </script>
 {% endblock %}
