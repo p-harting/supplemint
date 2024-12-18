@@ -26,7 +26,7 @@
         {% endif %}
         <div class="divider"></div>
     </div>
-    <div>
+    <div class="product-sort-container">
         <div>
             <select id="sort-selector">
                 <option value="reset" {% if current_sorting == 'None_None' %}selected{% endif %}>Sort by...</option>
@@ -46,14 +46,9 @@
                     (Z-A)</option>
             </select>
         </div>
-    </div>
-    <div>
-        <p>
-            {% if search_term or current_categories or current_sorting != 'None_None' %}
-            <span><a href="{% url 'products' %}">Products Home</a> | </span>
-            {% endif %}
+        <div class="product-found-amount">
             {{ products|length }} Products{% if search_term %} found for <strong>"{{ search_term }}"</strong>{% endif %}
-        </p>
+        </div>
     </div>
     <div class="product-grid">
         {% for product in products %}
