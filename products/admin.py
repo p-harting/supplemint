@@ -56,10 +56,22 @@ class SubCategoryAdmin(admin.ModelAdmin):
         'friendly_name',
         'name',
         'category',
+        'seo_title',
+        'seo_meta_description',
     )
-    search_fields = ('name', 'friendly_name')
+    search_fields = ('name', 'friendly_name', 'seo_title', 'seo_meta_description')
     ordering = ('name',)
     list_filter = ('category',)
+
+    fields = (
+        'name',
+        'friendly_name',
+        'category',
+        'description',
+        'seo_title',
+        'seo_meta_description',
+        'seo_keywords',
+    )
 
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)
