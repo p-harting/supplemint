@@ -331,13 +331,6 @@ body {
     margin-bottom: 15px;
 }
 
-.review-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
 .reviewer-name {
     font-weight: bold;
 }
@@ -446,7 +439,7 @@ body {
 
 .reviews-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     margin-bottom: 20px;
 }
@@ -455,6 +448,37 @@ body {
     padding: 8px;
     border-radius: 30px;
     border: 1px solid #ddd;
+}
+
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+.pagination-btn {
+    background: none;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.pagination-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.page-info {
+    font-size: 0.9rem;
+    color: #666;
 }
 
 @media (max-width: 600px) {

@@ -7,6 +7,8 @@ from .models import Review
 from .forms import ReviewForm
 from django.http import JsonResponse
 from django.template.loader import render_to_string
+from django.core.paginator import Paginator
+
 
 @login_required
 def add_review(request, product_id):
@@ -83,6 +85,7 @@ def delete_review(request, review_id):
 def sort_reviews(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     sort_option = request.GET.get('sort', 'newest')
+    page = request.GET.get('page', 1)
     
     reviews = product.reviews.all()
     
@@ -94,13 +97,25 @@ def sort_reviews(request, product_id):
         reviews = reviews.order_by('rating')
     else:
         reviews = reviews.order_by('-created_at')
-        
+    
+    paginator = Paginator(reviews, 3)
+    try:
+        reviews_page = paginator.get_page(page)
+    except:
+        reviews_page = paginator.get_page(1)
+    
     context = {
         'product': product,
-        'reviews': reviews,
+        'reviews': reviews_page,
         'user': request.user,
         'user_has_reviewed': product.reviews.filter(user=request.user).exists() if request.user.is_authenticated else False
     }
     
     html = render_to_string('reviews/partials/review_list.html', context, request=request)
-    return JsonResponse({'html': html})
+    return JsonResponse({
+        'html': html,
+        'has_next': reviews_page.has_next(),
+        'has_previous': reviews_page.has_previous(),
+        'current_page': reviews_page.number,
+        'total_pages': paginator.num_pages
+    })

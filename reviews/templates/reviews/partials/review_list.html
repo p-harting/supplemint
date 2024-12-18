@@ -33,3 +33,21 @@
 {% empty %}
     <p>No reviews yet. Be the first to review this product!</p>
 {% endfor %}
+
+{% if reviews.paginator.num_pages > 1 %}
+<div class="pagination-controls">
+    {% if reviews.has_previous %}
+    <button class="pagination-btn" onclick="loadPage('{{ reviews.previous_page_number }}')">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+    {% endif %}
+    
+    <span class="page-info">Page {{ reviews.number }} of {{ reviews.paginator.num_pages }}</span>
+    
+    {% if reviews.has_next %}
+    <button class="pagination-btn" onclick="loadPage('{{ reviews.next_page_number }}')">
+        <i class="fas fa-chevron-right"></i>
+    </button>
+    {% endif %}
+</div>
+{% endif %}

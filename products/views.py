@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.db.models import Q
 from .models import Product, Category, SubCategory
 from django.db.models.functions import Lower
+from django.core.paginator import Paginator
 import random
 
 def all_products(request):
@@ -99,6 +100,14 @@ def product_detail(request, category_name, product_slug, subcategory_name=None):
             category__name=category_name,
         )
     
+    reviews = product.reviews.all()
+    paginator = Paginator(reviews, 3)
+    page = request.GET.get('page', 1)
+    try:
+        reviews_page = paginator.get_page(page)
+    except:
+        reviews_page = paginator.get_page(1)
+
     category_products = Product.objects.filter(
         category__name=category_name
     ).exclude(id=product.id)
@@ -115,5 +124,7 @@ def product_detail(request, category_name, product_slug, subcategory_name=None):
     context = {
         'product': product,
         'random_products': random_products,
+        'reviews': reviews_page,
+        'user_has_reviewed': product.reviews.filter(user=request.user).exists() if request.user.is_authenticated else False
     }
     return render(request, 'products/product_detail.html', context)
