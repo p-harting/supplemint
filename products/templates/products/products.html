@@ -88,6 +88,11 @@
                     <p class="product-price">€{{ product.price }}</p>
                     <form class="add-to-cart-form" action="{% url 'add_to_bag' product.id %}" method="POST">
                         {% csrf_token %}
+                        {% if product.has_sizes %}
+                            <input type="hidden" name="product_size" value="medium">
+                        {% endif %}
+                        <input type="hidden" name="quantity" value="1">
+                        <input type="hidden" name="redirect_url" value="{{ request.path }}">
                         <input type="submit" class="custom-button add-to-bag" value="+">
                     </form>
                 </div>
