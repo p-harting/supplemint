@@ -42,7 +42,7 @@ class Product(models.Model):
     description = models.TextField()
     detailed_description = RichTextField(null=True, blank=True)
     has_sizes = models.BooleanField(default=False, null=True, blank=True)
-    price = models.DecimalField(max_digits=6, decimal_places=2)
+    base_price = models.DecimalField(max_digits=6, decimal_places=2)
     rating = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
     image = models.ImageField(null=True, blank=True)
     nutritional_info = RichTextField(null=True, blank=True)
@@ -52,8 +52,27 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+    
+    @property
+    def price(self):
+        """Return the base price if no sizes exist, otherwise return the lowest size price"""
+        if not self.has_sizes:
+            return self.base_price
+        size_prices = self.sizes.all()
+        return min([size.price for size in size_prices]) if size_prices else self.base_price
 
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)
+
+class ProductSize(models.Model):
+    product = models.ForeignKey('Product', related_name='sizes', on_delete=models.CASCADE)
+    name = models.CharField(max_length=50)
+    price = models.DecimalField(max_digits=6, decimal_places=2)
+    
+    def __str__(self):
+        return f"{self.product.name} - {self.name}"
+
+    class Meta:
+        unique_together = ('product', 'name')

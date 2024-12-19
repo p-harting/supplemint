@@ -42,7 +42,7 @@
                         <p>Qty: {{ item.quantity }}</p>
                     </div>
                     <div class="item-subtotal">
-                        <p>${{ item.product.price | calc_subtotal:item.quantity }}</p>
+                        <p>${{ item.price | calc_subtotal:item.quantity }}</p>
                     </div>
                 </div>
                 {% endfor %}

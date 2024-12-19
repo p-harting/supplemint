@@ -23,37 +23,50 @@ def add_to_bag(request, item_id):
     bag = request.session.get('bag', {})
 
     if size:
+        product_size = product.sizes.filter(name=size).first()
+        if product_size:
+            size_price = product_size.price
+        else:
+            size_price = product.base_price
+
         if item_id in bag:
             if isinstance(bag[item_id], dict):
                 if size in bag[item_id]['items_by_size']:
-                    bag[item_id]['items_by_size'][size] += quantity
+                    bag[item_id]['items_by_size'][size]['quantity'] += quantity
                     messages.success(request,
-                                     (f'Updated size {size.upper()} '
-                                      f'{product.name} quantity to '
-                                      f'{bag[item_id]["items_by_size"][size]}'))
+                                    (f'Updated size {size.upper()} '
+                                     f'{product.name} quantity to '
+                                     f'{bag[item_id]["items_by_size"][size]["quantity"]}'))
                 else:
-                    bag[item_id]['items_by_size'][size] = quantity
+                    bag[item_id]['items_by_size'][size] = {
+                        'quantity': quantity,
+                        'price': str(size_price)
+                    }
                     messages.success(request,
-                                     (f'Added size {size.upper()} '
-                                      f'{product.name} to your bag'))
+                                    (f'Added size {size.upper()} '
+                                     f'{product.name} to your bag'))
             else:
-                bag[item_id] = {'items_by_size': {size: quantity}}
-                messages.success(request,
-                                 (f'Added size {size.upper()} '
-                                  f'{product.name} to your bag'))
+                bag[item_id] = {
+                    'items_by_size': {
+                        size: {
+                            'quantity': quantity,
+                            'price': str(size_price)
+                        }
+                    }
+                }
         else:
-            bag[item_id] = {'items_by_size': {size: quantity}}
-            messages.success(request,
-                             (f'Added size {size.upper()} '
-                              f'{product.name} to your bag'))
+            bag[item_id] = {
+                'items_by_size': {
+                    size: {
+                        'quantity': quantity,
+                        'price': str(size_price)
+                    }
+                }
+            }
     else:
         if item_id in bag:
-            if isinstance(bag[item_id], dict) and 'items_by_size' in bag[item_id]:
-                bag[item_id] = quantity
-            else:
-                bag[item_id] += quantity
-            messages.success(request,
-                             (f'Updated {product.name} quantity to {bag[item_id]}'))
+            bag[item_id] += quantity
+            messages.success(request, f'Updated {product.name} quantity to {bag[item_id]}')
         else:
             bag[item_id] = quantity
             messages.success(request, f'Added {product.name} to your bag')

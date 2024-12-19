@@ -1,5 +1,10 @@
 from django.contrib import admin
-from .models import Product, Category, SubCategory
+from .models import Product, Category, SubCategory, ProductSize
+
+class ProductSizeInline(admin.TabularInline):
+    model = ProductSize
+    extra = 1
+    fields = ('name', 'price')
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = (
@@ -7,7 +12,7 @@ class ProductAdmin(admin.ModelAdmin):
         'name',
         'category',
         'subcategory',
-        'price',
+        'base_price',  # Changed from 'price'
         'rating',
         'image',
     )
@@ -24,13 +29,21 @@ class ProductAdmin(admin.ModelAdmin):
         'how_to_use',
         'key_facts',
         'has_sizes',
-        'price',
+        'base_price',  # Changed from 'price'
         'rating',
         'image',
         'slug',
     )
+    
+    inlines = [ProductSizeInline]  # Add this line to include the size editor
 
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        if obj and obj.has_sizes:
+            form.base_fields['base_price'].help_text = 'This is the default price if no size is selected'
+        return form
 
+# CategoryAdmin and SubCategoryAdmin remain unchanged
 class CategoryAdmin(admin.ModelAdmin):
     list_display = (
         'friendly_name',
@@ -73,6 +86,7 @@ class SubCategoryAdmin(admin.ModelAdmin):
         'seo_keywords',
     )
 
+# Register your models
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(SubCategory, SubCategoryAdmin)

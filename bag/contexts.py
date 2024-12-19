@@ -5,32 +5,45 @@ from products.models import Product
 
 
 def bag_contents(request):
-
     bag_items = []
     total = 0
     product_count = 0
     bag = request.session.get('bag', {})
 
     for item_id, item_data in bag.items():
+        product = get_object_or_404(Product, pk=item_id)
+        
         if isinstance(item_data, int):
-            product = get_object_or_404(Product, pk=item_id)
-            total += item_data * product.price
+            # No size selected
+            total += item_data * product.base_price
             product_count += item_data
             bag_items.append({
                 'item_id': item_id,
                 'quantity': item_data,
                 'product': product,
+                'price': product.base_price,
             })
         else:
-            product = get_object_or_404(Product, pk=item_id)
-            for size, quantity in item_data['items_by_size'].items():
-                total += quantity * product.price
+            # Size selected
+            for size, size_data in item_data['items_by_size'].items():
+                if isinstance(size_data, dict):
+                    # New format with price
+                    quantity = size_data['quantity']
+                    price = Decimal(size_data['price'])
+                else:
+                    # Old format (just quantity)
+                    quantity = size_data
+                    product_size = product.sizes.filter(name=size).first()
+                    price = product_size.price if product_size else product.base_price
+                
+                total += quantity * price
                 product_count += quantity
                 bag_items.append({
                     'item_id': item_id,
                     'quantity': quantity,
                     'product': product,
                     'size': size,
+                    'price': price,
                 })
 
     if total < settings.FREE_DELIVERY_THRESHOLD:
