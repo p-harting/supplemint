@@ -54,27 +54,32 @@
         {% for product in products %}
         <div class="product-card">
             <a href="#">
-                {% if product.image %}
-                {% if product.subcategory %}
-                <a href="{% url 'product_detail' product.category.name product.subcategory.name product.slug %}">
-                    <img class="product-image" src="{{ product.image.url }}" alt="{{ product.name }}">
-                </a>
-                {% else %}
-                <a href="{% url 'product_detail_no_subcategory' product.category.name product.slug %}">
-                    <img class="product-image" src="{{ product.image.url }}" alt="{{ product.name }}">
-                </a>
-                {% endif %}
-                {% else %}
-                {% if product.subcategory %}
-                <a href="{% url 'product_detail' product.category.name product.subcategory.name product.slug %}">
-                    <img class="product-image" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
-                </a>
-                {% else %}
-                <a href="{% url 'product_detail_no_subcategory' product.category.name product.slug %}">
-                    <img class="product-image" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
-                </a>
-                {% endif %}
-                {% endif %}
+                <div class="image-wrapper">
+                    {% if product.get_sale_price %}
+                    <span class="sale-badge">{{ product.sale.discount_percentage|floatformat:0 }}% OFF</span>
+                    {% endif %}
+                    {% if product.image %}
+                    {% if product.subcategory %}
+                    <a href="{% url 'product_detail' product.category.name product.subcategory.name product.slug %}">
+                        <img class="product-image" src="{{ product.image.url }}" alt="{{ product.name }}">
+                    </a>
+                    {% else %}
+                    <a href="{% url 'product_detail_no_subcategory' product.category.name product.slug %}">
+                        <img class="product-image" src="{{ product.image.url }}" alt="{{ product.name }}">
+                    </a>
+                    {% endif %}
+                    {% else %}
+                    {% if product.subcategory %}
+                    <a href="{% url 'product_detail' product.category.name product.subcategory.name product.slug %}">
+                        <img class="product-image" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+                    </a>
+                    {% else %}
+                    <a href="{% url 'product_detail_no_subcategory' product.category.name product.slug %}">
+                        <img class="product-image" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+                    </a>
+                    {% endif %}
+                    {% endif %}
+                </div>
             </a>
             <div class="product-details">
                 <p class="product-name">{{ product.name }}</p>
@@ -89,11 +94,11 @@
                     <form class="add-to-cart-form" action="{% url 'add_to_bag' product.id %}" method="POST">
                         {% csrf_token %}
                         {% if product.has_sizes %}
-                            {% for size in product.sizes.all %}
-                                {% if size.price == product.base_price %}
-                                    <input type="hidden" id="product-size" name="product_size" value="{{ size.name }}">
-                                {% endif %}
-                            {% endfor %}
+                        {% for size in product.sizes.all %}
+                        {% if size.price == product.base_price %}
+                        <input type="hidden" id="product-size" name="product_size" value="{{ size.name }}">
+                        {% endif %}
+                        {% endfor %}
                         {% endif %}
                         <input type="hidden" name="quantity" value="1">
                         <input type="hidden" name="redirect_url" value="{{ request.path }}">

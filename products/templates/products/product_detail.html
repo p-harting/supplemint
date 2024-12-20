@@ -22,12 +22,22 @@
                     <img class="product-image" src="{{ MEDIA_URL }}noimage.png" alt="No image available">
                 </a>
                 {% endif %}
+                {% if product.get_sale_price %}
+                <span class="sale-badge">{{ product.sale.discount_percentage|floatformat:0 }}% OFF</span>
+                {% endif %}
             </div>
         </div>
         <div class="product-info-section">
             <div class="product-details">
                 <h2 class="product-name">{{ product.name }}</h2>
-                <p class="product-price" id="product-price">${{ product.base_price }}</p>
+                <div class="product-price" id="product-price">
+                    {% if product.get_sale_price %}
+                    <span class="original-price">${{ product.base_price }}</span>
+                    <span class="sale-price">${{ product.get_sale_price }}</span>
+                    {% else %}
+                    <span>${{ product.base_price }}</span>
+                    {% endif %}
+                </div>
                 {% if product.category %}
                 <p class="product-category">
                     <a

@@ -133,10 +133,8 @@ body {
 }
 
 .image-wrapper {
-    width: 100%;
-    max-width: 100%;
-    text-align: center;
-    overflow: hidden;
+    position: relative;
+    display: inline-block;
 }
 
 .product-image {
@@ -475,6 +473,32 @@ body {
 .page-info {
     font-size: 0.9rem;
     color: #666;
+}
+
+.original-price {
+    text-decoration: line-through;
+    color: #999;
+    font-size: 0.9em;
+    margin-right: 10px;
+}
+
+.sale-price {
+    color: #ff4444;
+    font-weight: bold;
+}
+
+.sale-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #ff4444;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    font-weight: bold;
+    z-index: 10;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 @media (max-width: 600px) {

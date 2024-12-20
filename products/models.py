@@ -1,6 +1,30 @@
 from django.db import models
-from django.utils.text import slugify
+from django.core.validators import MinValueValidator, MaxValueValidator
+from django.utils import timezone
+from django.core.exceptions import ValidationError
 from ckeditor.fields import RichTextField
+from django.utils.text import slugify
+
+class Sale(models.Model):
+    name = models.CharField(max_length=100)
+    discount_percentage = models.DecimalField(
+        max_digits=5, 
+        decimal_places=2,
+        validators=[
+            MinValueValidator(0),
+            MaxValueValidator(100)
+        ]
+    )
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField()
+    active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f"{self.name} ({self.discount_percentage}% off)"
+
+    def clean(self):
+        if self.end_date <= self.start_date:
+            raise ValidationError('End date must be after start date')
 
 class Category(models.Model):
     class Meta:
@@ -50,7 +74,19 @@ class Product(models.Model):
     how_to_use = models.TextField(null=True, blank=True)
     key_facts = models.JSONField(null=True, blank=True) 
     slug = models.SlugField(max_length=254, unique=True, null=True, blank=True)
+    sale = models.ForeignKey(Sale, null=True, blank=True, on_delete=models.SET_NULL)
 
+    @property
+    def get_sale_price(self):
+        if not self.sale or not self.sale.active:
+            return None
+        
+        now = timezone.now()
+        if self.sale.start_date <= now <= self.sale.end_date:
+            discount = self.base_price * (self.sale.discount_percentage / 100)
+            return round(self.base_price - discount, 2)
+        return None
+        
     @property
     def price(self):
         if not self.has_sizes:

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Category, SubCategory, ProductSize
+from .models import Product, Category, SubCategory, ProductSize, Sale
 
 class ProductSizeInline(admin.TabularInline):
     model = ProductSize
@@ -13,6 +13,7 @@ class ProductAdmin(admin.ModelAdmin):
         'category',
         'subcategory',
         'base_price',
+        'get_sale_display',
         'get_stock_display',
         'rating',
         'image',
@@ -30,11 +31,13 @@ class ProductAdmin(admin.ModelAdmin):
         'key_facts',
         'has_sizes',
         'base_price',
+        'sale',
         'stock',
         'rating',
         'image',
         'slug',
     )
+
     
     inlines = [ProductSizeInline]
 
@@ -44,6 +47,13 @@ class ProductAdmin(admin.ModelAdmin):
             form.base_fields['stock'].widget.attrs['readonly'] = True
             form.base_fields['stock'].help_text = 'Stock is managed through product sizes'
         return form
+    
+    def get_sale_display(self, obj):
+        sale_price = obj.get_sale_price
+        if sale_price is not None:
+            return f"${sale_price} (${obj.base_price} - {obj.sale.discount_percentage}% off)"
+        return "No sale"
+    get_sale_display.short_description = 'Sale Price'
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = (
@@ -90,3 +100,4 @@ class SubCategoryAdmin(admin.ModelAdmin):
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(SubCategory, SubCategoryAdmin)
+admin.site.register(Sale)
