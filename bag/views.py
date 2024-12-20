@@ -2,7 +2,6 @@ from django.shortcuts import (
     render, redirect, reverse, HttpResponse, get_object_or_404
 )
 from django.contrib import messages
-
 from products.models import Product
 
 
@@ -12,15 +11,27 @@ def view_bag(request):
     return render(request, 'bag/bag.html')
 
 def add_to_bag(request, item_id):
-    """ Add a quantity of the specified product to the shopping bag """
-
     product = get_object_or_404(Product, pk=item_id)
     quantity = int(request.POST.get('quantity'))
     redirect_url = request.POST.get('redirect_url')
     size = None
+    bag = request.session.get('bag', {})
+    
     if 'product_size' in request.POST:
         size = request.POST['product_size']
-    bag = request.session.get('bag', {})
+        product_size = product.sizes.filter(name=size).first()
+        
+        if not product_size:
+            messages.error(request, "Selected size not found")
+            return redirect(redirect_url)
+            
+        if quantity > product_size.stock:
+            messages.error(request, f"Sorry, only {product_size.stock} items available in size {size}")
+            return redirect(redirect_url)
+    else:
+        if quantity > product.stock:
+            messages.error(request, f"Sorry, only {product.stock} items available")
+            return redirect(redirect_url)
 
     if size:
         product_size = product.sizes.filter(name=size).first()

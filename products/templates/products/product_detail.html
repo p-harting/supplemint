@@ -45,17 +45,29 @@
                     {% csrf_token %}
                     <div class="form-section">
                         {% if product.has_sizes %}
-                        <div>
-                            <p><strong>Size:</strong></p>
+                        <div class="size-selector-container">
                             <select class="size-selector" name="product_size" id="id_product_size" required>
                                 <option value="">Select Size</option>
                                 {% for size in product.sizes.all %}
                                 <option value="{{ size.name }}" data-price="{{ size.price }}"
-                                    {% if size.price == product.base_price %} selected {% endif %}>
+                                    {% if size.stock == 0 %}disabled{% endif %}>
                                     {{ size.name }} - ${{ size.price }}
+                                    {% if size.stock == 0 %}
+                                    (Out of Stock)
+                                    {% else %}
+                                    ({{ size.stock }} in stock)
+                                    {% endif %}
                                 </option>
                                 {% endfor %}
                             </select>
+                        </div>
+                        {% else %}
+                        <div class="stock-info">
+                            {% if product.stock > 0 %}
+                            <p class="in-stock">{{ product.stock }} in stock</p>
+                            {% else %}
+                            <p class="out-of-stock">Out of Stock</p>
+                            {% endif %}
                         </div>
                         {% endif %}
                         <p class="quantity-label"><strong>Quantity:</strong></p>
