@@ -125,25 +125,31 @@
 
 <script type="text/javascript">
     $('#sort-selector').change(function () {
-        var selector = $(this);
-        var currentUrl = new URL(window.location);
+    var selector = $(this);
+    var currentUrl = new URL(window.location);
 
-        var selectedVal = selector.val();
-        if (selectedVal != "reset") {
-            var sort = selectedVal.split("_")[0];
-            var direction = selectedVal.split("_")[1];
+    var selectedVal = selector.val();
+    console.log("Selected value:", selectedVal);
 
-            currentUrl.searchParams.set("sort", sort);
-            currentUrl.searchParams.set("direction", direction);
+    if (selectedVal != "reset") {
+        var sort = selectedVal.split("_")[0];
+        var direction = selectedVal.split("_")[1];
+        console.log("Sort:", sort, "Direction:", direction);
 
-            window.location.replace(currentUrl);
-        } else {
-            currentUrl.searchParams.delete("sort");
-            currentUrl.searchParams.delete("direction");
+        currentUrl.searchParams.set("sort", sort);
+        currentUrl.searchParams.set("direction", direction);
 
-            window.location.replace(currentUrl);
-        }
-    })
+        console.log("Updated URL:", currentUrl.toString());
+        window.location.replace(currentUrl);
+    } else {
+        currentUrl.searchParams.delete("sort");
+        currentUrl.searchParams.delete("direction");
+
+        console.log("Reset URL:", currentUrl.toString());
+        window.location.replace(currentUrl);
+    }
+});
+
 </script>
 
 <script type="text/javascript">
