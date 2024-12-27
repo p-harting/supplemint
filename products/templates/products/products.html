@@ -49,6 +49,26 @@
         <div class="product-found-amount">
             {{ products|length }} Products{% if search_term %} found for <strong>"{{ search_term }}"</strong>{% endif %}
         </div>
+        <div class="price-filter-container">
+            <div class="price-input">
+                <div class="field">
+                    <span>Min</span>
+                    <input type="number" class="input-min" value="0">
+                </div>
+                <div class="separator">-</div>
+                <div class="field">
+                    <span>Max</span>
+                    <input type="number" class="input-max" value="1000">
+                </div>
+            </div>
+            <div class="slider">
+                <div class="progress"></div>
+            </div>
+            <div class="range-input">
+                <input type="range" class="range-min" min="0" max="1000" value="0" step="10">
+                <input type="range" class="range-max" min="0" max="1000" value="1000" step="10">
+            </div>
+        </div>
     </div>
     <div class="product-grid">
         {% for product in products %}
@@ -175,5 +195,65 @@
 
         ratingElement.innerHTML = starsHTML;
     });
+</script>
+
+<script type="text/javascript">
+    const rangeInput = document.querySelectorAll(".range-input input"),
+        priceInput = document.querySelectorAll(".price-input input"),
+        range = document.querySelector(".slider .progress"),
+        productCards = document.querySelectorAll('.product-card');
+    let priceGap = 100;
+
+    function filterProductsByPrice(minPrice, maxPrice) {
+        productCards.forEach(card => {
+            const price = parseFloat(card.querySelector('.product-price').textContent.replace('$', ''));
+            if (price >= minPrice && price <= maxPrice) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    priceInput.forEach((input) => {
+        input.addEventListener("input", (e) => {
+            let minPrice = parseInt(priceInput[0].value),
+                maxPrice = parseInt(priceInput[1].value);
+
+            if (maxPrice - minPrice >= priceGap && maxPrice <= rangeInput[1].max) {
+                if (e.target.className === "input-min") {
+                    rangeInput[0].value = minPrice;
+                    range.style.left = (minPrice / rangeInput[0].max) * 100 + "%";
+                } else {
+                    rangeInput[1].value = maxPrice;
+                    range.style.right = 100 - (maxPrice / rangeInput[1].max) * 100 + "%";
+                }
+                filterProductsByPrice(minPrice, maxPrice);
+            }
+        });
+    });
+
+    rangeInput.forEach((input) => {
+        input.addEventListener("input", (e) => {
+            let minVal = parseInt(rangeInput[0].value),
+                maxVal = parseInt(rangeInput[1].value);
+
+            if (maxVal - minVal < priceGap) {
+                if (e.target.className === "range-min") {
+                    rangeInput[0].value = maxVal - priceGap;
+                } else {
+                    rangeInput[1].value = minVal + priceGap;
+                }
+            } else {
+                priceInput[0].value = minVal;
+                priceInput[1].value = maxVal;
+                range.style.left = (minVal / rangeInput[0].max) * 100 + "%";
+                range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
+                filterProductsByPrice(minVal, maxVal);
+            }
+        });
+    });
+    
+    filterProductsByPrice(0, 1000);
 </script>
 {% endblock %}
