@@ -69,9 +69,33 @@ def category_products(request, category_name):
     category = get_object_or_404(Category, name=category_name)
     products = Product.objects.filter(category=category)
     
+    sort = None
+    direction = None
+
+    if request.GET:
+        if 'sort' in request.GET:
+            sortkey = request.GET['sort']
+            sort = sortkey
+            if sortkey == 'name':
+                sortkey = 'lower_name'
+                products = products.annotate(lower_name=Lower('name'))
+            if sortkey == 'category':
+                sortkey = 'category__name'
+            if sortkey == 'price':
+                sortkey = 'base_price'
+
+            if 'direction' in request.GET:
+                direction = request.GET['direction']
+                if direction == 'desc':
+                    sortkey = f'-{sortkey}'
+            products = products.order_by(sortkey)
+
+    current_sorting = f'{sort}_{direction}'
+    
     context = {
         'category': category,
         'products': products,
+        'current_sorting': current_sorting,
     }
     return render(request, 'products/products.html', context)
 
@@ -79,7 +103,30 @@ def subcategory_products(request, category_name, subcategory_name):
     category = get_object_or_404(Category, name=category_name)
     subcategory = get_object_or_404(SubCategory, name=subcategory_name, category=category)
     products = Product.objects.filter(subcategory=subcategory)
-    
+
+    sort = None
+    direction = None
+
+    if request.GET:
+        if 'sort' in request.GET:
+            sortkey = request.GET['sort']
+            sort = sortkey
+            if sortkey == 'name':
+                sortkey = 'lower_name'
+                products = products.annotate(lower_name=Lower('name'))
+            if sortkey == 'category':
+                sortkey = 'category__name'
+            if sortkey == 'price':
+                sortkey = 'base_price'
+
+            if 'direction' in request.GET:
+                direction = request.GET['direction']
+                if direction == 'desc':
+                    sortkey = f'-{sortkey}'
+            products = products.order_by(sortkey)
+
+    current_sorting = f'{sort}_{direction}'
+
     context = {
         'category': category,
         'subcategory': subcategory,
