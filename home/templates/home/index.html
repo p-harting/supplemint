@@ -41,23 +41,61 @@
 <div class="product-tile-container">
     <div class="product-tile-grid">
         {% for product in random_products %}
-            <div class="product-tile">
-                {% if product.subcategory %}
-                    <a href="{% url 'product_detail' product.category.name product.subcategory.name product.slug %}">
-                {% else %}
-                    <a href="{% url 'product_detail_no_subcategory' product.category.name product.slug %}">
-                {% endif %}
-                    {% if product.image %}
-                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-tile-image">
-                    {% else %}
-                        <img src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}" class="product-tile-image">
+        <div class="product-card">
+            <a href="#">
+                <div class="image-wrapper">
+                    {% if product.get_sale_price %}
+                    <span class="sale-badge">{{ product.sale.discount_percentage|floatformat:0 }}% OFF</span>
                     {% endif %}
-                </a>
-                <div class="product-tile-details">
-                    <h3 class="product-tile-name">{{ product.name }}</h3>
-                    <p class="product-tile-price">${{ product.price }}</p>
+                    {% if product.image %}
+                    {% if product.subcategory %}
+                    <a href="{% url 'product_detail' product.category.name product.subcategory.name product.slug %}">
+                        <img class="product-image" src="{{ product.image.url }}" alt="{{ product.name }}">
+                    </a>
+                    {% else %}
+                    <a href="{% url 'product_detail_no_subcategory' product.category.name product.slug %}">
+                        <img class="product-image" src="{{ product.image.url }}" alt="{{ product.name }}">
+                    </a>
+                    {% endif %}
+                    {% else %}
+                    {% if product.subcategory %}
+                    <a href="{% url 'product_detail' product.category.name product.subcategory.name product.slug %}">
+                        <img class="product-image" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+                    </a>
+                    {% else %}
+                    <a href="{% url 'product_detail_no_subcategory' product.category.name product.slug %}">
+                        <img class="product-image" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+                    </a>
+                    {% endif %}
+                    {% endif %}
+                </div>
+            </a>
+            <div class="product-details">
+                <p class="product-name">{{ product.name }}</p>
+                <p class="product-description">{{ product.description }}</p>
+                {% if product.rating %}
+                <p class="product-rating" data-rating="{{ product.rating }}"></p>
+                {% else %}
+                <p class="product-rating">No Rating</p>
+                {% endif %}
+                <div class="price-bag-container">
+                    <p class="product-price">${{ product.base_price }}</p>
+                    <form class="add-to-cart-form" action="{% url 'add_to_bag' product.id %}" method="POST">
+                        {% csrf_token %}
+                        {% if product.has_sizes %}
+                        {% for size in product.sizes.all %}
+                        {% if size.price == product.base_price %}
+                        <input type="hidden" id="product-size" name="product_size" value="{{ size.name }}">
+                        {% endif %}
+                        {% endfor %}
+                        {% endif %}
+                        <input type="hidden" name="quantity" value="1">
+                        <input type="hidden" name="redirect_url" value="{{ request.path }}">
+                        <input type="submit" class="custom-button add-to-bag" value="+">
+                    </form>
                 </div>
             </div>
+        </div>
         {% empty %}
             <p>No products available.</p>
         {% endfor %}
