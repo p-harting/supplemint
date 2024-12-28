@@ -46,28 +46,29 @@
                     (Z-A)</option>
             </select>
         </div>
-        <div class="product-found-amount">
-            {{ products|length }} Products{% if search_term %} found for <strong>"{{ search_term }}"</strong>{% endif %}
-        </div>
+        <button class="sale-filter-btn" id="sale-filter-btn">On Sale</button>
         <div class="price-filter-container">
             <div class="price-input">
                 <div class="field">
                     <span>Min</span>
-                    <input type="number" class="input-min" value="0">
+                    <input type="number" class="input-min" value="1">
                 </div>
                 <div class="separator">-</div>
                 <div class="field">
                     <span>Max</span>
-                    <input type="number" class="input-max" value="1000">
+                    <input type="number" class="input-max" value="100">
                 </div>
             </div>
             <div class="slider">
                 <div class="progress"></div>
             </div>
             <div class="range-input">
-                <input type="range" class="range-min" min="0" max="1000" value="0" step="10">
-                <input type="range" class="range-max" min="0" max="1000" value="1000" step="10">
+                <input type="range" class="range-min" min="1" max="100" value="1" step="1">
+                <input type="range" class="range-max" min="1" max="100" value="100" step="1">
             </div>
+        </div>
+        <div class="product-found-amount">
+            {{ products|length }} Products{% if search_term %} found for <strong>"{{ search_term }}"</strong>{% endif %}
         </div>
     </div>
     <div class="product-grid">
@@ -202,7 +203,7 @@
         priceInput = document.querySelectorAll(".price-input input"),
         range = document.querySelector(".slider .progress"),
         productCards = document.querySelectorAll('.product-card');
-    let priceGap = 100;
+    let priceGap = 2;
 
     function filterProductsByPrice(minPrice, maxPrice) {
         productCards.forEach(card => {
@@ -214,24 +215,6 @@
             }
         });
     }
-
-    priceInput.forEach((input) => {
-        input.addEventListener("input", (e) => {
-            let minPrice = parseInt(priceInput[0].value),
-                maxPrice = parseInt(priceInput[1].value);
-
-            if (maxPrice - minPrice >= priceGap && maxPrice <= rangeInput[1].max) {
-                if (e.target.className === "input-min") {
-                    rangeInput[0].value = minPrice;
-                    range.style.left = (minPrice / rangeInput[0].max) * 100 + "%";
-                } else {
-                    rangeInput[1].value = maxPrice;
-                    range.style.right = 100 - (maxPrice / rangeInput[1].max) * 100 + "%";
-                }
-                filterProductsByPrice(minPrice, maxPrice);
-            }
-        });
-    });
 
     rangeInput.forEach((input) => {
         input.addEventListener("input", (e) => {
@@ -254,6 +237,29 @@
         });
     });
     
-    filterProductsByPrice(0, 1000);
+    filterProductsByPrice(1, 100);
+
+    const saleFilterBtn = document.getElementById('sale-filter-btn');
+    let showSaleOnly = false;
+
+    saleFilterBtn.addEventListener('click', () => {
+        showSaleOnly = !showSaleOnly;
+        saleFilterBtn.textContent = showSaleOnly ? 'Show All Products' : 'Show Sale Products';
+        
+        const minPrice = parseInt(priceInput[0].value);
+        const maxPrice = parseInt(priceInput[1].value);
+        
+        productCards.forEach(card => {
+            const isSale = card.querySelector('.sale-badge') !== null;
+            const price = parseFloat(card.querySelector('.product-price').textContent.replace('$', ''));
+            const isInPriceRange = price >= minPrice && price <= maxPrice;
+            
+            if (showSaleOnly) {
+                card.style.display = isSale && isInPriceRange ? 'block' : 'none';
+            } else {
+                card.style.display = isInPriceRange ? 'block' : 'none';
+            }
+        });
+    });
 </script>
 {% endblock %}
