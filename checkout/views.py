@@ -9,6 +9,7 @@ from products.models import Product
 from profiles.models import UserProfile
 from profiles.forms import UserProfileForm
 from bag.contexts import bag_contents
+from bag.models import DiscountCode
 import stripe
 import random
 import json
@@ -51,10 +52,28 @@ def checkout(request):
         }
         order_form = OrderForm(form_data)
         if order_form.is_valid():
+            current_bag = bag_contents(request)
+            total = current_bag['grand_total']
+            
             order = order_form.save(commit=False)
+            
+            if 'discount_code' in request.session:
+                try:
+                    code = DiscountCode.objects.get(
+                        code=request.session['discount_code'],
+                        is_active=True
+                    )
+                    order.discount_code = code
+                    discount_amount = code.apply_discount(total)
+                    order.discount_amount = discount_amount
+                    total -= discount_amount
+                except DiscountCode.DoesNotExist:
+                    pass
+            
             pid = request.POST.get('client_secret').split('_secret')[0]
             order.stripe_pid = pid
             order.original_bag = json.dumps(bag)
+            order.grand_total = total
             order.save()
             for item_id, item_data in bag.items():
                 try:
@@ -67,11 +86,16 @@ def checkout(request):
                         )
                         order_line_item.save()
                     else:
-                        for size, quantity in item_data['items_by_size'].items():
+                        for size, size_data in item_data['items_by_size'].items():
+                            if isinstance(size_data, dict):
+                                quantity = size_data['quantity']
+                            else:
+                                quantity = size_data
+                            
                             order_line_item = OrderLineItem(
                                 order=order,
                                 product=product,
-                                quantity=quantity,
+                                quantity=int(quantity),
                                 product_size=size,
                             )
                             order_line_item.save()
@@ -96,12 +120,41 @@ def checkout(request):
 
         current_bag = bag_contents(request)
         total = current_bag['grand_total']
+        
+        discount_code = request.session.get('discount_code')
+        if discount_code:
+            try:
+                code = DiscountCode.objects.get(code=discount_code, is_active=True)
+                if code.remaining_balance > 0:
+                    discount_amount = code.apply_discount(total)
+                    total -= discount_amount
+                    code.save()
+                    messages.success(request, f'Discount code {code.code} applied! ${discount_amount:.2f} off your order.')
+            except DiscountCode.DoesNotExist:
+                messages.error(request, 'Invalid discount code')
+                request.session.pop('discount_code', None)
+        
         stripe_total = round(total * 100)
         stripe.api_key = stripe_secret_key
-        intent = stripe.PaymentIntent.create(
-            amount=stripe_total,
-            currency=settings.STRIPE_CURRENCY,
-        )
+        
+        if 'client_secret' in request.POST:
+            try:
+                pid = request.POST.get('client_secret').split('_secret')[0]
+                stripe.PaymentIntent.modify(
+                    pid,
+                    amount=stripe_total
+                )
+                intent = stripe.PaymentIntent.retrieve(pid)
+            except Exception as e:
+                intent = stripe.PaymentIntent.create(
+                    amount=stripe_total,
+                    currency=settings.STRIPE_CURRENCY,
+                )
+        else:
+            intent = stripe.PaymentIntent.create(
+                amount=stripe_total,
+                currency=settings.STRIPE_CURRENCY,
+            )
 
         order_form = OrderForm()
 
@@ -114,6 +167,7 @@ def checkout(request):
         'order_form': order_form,
         'stripe_public_key': stripe_public_key,
         'client_secret': intent.client_secret,
+        'discount_code': request.session.get('discount_code'),
     }
 
     return render(request, template, context)
@@ -125,11 +179,9 @@ def checkout_success(request, order_number):
 
     if request.user.is_authenticated:
         profile = UserProfile.objects.get(user=request.user)
-        # Attach the user's profile to the order
         order.user_profile = profile
         order.save()
 
-        # Check for referral and create transaction
         if profile.referred_by:
             commission_rate = Decimal('0.05')
             commission_amount = order.grand_total * commission_rate
@@ -142,7 +194,6 @@ def checkout_success(request, order_number):
                 commission=commission_amount
             )
 
-        # Save the user's info
         if save_info:
             profile_data = {
                 'default_phone_number': order.phone_number,

@@ -23,6 +23,8 @@ class Order(models.Model):
     grand_total = models.DecimalField(max_digits=10, decimal_places=2, null=False, default=0)
     original_bag = models.TextField(null=False, blank=False, default='')
     stripe_pid = models.CharField(max_length=254, null=False, blank=False, default='')
+    discount_code = models.ForeignKey('bag.DiscountCode', on_delete=models.SET_NULL, null=True, blank=True)
+    discount_amount = models.DecimalField(max_digits=10, decimal_places=2, null=False, default=0)
 
     def _generate_order_number(self):
         """
@@ -33,14 +35,17 @@ class Order(models.Model):
     def update_total(self):
         """
         Update grand total each time a line item is added,
-        accounting for delivery costs.
+        accounting for delivery costs and discounts.
         """
         self.order_total = self.lineitems.aggregate(Sum('lineitem_total'))['lineitem_total__sum'] or 0
         if self.order_total < settings.FREE_DELIVERY_THRESHOLD:
             self.delivery_cost = self.order_total * settings.STANDARD_DELIVERY_PERCENTAGE / 100
         else:
             self.delivery_cost = 0
-        self.grand_total = self.order_total + self.delivery_cost
+        total = self.order_total + self.delivery_cost
+        if self.discount_amount:
+            total -= self.discount_amount
+        self.grand_total = total
         self.save()
 
     def save(self, *args, **kwargs):
@@ -59,7 +64,7 @@ class Order(models.Model):
 class OrderLineItem(models.Model):
     order = models.ForeignKey(Order, null=False, blank=False, on_delete=models.CASCADE, related_name='lineitems')
     product = models.ForeignKey(Product, null=False, blank=False, on_delete=models.CASCADE)
-    product_size = models.CharField(max_length=2, null=True, blank=True) # XS, S, M, L, XL
+    product_size = models.CharField(max_length=2, null=True, blank=True)
     quantity = models.IntegerField(null=False, blank=False, default=0)
     lineitem_total = models.DecimalField(max_digits=6, decimal_places=2, null=False, blank=False, editable=False)
 

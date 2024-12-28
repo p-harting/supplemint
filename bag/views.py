@@ -3,12 +3,53 @@ from django.shortcuts import (
 )
 from django.contrib import messages
 from products.models import Product
+from .models import DiscountCode
 
 
 def view_bag(request):
     """ A view that renders the bag contents page """
 
     return render(request, 'bag/bag.html')
+
+from django.http import JsonResponse
+from bag.contexts import bag_contents
+
+def apply_discount(request):
+    """ Apply discount code to the session """
+    if request.method == 'POST':
+        code = request.POST.get('discount_code')
+        try:
+            discount_code = DiscountCode.objects.get(code=code, is_active=True)
+            if discount_code.remaining_balance > 0:
+                request.session['discount_code'] = code
+                # Calculate new total
+                current_bag = bag_contents(request)
+                total = current_bag['grand_total']
+                discount_amount = discount_code.apply_discount(total)
+                new_total = total - discount_amount
+                
+                return JsonResponse({
+                    'success': True,
+                    'message': f'Discount code {code} applied! ${discount_amount:.2f} off your order.',
+                    'new_total': f'{new_total:.2f}'
+                })
+            else:
+                request.session.pop('discount_code', None)
+                return JsonResponse({
+                    'success': False,
+                    'message': 'This discount code has no remaining balance'
+                })
+        except DiscountCode.DoesNotExist:
+            request.session.pop('discount_code', None)
+            return JsonResponse({
+                'success': False,
+                'message': 'Invalid discount code'
+            })
+    
+    return JsonResponse({
+        'success': False,
+        'message': 'Invalid request method'
+    })
 
 def add_to_bag(request, item_id):
     product = get_object_or_404(Product, pk=item_id)

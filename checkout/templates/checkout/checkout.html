@@ -360,6 +360,16 @@
                 </fieldset>
 
                 <fieldset class="form-section">
+                    <legend>Discount Code</legend>
+                    <div class="form-group">
+                        <label for="discount_code">Enter Discount Code</label>
+                        <input type="text" id="discount_code" name="discount_code" value="{{ discount_code }}">
+                        <button type="button" id="apply-discount" class="btn btn-small">Apply</button>
+                        <div id="discount-message" class="mt-2"></div>
+                    </div>
+                </fieldset>
+
+                <fieldset class="form-section">
                     <legend>Payment</legend>
                     <div id="card-element" class="card-element"></div>
                     <div id="card-errors" class="card-errors" role="alert"></div>
@@ -393,4 +403,62 @@
 {{ stripe_public_key|json_script:"id_stripe_public_key" }}
 {{ client_secret|json_script:"id_client_secret" }}
 <script src="{% static 'checkout/js/stripe_elements.js' %}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const applyDiscountBtn = document.getElementById('apply-discount');
+    const discountCodeInput = document.getElementById('discount_code');
+    const discountMessage = document.getElementById('discount-message');
+    const grandTotalElement = document.querySelector('.totals-values p:last-child strong');
+    const paymentWarning = document.querySelector('.payment-warning strong');
+
+    applyDiscountBtn.addEventListener('click', function() {
+        const code = discountCodeInput.value.trim();
+        if (!code) return;
+
+        fetch('{% url "apply_discount" %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: `discount_code=${encodeURIComponent(code)}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                discountMessage.textContent = data.message;
+                discountMessage.classList.remove('text-danger');
+                discountMessage.classList.add('text-success');
+                
+                const formattedTotal = parseFloat(data.new_total).toFixed(2);
+                grandTotalElement.textContent = `$${formattedTotal}`;
+                paymentWarning.textContent = `$${formattedTotal}`;
+                
+                const clientSecret = document.getElementById('id_client_secret').textContent;
+                fetch('{% url "checkout" %}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: `client_secret=${encodeURIComponent(clientSecret)}`
+                }).then(() => {
+                    stripe.update({
+                        amount: Math.round(parseFloat(data.new_total) * 100)
+                    });
+                });
+            } else {
+                discountMessage.textContent = data.message;
+                discountMessage.classList.remove('text-success');
+                discountMessage.classList.add('text-danger');
+            }
+        })
+        .catch(error => {
+            discountMessage.textContent = 'An error occurred. Please try again.';
+            discountMessage.classList.remove('text-success');
+            discountMessage.classList.add('text-danger');
+        });
+    });
+});
+</script>
 {% endblock %}

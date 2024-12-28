@@ -59,6 +59,12 @@
             <p class="section-title">Billing Info:</p>
             <div class="info-row"><span class="label">Order Total:</span><span class="value">${{ order.order_total }}</span></div>
             <div class="info-row"><span class="label">Delivery:</span><span class="value">${{ order.delivery_cost }}</span></div>
+            {% if order.discount_code %}
+            <div class="info-row discount-row">
+                <span class="label">Discount ({{ order.discount_code.code }}):</span>
+                <span class="value">-${{ order.discount_amount }}</span>
+            </div>
+            {% endif %}
             <div class="info-row"><span class="label">Grand Total:</span><span class="value">${{ order.grand_total }}</span></div>
         </article>
     </section>
