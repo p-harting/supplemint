@@ -103,6 +103,8 @@ ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
 ACCOUNT_USERNAME_MIN_LENGTH = 4
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
+ACCOUNT_LOGOUT_ON_GET = True
+LOGOUT_REDIRECT_URL = '/'
 
 MESSAGES_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
