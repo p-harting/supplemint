@@ -6,14 +6,28 @@
 {% endblock %}
 
 {% block content %}
-<div class="overlay"></div>
-<div class="profile-container">
-    <div class="profile-header-section">
-        <hr>
-        <h2 class="profile-title">My Profile</h2>
-        <hr>
+<div class="profile-wrapper">
+    <div class="profile-header">
+        <h2 class="profile-heading">My Profile</h2>
     </div>
-    {{ profile }}
+    
+    <div class="profile-form-container">
+        <form method="POST" action="{% url 'profile' %}" class="profile-form">
+            {% csrf_token %}
+            {% for field in profile_form %}
+                <div class="form-field">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.help_text %}
+                        <span class="form-help">{{ field.help_text }}</span>
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <div class="form-error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            <button class="form-submit" type="submit">Update Profile</button>
+        </form>
+    </div>
 </div>
-
 {% endblock %}

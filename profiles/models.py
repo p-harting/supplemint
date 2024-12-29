@@ -11,13 +11,23 @@ class UserProfile(models.Model):
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     referred_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='referred_profiles')
-    default_phone_number = models.CharField(max_length=20, null=True, blank=True)
-    country = models.CharField(max_length=40, null=True, blank=True)
-    default_postcode = models.CharField(max_length=20, null=True, blank=True)
-    default_town_or_city = models.CharField(max_length=40, null=True, blank=True)
-    default_street_address1 = models.CharField(max_length=80, null=True, blank=True)
-    default_street_address2 = models.CharField(max_length=80, null=True, blank=True)
-    default_county = models.CharField(max_length=80, null=True, blank=True)
+    full_name = models.CharField(max_length=50, default='')
+
+    email = models.EmailField(default='')
+
+    def save(self, *args, **kwargs):
+        """Ensure email and full_name are always set"""
+        if not self.email:
+            self.email = self.user.email
+        if not self.full_name:
+            self.full_name = self.user.username
+        super().save(*args, **kwargs)
+    street_address1 = models.CharField(max_length=80, default='Main Street')
+    street_address2 = models.CharField(max_length=80, blank=True, null=True)
+    town_or_city = models.CharField(max_length=40, default='City')
+    county = models.CharField(max_length=80, blank=True, null=True)
+    postcode = models.CharField(max_length=20, default='00000')
+    country = models.CharField(max_length=40, default='US')
     points = models.IntegerField(default=0)
 
     def __str__(self):
@@ -31,5 +41,4 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
     """
     if created:
         UserProfile.objects.create(user=instance)
-    # Existing users: just save the profile
     instance.userprofile.save()
