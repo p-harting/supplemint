@@ -22,9 +22,6 @@ class DiscountCode(models.Model):
 
     def apply_discount(self, total):
         if self.remaining_balance >= total:
-            self.remaining_balance -= total
             return total
         else:
-            discount = self.remaining_balance
-            self.remaining_balance = 0
-            return discount
+            return self.remaining_balance
