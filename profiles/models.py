@@ -12,7 +12,6 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     referred_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='referred_profiles')
     full_name = models.CharField(max_length=50, default='')
-
     email = models.EmailField(default='')
 
     def save(self, *args, **kwargs):
@@ -22,6 +21,7 @@ class UserProfile(models.Model):
         if not self.full_name:
             self.full_name = self.user.username
         super().save(*args, **kwargs)
+        
     street_address1 = models.CharField(max_length=80, default='Main Street')
     street_address2 = models.CharField(max_length=80, blank=True, null=True)
     town_or_city = models.CharField(max_length=40, default='City')
