@@ -3,9 +3,10 @@ from .models import ReferralCode, ReferralTransaction
 
 @admin.register(ReferralCode)
 class ReferralCodeAdmin(admin.ModelAdmin):
-    list_display = ('user', 'code', 'created_at', 'total_earnings')
+    list_display = ('user', 'code', 'created_at', 'total_earnings', 'unredeemed_balance')
     search_fields = ('user__username', 'code')
     readonly_fields = ('created_at',)
+    fields = ('user', 'code', 'total_earnings', 'unredeemed_balance', 'created_at')
 
 @admin.register(ReferralTransaction)
 class ReferralTransactionAdmin(admin.ModelAdmin):
