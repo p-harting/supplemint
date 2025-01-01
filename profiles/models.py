@@ -28,6 +28,7 @@ class UserProfile(models.Model):
     county = models.CharField(max_length=80, blank=True, null=True)
     postcode = models.CharField(max_length=20, default='00000')
     country = models.CharField(max_length=40, default='US')
+    phone_number = models.CharField(max_length=20, blank=True, null=True)
     points = models.IntegerField(default=0)
 
     def __str__(self):

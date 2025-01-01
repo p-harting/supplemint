@@ -151,6 +151,7 @@ def checkout(request):
             order = Order(
                 full_name=profile.full_name,
                 email=profile.email,
+                phone_number=profile.phone_number,
                 street_address1=profile.street_address1,
                 street_address2=profile.street_address2,
                 town_or_city=profile.town_or_city,
