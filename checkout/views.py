@@ -88,7 +88,7 @@ def checkout(request):
                         form_data['email'] = profile.user.email
             except UserProfile.DoesNotExist:
                 pass
-        order_form = OrderForm(form_data)
+        order_form = OrderForm(form_data, user=request.user)
         if order_form.is_valid():
             current_bag = bag_contents(request)
             total = current_bag['grand_total']
@@ -144,7 +144,24 @@ def checkout(request):
         else:
             messages.error(request, 'There was an error with your form. Please check your details.')
 
-    order_form = OrderForm()
+    order = None
+    if request.user.is_authenticated:
+        try:
+            profile = UserProfile.objects.get(user=request.user)
+            order = Order(
+                full_name=profile.full_name,
+                email=profile.email,
+                street_address1=profile.street_address1,
+                street_address2=profile.street_address2,
+                town_or_city=profile.town_or_city,
+                county=profile.county,
+                postcode=profile.postcode,
+                country=profile.country
+            )
+        except UserProfile.DoesNotExist:
+            print("No profile found for user")
+    
+    order_form = OrderForm(instance=order)
 
     if not stripe_public_key:
         messages.warning(request, 'Stripe public key is missing. Did you set it in your environment?')

@@ -1,8 +1,16 @@
 from django import forms
+from django_countries import countries
 from .models import Order
 
 
 class OrderForm(forms.ModelForm):
+    country = forms.ChoiceField(
+        choices=countries,
+        widget=forms.Select(attrs={
+            'class': 'stripe-style-input country-select'
+        })
+    )
+
     class Meta:
         model = Order
         fields = ('full_name', 'email', 'phone_number',
@@ -16,6 +24,7 @@ class OrderForm(forms.ModelForm):
         labels and set autofocus on first field
         """
         super().__init__(*args, **kwargs)
+        
         placeholders = {
             'full_name': 'Full Name',
             'email': 'Email Address',
@@ -35,5 +44,7 @@ class OrderForm(forms.ModelForm):
             else:
                 placeholder = placeholders[field]
             self.fields[field].widget.attrs['placeholder'] = placeholder
-            self.fields[field].widget.attrs['class'] = 'stripe-style-input'
+            if field != 'country':
+                self.fields[field].widget.attrs['class'] = 'stripe-style-input'
+            self.fields[field].widget.attrs['aria-label'] = placeholders[field]
             self.fields[field].label = False
