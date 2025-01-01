@@ -3,6 +3,8 @@ from django.views.decorators.http import require_POST
 from referrals.models import ReferralTransaction
 from django.contrib import messages
 from django.conf import settings
+from django.core.mail import send_mail, EmailMultiAlternatives
+from django.template.loader import render_to_string
 from .forms import OrderForm
 from .models import Order, OrderLineItem
 from products.models import Product
@@ -217,9 +219,24 @@ def checkout_success(request, order_number):
             remaining_balance=F('remaining_balance') - order.discount_amount
         )
 
+    subject = f'Order Confirmation - {order.order_number}'
+    html_body = render_to_string(
+        'checkout/order_confirmation_email.html',
+        {'order': order}
+    )
+    
+    email = EmailMultiAlternatives(
+        subject,
+        html_body,
+        settings.DEFAULT_FROM_EMAIL,
+        [order.email]
+    )
+    email.content_subtype = "html"
+    email.send()
+
     messages.success(request, f'Order successfully processed! \
         Your order number is {order_number}. A confirmation \
-        email will be sent to {order.email}.')
+        email has been sent to {order.email}.')
 
     if 'bag' in request.session:
         del request.session['bag']
