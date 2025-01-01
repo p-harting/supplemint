@@ -224,9 +224,16 @@ def checkout_success(request, order_number):
     if 'bag' in request.session:
         del request.session['bag']
 
+    available_products = Product.objects.filter(stock__gt=0)
+    if available_products.count() >= 6:
+        recommended_products = available_products.order_by('?')[:6]
+    else:
+        recommended_products = Product.objects.order_by('?')[:6]
+
     template = 'checkout/checkout_success.html'
     context = {
         'order': order,
+        'recommended_products': recommended_products,
     }
 
     return render(request, template, context)
