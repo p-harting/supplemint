@@ -62,10 +62,18 @@
             <div class="user-section">
                 <ul class="user-menu">
                     <li class="user-item dropdown">
-                        <a class="account-link" href="#" id="account-menu">
+                        {% if request.user.is_authenticated %}
+                        <a class="account-link" href="{% url 'profile' %}" id="account-menu">
+                        {% else %}
+                        <a class="account-link" href="{% url 'account_signup' %}" id="account-menu">
+                        {% endif %}
                             <div class="account-info">
                                 <div><i class="fas fa-user fa-lg"></i></div>
+                                {% if request.user.is_authenticated %}
                                 <a href="{% url 'profile' %}" class="account-text">My Account</a>
+                                {% else %}
+                                <a href="{% url 'account_signup' %}" class="account-text">My Account</a>
+                                {% endif %}
                             </div>
                         </a>
                         <div class="dropdown-content" aria-labelledby="account-menu">
