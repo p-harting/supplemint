@@ -5,7 +5,7 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.urls import path
 from django.shortcuts import redirect
-from .models import NewsletterSubscriber, NewsletterEmail
+from .models import NewsletterSubscriber, NewsletterEmail, PageContent
 
 @admin.register(NewsletterSubscriber)
 class NewsletterSubscriberAdmin(admin.ModelAdmin):
@@ -44,3 +44,9 @@ class NewsletterEmailAdmin(admin.ModelAdmin):
             )
         self.message_user(request, f"Newsletter '{email.subject}' sent successfully!")
         return redirect('..')
+
+@admin.register(PageContent)
+class PageContentAdmin(admin.ModelAdmin):
+    list_display = ('get_page_display', 'last_updated')
+    list_filter = ('page',)
+    search_fields = ('content',)
