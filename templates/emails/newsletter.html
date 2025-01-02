@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{ subject }}</title>
+</head>
+<body>
+    <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+        {{ content|safe }}
+        <p style="text-align: center; margin-top: 20px;">
+            <a href="{{ unsubscribe_url }}" style="color: #666; text-decoration: none;">
+                Unsubscribe
+            </a>
+        </p>
+    </div>
+</body>
+</html>

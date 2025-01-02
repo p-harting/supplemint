@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from products.models import Product
 import random
+from django.shortcuts import redirect
+from django.contrib import messages
+from .models import NewsletterSubscriber
 
 def index(request):
     all_products = Product.objects.all()
@@ -14,3 +17,16 @@ def index(request):
 
 def custom_404(request, exception):
     return render(request, '404.html', status=404)
+
+def newsletter_subscribe(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        if email:
+            try:
+                NewsletterSubscriber.objects.create(email=email)
+                messages.success(request, 'Thank you for subscribing!')
+            except:
+                messages.error(request, 'This email is already subscribed.')
+        else:
+            messages.error(request, 'Please enter a valid email address.')
+    return redirect('home')

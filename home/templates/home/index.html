@@ -107,8 +107,9 @@
 <div class="newsletter-container">
     <h2 class="newsletter-title">Sign up for our Newsletter!</h2>
     <p class="newsletter-description">Get exclusive offers and news directly to your inbox.</p>
-    <form class="newsletter-form">
-        <input type="email" class="newsletter-input" placeholder="Your email address" required>
+    <form class="newsletter-form" method="POST" action="{% url 'newsletter_subscribe' %}">
+        {% csrf_token %}
+        <input type="email" class="newsletter-input" name="email" placeholder="Your email address" required>
         <button type="submit" class="newsletter-button">Sign Up</button>
     </form>
 </div>
