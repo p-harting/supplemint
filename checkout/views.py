@@ -39,6 +39,9 @@ def checkout(request):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
 
+    if 'email_sent' in request.session:
+        del request.session['email_sent']
+
     bag = request.session.get('bag', {})
     if not bag:
         messages.error(request, "There's nothing in your bag at the moment.")
@@ -219,24 +222,29 @@ def checkout_success(request, order_number):
             remaining_balance=F('remaining_balance') - order.discount_amount
         )
 
-    subject = f'Order Confirmation - {order.order_number}'
-    html_body = render_to_string(
-        'checkout/order_confirmation_email.html',
-        {'order': order}
-    )
-    
-    email = EmailMultiAlternatives(
-        subject,
-        html_body,
-        settings.DEFAULT_FROM_EMAIL,
-        [order.email]
-    )
-    email.content_subtype = "html"
-    email.send()
-
-    messages.success(request, f'Order successfully processed! \
-        Your order number is {order_number}. A confirmation \
-        email has been sent to {order.email}.')
+    if 'email_sent' not in request.session:
+        from django.core.mail import send_mail, EmailMultiAlternatives
+        from django.template.loader import render_to_string
+        
+        subject = f'Order Confirmation - {order.order_number}'
+        html_body = render_to_string(
+            'checkout/order_confirmation_email.html',
+            {'order': order}
+        )
+        
+        email = EmailMultiAlternatives(
+            subject,
+            html_body,
+            settings.DEFAULT_FROM_EMAIL,
+            [order.email]
+        )
+        email.content_subtype = "html"
+        email.send()
+        
+        request.session['email_sent'] = True
+        messages.success(request, f'Order successfully processed! \
+            Your order number is {order_number}. A confirmation \
+            email has been sent to {order.email}.')
 
     if 'bag' in request.session:
         del request.session['bag']

@@ -104,7 +104,6 @@ body {
     right: 0%;
     position: absolute;
     border-radius: 5px;
-    z-index: 1;
 }
 
 .range-input {
