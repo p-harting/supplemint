@@ -41,14 +41,25 @@ body {
 
 .product-sort-container {
     display: flex;
-    justify-content: space-between;
-    padding: 10px 20px;
-    gap: 20px;
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+}
+
+.product-sort-container-left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.product-found-amount {
+    text-align: right;
 }
 
 .price-filter-container {
     width: 100%;
     margin-bottom: 20px;
+    margin: 0 10px;
 }
 
 .price-input {
@@ -93,7 +104,7 @@ body {
     right: 0%;
     position: absolute;
     border-radius: 5px;
-    background: #007bff;
+    z-index: 1;
 }
 
 .range-input {
@@ -113,8 +124,8 @@ input[type="range"]::-webkit-slider-thumb {
     height: 17px;
     width: 17px;
     border-radius: 50%;
-    background: #007bff;
     pointer-events: auto;
+    background: black;
     -webkit-appearance: none;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
 }
@@ -124,7 +135,6 @@ input[type="range"]::-moz-range-thumb {
     width: 17px;
     border: none;
     border-radius: 50%;
-    background: #007bff;
     pointer-events: auto;
     -moz-appearance: none;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
@@ -137,17 +147,27 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .sale-filter-btn {
     padding: 8px 16px;
-    background-color: #007bff;
+    background-color: #ccc;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 12px;
     cursor: pointer;
     font-size: 14px;
-    transition: background-color 0.3s;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s;
+    opacity: 0.7;
+    height: 50%;
+    max-width: 200px;
+}
+
+.sale-filter-btn.active {
+    background-color: #ff4444;
+    opacity: 1;
 }
 
 .sale-filter-btn:hover {
-    background-color: #0056b3;
+    opacity: 1;
 }
 
 .product-grid {
@@ -204,11 +224,34 @@ input[type="number"]::-webkit-inner-spin-button {
     text-align: right;
 }
 
-.sort-section select {
-    padding: 10px;
+#sort-selector {
+    padding: 10px 32px 10px 12px;
+    margin: 10px 10px;
     font-size: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: white;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 16px;
+}
+
+#sort-selector:hover {
+    border-color: #ADEBB3;
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.2);
+}
+
+#sort-selector:focus {
+    outline: none;
+    border-color: #ADEBB3;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
 }
 
 /* Product Detail Page */
@@ -515,7 +558,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .btn-edit:hover {
-    color: #007bff;
+    color: #ADEBB3;
 }
 
 .btn-delete:hover {
