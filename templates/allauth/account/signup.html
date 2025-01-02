@@ -15,6 +15,22 @@
             {% element h1 %}
                 {% trans "Sign Up" %}
             {% endelement %}
+            
+            <script>
+                // Get referral code from URL parameters
+                const urlParams = new URLSearchParams(window.location.search);
+                const referralCode = urlParams.get('ref');
+                
+                // Set referral code in the input field if present
+                if (referralCode) {
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const referralInput = document.getElementById('id_referral_code');
+                        if (referralInput) {
+                            referralInput.value = referralCode;
+                        }
+                    });
+                }
+            </script>
 
             {% setvar link %}
                 <a href="{{ login_url }}">

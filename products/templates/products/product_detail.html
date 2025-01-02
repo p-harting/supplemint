@@ -423,7 +423,6 @@
 </script>
 
 <script>
-    // Update displayed price when size changes
     const sizeSelector = document.getElementById('id_product_size');
     const priceDisplay = document.getElementById('product-price');
 
@@ -437,12 +436,10 @@
         }
     };
 
-    // Set initial price on page load and automatically select the size with the matching price
     document.addEventListener('DOMContentLoaded', () => {
         updateDisplayPrice();
         const sizeSelector = document.getElementById('id_product_size');
         if (sizeSelector) {
-            // Automatically select the size with the same price as the base price
             for (let option of sizeSelector.options) {
                 if (option.getAttribute('data-price') == '{{ product.base_price }}') {
                     option.selected = true;
@@ -452,7 +449,6 @@
         }
     });
 
-    // Event listener for when the size changes
     if (sizeSelector) {
         sizeSelector.addEventListener('change', updateDisplayPrice);
     }
