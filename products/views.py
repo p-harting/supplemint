@@ -5,6 +5,52 @@ from .models import Product, Category, SubCategory
 from django.db.models.functions import Lower
 from django.core.paginator import Paginator
 import random
+from django.contrib.auth.decorators import login_required, user_passes_test
+from .forms import ProductForm
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def product_management(request):
+    products = Product.objects.all()
+    return render(request, 'products/product_management.html', {
+        'products': products
+    })
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def add_product(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            product = form.save()
+            messages.success(request, 'Product added successfully!')
+            return redirect('product_management')
+    else:
+        form = ProductForm()
+    return render(request, 'products/product_form.html', {'form': form})
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def edit_product(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES, instance=product)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Product updated successfully!')
+            return redirect('product_management')
+    else:
+        form = ProductForm(instance=product)
+    return render(request, 'products/product_form.html', {'form': form})
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def delete_product(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    if request.method == 'POST':
+        product.delete()
+        messages.success(request, 'Product deleted successfully!')
+    return redirect('product_management')
 
 def all_products(request):
     """ A view to show all products, including sorting and search queries """

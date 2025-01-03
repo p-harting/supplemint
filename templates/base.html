@@ -79,7 +79,7 @@
                         <div class="dropdown-content" aria-labelledby="account-menu">
                             {% if request.user.is_authenticated %}
                             {% if request.user.is_superuser %}
-                            <a href="" class="dropdown-link">Product Management</a>
+                            <a href="{% url 'product_management' %}" class="dropdown-link">Product Management</a>
                             {% endif %}
                             <a href="" class="dropdown-link">My Profile</a>
                             <a href="{% url 'referrals:dashboard' %}" class="dropdown-link">Referral Dashboard</a>

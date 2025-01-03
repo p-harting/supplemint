@@ -655,6 +655,43 @@ input[type="number"]::-webkit-inner-spin-button {
     margin: 0.5rem;
 }
 
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    margin-top: 200px;
+}
+
+.table {
+    margin-top: 1rem;
+}
+
+.btn {
+    margin-right: 0.5rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.form-actions {
+    margin-top: 1.5rem;
+}
+
 @media (max-width: 600px) {
     .products-title {
         font-size: 1.5rem;
