@@ -20,9 +20,12 @@ def profile(request):
         profile_form = UserProfileForm(instance=profile)
 
     template = 'profiles/profile.html'
+    orders = profile.orders.all().order_by('-date')
+    
     context = {
         'profile': profile,
         'profile_form': profile_form,
+        'orders': orders,
         'on_profile_page': True
     }
 
