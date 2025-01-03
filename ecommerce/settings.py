@@ -33,9 +33,9 @@ if os.environ.get('ENV') == 'development':
 else:
     DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '8000-pharting-supplemint-evq9f9h4spd.ws.codeinstitute-ide.net', 'supplemint-91663a1226fd.herokuapp.com', ]
+ALLOWED_HOSTS = ['localhost', '8000-pharting-supplemint-evq9f9h4spd.ws.codeinstitute-ide.net', 'supplemint-ff2fe0e93175.herokuapp.com', ]
 
-CSRF_TRUSTED_ORIGINS = ['https://8000-pharting-supplemint-evq9f9h4spd.ws.codeinstitute-ide.net', 'https://supplemint-91663a1226fd.herokuapp.com']
+CSRF_TRUSTED_ORIGINS = ['https://8000-pharting-supplemint-evq9f9h4spd.ws.codeinstitute-ide.net', 'https://supplemint-ff2fe0e93175.herokuapp.com']
 
 
 # Application definition

@@ -1,8 +1,62 @@
 [
-    {"pk": 1, "model": "products.category", "fields": {"name": "vitamins", "friendly_name": "Vitamins"}},
-    {"pk": 2, "model": "products.category", "fields": {"name": "proteins", "friendly_name": "Proteins"}},
-    {"pk": 3, "model": "products.category", "fields": {"name": "superfoods", "friendly_name": "Superfoods"}},
-    {"pk": 4, "model": "products.category", "fields": {"name": "bioactives", "friendly_name": "Bioactives"}},
-    {"pk": 5, "model": "products.category", "fields": {"name": "herbs_extracts", "friendly_name": "Herbs and Extracts"}}
-  ]
-  
+{
+  "model": "products.category",
+  "pk": 1,
+  "fields": {
+    "name": "vitamins",
+    "friendly_name": "Vitamins",
+    "description": null,
+    "seo_title": null,
+    "seo_meta_description": null,
+    "seo_keywords": null
+  }
+},
+{
+  "model": "products.category",
+  "pk": 2,
+  "fields": {
+    "name": "proteins",
+    "friendly_name": "Proteins",
+    "description": null,
+    "seo_title": null,
+    "seo_meta_description": null,
+    "seo_keywords": null
+  }
+},
+{
+  "model": "products.category",
+  "pk": 3,
+  "fields": {
+    "name": "superfoods",
+    "friendly_name": "Superfoods",
+    "description": null,
+    "seo_title": null,
+    "seo_meta_description": null,
+    "seo_keywords": null
+  }
+},
+{
+  "model": "products.category",
+  "pk": 4,
+  "fields": {
+    "name": "bioactives",
+    "friendly_name": "Bioactives",
+    "description": null,
+    "seo_title": null,
+    "seo_meta_description": null,
+    "seo_keywords": null
+  }
+},
+{
+  "model": "products.category",
+  "pk": 5,
+  "fields": {
+    "name": "herbs_extracts",
+    "friendly_name": "Herbs and Extracts",
+    "description": null,
+    "seo_title": null,
+    "seo_meta_description": null,
+    "seo_keywords": null
+  }
+}
+]
