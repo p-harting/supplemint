@@ -51,8 +51,12 @@ def edit_review(request, review_id):
         if form.is_valid():
             form.save()
 
-            avg_rating = Review.objects.filter(product=product, approved=True).aggregate(Avg('rating'))['rating__avg']
-            review.product.rating = round(avg_rating, 1)
+            approved_reviews = Review.objects.filter(product=review.product, approved=True)
+            if approved_reviews.exists():
+                avg_rating = approved_reviews.aggregate(Avg('rating'))['rating__avg']
+                review.product.rating = round(avg_rating, 1)
+            else:
+                review.product.rating = 0
             review.product.save()
             
             messages.success(request, 'Review updated successfully!')

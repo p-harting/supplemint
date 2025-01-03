@@ -37,6 +37,8 @@ class ProductAdmin(admin.ModelAdmin):
         'image',
         'slug',
     )
+    
+    readonly_fields = ('rating',)
 
     
     inlines = [ProductSizeInline]
