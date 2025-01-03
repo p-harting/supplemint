@@ -329,3 +329,16 @@ body {
     margin: 0;
     height: 100%;
 }
+
+.info-row.discount-row {
+    color: #28a745;
+    font-weight: bold;
+    margin: 10px 0;
+    padding: 8px;
+    background-color: #f0fff4;
+    border-radius: 4px;
+}
+
+.info-row.discount-row .value {
+    color: #218838;
+}
