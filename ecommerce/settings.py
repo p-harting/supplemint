@@ -28,10 +28,10 @@ load_dotenv()
 SECRET_KEY = os.environ.get('SECRET_KEY', '')
 # SECURITY WARNING: don't run with debug turned on in production!
 
-#if os.environ.get('ENV') == 'development':
-DEBUG = True
-#else:
-#    DEBUG = False
+if os.environ.get('ENV') == 'development':
+    DEBUG = True
+else:
+    DEBUG = False
 
 ALLOWED_HOSTS = ['localhost', '8000-pharting-supplemint-evq9f9h4spd.ws.codeinstitute-ide.net', 'supplemint-ff2fe0e93175.herokuapp.com', ]
 
@@ -103,7 +103,8 @@ SITE_ID = 1
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = False
 ACCOUNT_USERNAME_MIN_LENGTH = 4
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
