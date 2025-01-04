@@ -17,6 +17,8 @@ class ProductAdmin(admin.ModelAdmin):
         'get_stock_display',
         'rating',
         'image',
+        'seo_title',
+        'seo_meta_description',
     )
     
     fields = (
@@ -36,6 +38,9 @@ class ProductAdmin(admin.ModelAdmin):
         'rating',
         'image',
         'slug',
+        'seo_title',
+        'seo_meta_description',
+        'seo_keywords',
     )
     
     readonly_fields = ('rating',)

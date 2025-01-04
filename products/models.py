@@ -75,6 +75,9 @@ class Product(models.Model):
     key_facts = models.JSONField(null=True, blank=True) 
     slug = models.SlugField(max_length=254, unique=True, null=True, blank=True)
     sale = models.ForeignKey(Sale, null=True, blank=True, on_delete=models.SET_NULL)
+    seo_title = models.CharField(max_length=60, null=True, blank=True)
+    seo_meta_description = models.CharField(max_length=160, null=True, blank=True)
+    seo_keywords = models.CharField(max_length=254, null=True, blank=True)
 
     @property
     def get_sale_price(self):
