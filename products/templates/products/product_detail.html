@@ -1,6 +1,18 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block extra_meta %}
+    {% if product.seo_title %}
+        <meta name="title" content="{{ product.seo_title }}">
+    {% endif %}
+    {% if product.seo_meta_description %}
+        <meta name="description" content="{{ product.seo_meta_description }}">
+    {% endif %}
+    {% if product.seo_keywords %}
+        <meta name="keywords" content="{{ product.seo_keywords }}">
+    {% endif %}
+{% endblock %}
+
 {% block content %}
 <div id="reviewModal" class="modal">
     <div class="modal-content">
