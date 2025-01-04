@@ -11,6 +11,7 @@ from .forms import ProductForm
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def product_management(request):
+    """ View to manage all products in the admin panel """
     products = Product.objects.all()
     return render(request, 'products/product_management.html', {
         'products': products
@@ -19,10 +20,11 @@ def product_management(request):
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def add_product(request):
+    """ View to add a new product to the database """
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
-            product = form.save()
+            form.save()
             messages.success(request, 'Product added successfully!')
             return redirect('product_management')
     else:
@@ -32,6 +34,7 @@ def add_product(request):
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def edit_product(request, product_id):
+    """ View to edit an existing product """
     product = get_object_or_404(Product, id=product_id)
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES, instance=product)
@@ -46,6 +49,7 @@ def edit_product(request, product_id):
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def delete_product(request, product_id):
+    """ View to delete a product from the database """
     product = get_object_or_404(Product, id=product_id)
     if request.method == 'POST':
         product.delete()
@@ -53,8 +57,7 @@ def delete_product(request, product_id):
     return redirect('product_management')
 
 def all_products(request):
-    """ A view to show all products, including sorting and search queries """
-
+    """ View to display all products with sorting and search functionality """
     products = Product.objects.all()
     query = None
     categories = None
@@ -63,6 +66,7 @@ def all_products(request):
     direction = None
 
     if request.GET:
+        # Sorting
         if 'sort' in request.GET:
             sortkey = request.GET['sort']
             sort = sortkey
@@ -74,22 +78,26 @@ def all_products(request):
             if sortkey == 'price':
                 sortkey = 'base_price'
 
+            # Direction (ascending or descending)
             if 'direction' in request.GET:
                 direction = request.GET['direction']
                 if direction == 'desc':
                     sortkey = f'-{sortkey}'
             products = products.order_by(sortkey)
 
+        # Filtering by category
         if 'category' in request.GET:
             categories = request.GET['category'].split(',')
             products = products.filter(category__name__in=categories)
             categories = Category.objects.filter(name__in=categories)
 
+        # Filtering by subcategory
         if 'subcategory' in request.GET:
             subcategories = request.GET['subcategory'].split(',')
             products = products.filter(subcategory__name__in=subcategories)
             subcategories = SubCategory.objects.filter(name__in=subcategories)
 
+        # Search query
         if 'q' in request.GET:
             query = request.GET['q']
             if not query:
@@ -112,6 +120,7 @@ def all_products(request):
     return render(request, 'products/products.html', context)
 
 def category_products(request, category_name):
+    """ View to display products filtered by category """
     category = get_object_or_404(Category, name=category_name)
     products = Product.objects.filter(category=category)
     
@@ -119,6 +128,7 @@ def category_products(request, category_name):
     direction = None
 
     if request.GET:
+        # Sorting
         if 'sort' in request.GET:
             sortkey = request.GET['sort']
             sort = sortkey
@@ -130,6 +140,7 @@ def category_products(request, category_name):
             if sortkey == 'price':
                 sortkey = 'base_price'
 
+            # Direction (ascending or descending)
             if 'direction' in request.GET:
                 direction = request.GET['direction']
                 if direction == 'desc':
@@ -146,6 +157,7 @@ def category_products(request, category_name):
     return render(request, 'products/products.html', context)
 
 def subcategory_products(request, category_name, subcategory_name):
+    """ View to display products filtered by subcategory """
     category = get_object_or_404(Category, name=category_name)
     subcategory = get_object_or_404(SubCategory, name=subcategory_name, category=category)
     products = Product.objects.filter(subcategory=subcategory)
@@ -154,6 +166,7 @@ def subcategory_products(request, category_name, subcategory_name):
     direction = None
 
     if request.GET:
+        # Sorting
         if 'sort' in request.GET:
             sortkey = request.GET['sort']
             sort = sortkey
@@ -165,6 +178,7 @@ def subcategory_products(request, category_name, subcategory_name):
             if sortkey == 'price':
                 sortkey = 'base_price'
 
+            # Direction (ascending or descending)
             if 'direction' in request.GET:
                 direction = request.GET['direction']
                 if direction == 'desc':
@@ -181,6 +195,7 @@ def subcategory_products(request, category_name, subcategory_name):
     return render(request, 'products/products.html', context)
 
 def product_detail(request, category_name, product_slug, subcategory_name=None):
+    """ View to display detailed product information, including reviews """
     if subcategory_name:
         product = get_object_or_404(
             Product,
@@ -196,13 +211,14 @@ def product_detail(request, category_name, product_slug, subcategory_name=None):
         )
     
     reviews = product.reviews.all()
-    paginator = Paginator(reviews, 3)
+    paginator = Paginator(reviews, 3)  # Paginate reviews (3 per page)
     page = request.GET.get('page', 1)
     try:
         reviews_page = paginator.get_page(page)
     except:
         reviews_page = paginator.get_page(1)
 
+    # Get random products from the same category (excluding the current product)
     category_products = Product.objects.filter(
         category__name=category_name
     ).exclude(id=product.id)

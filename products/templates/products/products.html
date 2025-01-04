@@ -2,8 +2,13 @@
 {% load static %}
 
 {% block content %}
+<!-- Overlay for background effect -->
 <div class="overlay"></div>
+
+<!-- Main container for products -->
 <div class="products-container">
+
+    <!-- Header Section for Category/Subcategory -->
     <div class="products-header">
         {% if subcategory %}
         <h1 class="products-title">{{ subcategory.friendly_name }}</h1>
@@ -26,7 +31,10 @@
         {% endif %}
         <div class="divider"></div>
     </div>
+
+    <!-- Product Sorting and Price Filter Section -->
     <div class="product-sort-container">
+        <!-- Price Filter Inputs -->
         <div class="price-filter-container">
             <div class="price-input">
                 <div class="field">
@@ -47,39 +55,32 @@
                 <input type="range" class="range-max" min="1" max="100" value="100" step="1">
             </div>
         </div>
+
+        <!-- Sorting Options (Price, Rating, Name, etc.) -->
         <div class="product-sort-container-left">
             <div>
                 <select id="sort-selector">
                     <option value="reset" {% if current_sorting == 'None_None' %}selected{% endif %}>Sort by...</option>
-                    <option value="price_asc" {% if current_sorting == 'price_asc' %}selected{% endif %}>Price (low to
-                        high)
-                    </option>
-                    <option value="price_desc" {% if current_sorting == 'price_desc' %}selected{% endif %}>Price (high
-                        to
-                        low)</option>
-                    <option value="rating_asc" {% if current_sorting == 'rating_asc' %}selected{% endif %}>Rating (low
-                        to
-                        high)</option>
-                    <option value="rating_desc" {% if current_sorting == 'rating_desc' %}selected{% endif %}>Rating
-                        (high to
-                        low)</option>
-                    <option value="name_asc" {% if current_sorting == 'name_asc' %}selected{% endif %}>Name (A-Z)
-                    </option>
-                    <option value="name_desc" {% if current_sorting == 'name_desc' %}selected{% endif %}>Name (Z-A)
-                    </option>
-                    <option value="category_asc" {% if current_sorting == 'category_asc' %}selected{% endif %}>Category
-                        (A-Z)</option>
-                    <option value="category_desc" {% if current_sorting == 'category_desc' %}selected{% endif %}>
-                        Category
-                        (Z-A)</option>
+                    <option value="price_asc" {% if current_sorting == 'price_asc' %}selected{% endif %}>Price (low to high)</option>
+                    <option value="price_desc" {% if current_sorting == 'price_desc' %}selected{% endif %}>Price (high to low)</option>
+                    <option value="rating_asc" {% if current_sorting == 'rating_asc' %}selected{% endif %}>Rating (low to high)</option>
+                    <option value="rating_desc" {% if current_sorting == 'rating_desc' %}selected{% endif %}>Rating (high to low)</option>
+                    <option value="name_asc" {% if current_sorting == 'name_asc' %}selected{% endif %}>Name (A-Z)</option>
+                    <option value="name_desc" {% if current_sorting == 'name_desc' %}selected{% endif %}>Name (Z-A)</option>
+                    <option value="category_asc" {% if current_sorting == 'category_asc' %}selected{% endif %}>Category (A-Z)</option>
+                    <option value="category_desc" {% if current_sorting == 'category_desc' %}selected{% endif %}>Category (Z-A)</option>
                 </select>
             </div>
             <button class="sale-filter-btn" id="sale-filter-btn">Sale</button>
         </div>
     </div>
+
+    <!-- Display number of products found -->
     <div class="product-found-amount">
         {{ products|length }} Products{% if search_term %} found for <strong>"{{ search_term }}"</strong>{% endif %}
     </div>
+
+    <!-- Product Grid: Display Products -->
     <div class="product-grid">
         {% for product in products %}
         <div class="product-card">
@@ -111,6 +112,8 @@
                     {% endif %}
                 </div>
             </a>
+
+            <!-- Product Details (Name, Description, Rating, Price, Add to Cart) -->
             <div class="product-details">
                 <p class="product-name">{{ product.name }}</p>
                 <p class="product-description">{{ product.description }}</p>
@@ -144,134 +147,9 @@
 </div>
 {% endblock %}
 
-
 {% block postloadjs %}
-{{ block.super }}
-<script type="text/javascript">
-    $('.btt-link').click(function (e) {
-        window.scrollTo(0, 0)
-    })
-</script>
-
-<script type="text/javascript">
-    $('#sort-selector').change(function () {
-        var selector = $(this);
-        var currentUrl = new URL(window.location);
-
-        var selectedVal = selector.val();
-        console.log("Selected value:", selectedVal);
-
-        if (selectedVal != "reset") {
-            var sort = selectedVal.split("_")[0];
-            var direction = selectedVal.split("_")[1];
-            console.log("Sort:", sort, "Direction:", direction);
-
-            currentUrl.searchParams.set("sort", sort);
-            currentUrl.searchParams.set("direction", direction);
-
-            console.log("Updated URL:", currentUrl.toString());
-            window.location.replace(currentUrl);
-        } else {
-            currentUrl.searchParams.delete("sort");
-            currentUrl.searchParams.delete("direction");
-
-            console.log("Reset URL:", currentUrl.toString());
-            window.location.replace(currentUrl);
-        }
-    });
-</script>
-
-<script type="text/javascript">
-    document.querySelectorAll('.product-rating').forEach(function (ratingElement) {
-        var rating = parseFloat(ratingElement.getAttribute('data-rating'));
-        var fullStars = Math.floor(rating);
-        var halfStar = (rating - fullStars) >= 0.5;
-        var emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
-
-        var starsHTML = '';
-
-        for (var i = 0; i < fullStars; i++) {
-            starsHTML += '<i class="fas fa-star" style="color: gold;"></i>';
-        }
-
-        if (halfStar) {
-            starsHTML += '<i class="fas fa-star-half-alt" style="color: gold;"></i>';
-        }
-
-        for (var i = 0; i < emptyStars; i++) {
-            starsHTML += '<i class="far fa-star" style="color: gray;"></i>';
-        }
-
-        ratingElement.innerHTML = starsHTML;
-    });
-</script>
-
-<script type="text/javascript">
-    const rangeInput = document.querySelectorAll(".range-input input"),
-        priceInput = document.querySelectorAll(".price-input input"),
-        range = document.querySelector(".slider .progress"),
-        productCards = document.querySelectorAll('.product-card');
-    let priceGap = 2;
-
-    rangeInput.forEach(input => {
-        input.style.accentColor = '#ADEBB3';
-    });
-
-    function filterProductsByPrice(minPrice, maxPrice) {
-        productCards.forEach(card => {
-            const price = parseFloat(card.querySelector('.product-price').textContent.replace('$', ''));
-            if (price >= minPrice && price <= maxPrice) {
-                card.style.display = 'block';
-            } else {
-                card.style.display = 'none';
-            }
-        });
-    }
-
-    rangeInput.forEach((input) => {
-        input.addEventListener("input", (e) => {
-            let minVal = parseInt(rangeInput[0].value),
-                maxVal = parseInt(rangeInput[1].value);
-
-            if (maxVal - minVal < priceGap) {
-                if (e.target.className === "range-min") {
-                    rangeInput[0].value = maxVal - priceGap;
-                } else {
-                    rangeInput[1].value = minVal + priceGap;
-                }
-            } else {
-                priceInput[0].value = minVal;
-                priceInput[1].value = maxVal;
-                range.style.left = (minVal / rangeInput[0].max) * 100 + "%";
-                range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
-                filterProductsByPrice(minVal, maxVal);
-            }
-        });
-    });
-
-    filterProductsByPrice(1, 100);
-
-    const saleFilterBtn = document.getElementById('sale-filter-btn');
-    let showSaleOnly = false;
-
-    saleFilterBtn.addEventListener('click', () => {
-        showSaleOnly = !showSaleOnly;
-        saleFilterBtn.classList.toggle('active', showSaleOnly);
-
-        const minPrice = parseInt(priceInput[0].value);
-        const maxPrice = parseInt(priceInput[1].value);
-
-        productCards.forEach(card => {
-            const isSale = card.querySelector('.sale-badge') !== null;
-            const price = parseFloat(card.querySelector('.product-price').textContent.replace('$', ''));
-            const isInPriceRange = price >= minPrice && price <= maxPrice;
-
-            if (showSaleOnly) {
-                card.style.display = isSale && isInPriceRange ? 'block' : 'none';
-            } else {
-                card.style.display = isInPriceRange ? 'block' : 'none';
-            }
-        });
-    });
-</script>
+    {{ block.super }}
+    <script src="{% static 'products/js/product_sorting.js' %}"></script>
+    <script src="{% static 'products/js/product_rating.js' %}"></script>
+    <script src="{% static 'products/js/price_filter.js' %}"></script>
 {% endblock %}

@@ -1,18 +1,35 @@
 {% extends "base.html" %}
+
 {% block content %}
+<!-- Product Management Section -->
 <div class="product-management">
-    <h1 class="product-management__title">{% if form.instance.id %}Edit{% else %}Add{% endif %} Product</h1>
+    <!-- Title: Dynamic title depending on whether it's editing or adding a product -->
+    <h1 class="product-management__title">
+        {% if form.instance.id %}
+            Edit Product  <!-- If the product has an ID, we are editing an existing product -->
+        {% else %}
+            Add Product  <!-- Otherwise, we are adding a new product -->
+        {% endif %}
+    </h1>
+
+    <!-- Product Form for Adding/Editing -->
     <form method="POST" enctype="multipart/form-data" class="product-form">
         {% csrf_token %}
+        <!-- Form Group: Render the form fields -->
         <div class="form-group">
-            {{ form.as_p }}
+            {{ form.as_p }}  <!-- Display form fields as paragraphs -->
         </div>
+
+        <!-- Form Actions: Buttons for submitting or canceling the form -->
         <div class="form-actions">
+            <!-- Save Button: Submit the form to save the product -->
             <button type="submit" class="btn btn--primary">
-                <i class="fas fa-save"></i> Save
+                <i class="fas fa-save"></i> Save  <!-- Icon and text for save button -->
             </button>
+
+            <!-- Cancel Button: Link to go back to the product management page -->
             <a href="{% url 'product_management' %}" class="btn btn--icon">
-                <i class="fas fa-times"></i> Cancel
+                <i class="fas fa-times"></i> Cancel  <!-- Icon and text for cancel button -->
             </a>
         </div>
     </form>

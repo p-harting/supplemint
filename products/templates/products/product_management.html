@@ -1,12 +1,18 @@
 {% extends "base.html" %}
+
 {% block content %}
+<!-- Product Management Section -->
 <div class="product-management">
     <h1 class="product-management__title">Product Management</h1>
+
+    <!-- Add New Product Button -->
     <div class="product-management__actions">
         <a href="{% url 'add_product' %}" class="btn btn--primary">
             <i class="fas fa-plus-circle"></i> Add New Product
         </a>
     </div>
+
+    <!-- Product Table -->
     <div class="product-table">
         <table class="product-table__content">
             <thead class="product-table__header">
@@ -27,9 +33,12 @@
                     <td>{{ product.get_stock_display }}</td>
                     <td class="product-table__actions">
                         <div class="action-buttons">
+                            <!-- Edit Product -->
                             <a href="{% url 'edit_product' product.id %}" class="btn btn--icon" title="Edit">
                                 <i class="fas fa-edit"></i>
                             </a>
+
+                            <!-- Delete Product -->
                             <form method="POST" action="{% url 'delete_product' product.id %}" class="inline-form">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn--icon btn--danger" onclick="return confirm('Are you sure?')" title="Delete">
