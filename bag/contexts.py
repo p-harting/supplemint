@@ -3,8 +3,12 @@ from django.conf import settings
 from django.shortcuts import get_object_or_404
 from products.models import Product
 
-
 def bag_contents(request):
+    """Calculate and return the shopping bag context data.
+
+    This includes item details, total cost, product count, delivery cost, 
+    free delivery delta, and the grand total.
+    """
     bag_items = []
     total = 0
     product_count = 0
@@ -14,7 +18,7 @@ def bag_contents(request):
         product = get_object_or_404(Product, pk=item_id)
         
         if isinstance(item_data, int):
-            # No size selected
+            # Item without size selection
             total += item_data * product.base_price
             product_count += item_data
             bag_items.append({
@@ -24,14 +28,14 @@ def bag_contents(request):
                 'price': product.base_price,
             })
         else:
-            # Size selected
+            # Item with size selection
             for size, size_data in item_data['items_by_size'].items():
                 if isinstance(size_data, dict):
-                    # New format with price
+                    # New format with explicit price and quantity
                     quantity = size_data['quantity']
                     price = Decimal(size_data['price'])
                 else:
-                    # Old format (just quantity)
+                    # Old format with just quantity
                     quantity = size_data
                     product_size = product.sizes.filter(name=size).first()
                     price = product_size.price if product_size else product.base_price
@@ -46,6 +50,7 @@ def bag_contents(request):
                     'price': price,
                 })
 
+    # Calculate delivery and free delivery delta
     if total < settings.FREE_DELIVERY_THRESHOLD:
         delivery = total * Decimal(settings.STANDARD_DELIVERY_PERCENTAGE / 100)
         free_delivery_delta = settings.FREE_DELIVERY_THRESHOLD - total
@@ -55,7 +60,7 @@ def bag_contents(request):
 
     grand_total = delivery + total
 
-    context = {
+    return {
         'bag_items': bag_items,
         'total': total,
         'product_count': product_count,
@@ -64,5 +69,3 @@ def bag_contents(request):
         'free_delivery_threshold': settings.FREE_DELIVERY_THRESHOLD,
         'grand_total': grand_total,
     }
-
-    return context

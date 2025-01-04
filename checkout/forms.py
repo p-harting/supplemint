@@ -4,6 +4,7 @@ from .models import Order
 
 
 class OrderForm(forms.ModelForm):
+    # Country field with a custom widget and class
     country = forms.ChoiceField(
         choices=countries,
         widget=forms.Select(attrs={
@@ -20,12 +21,14 @@ class OrderForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         """
-        Add placeholders and classes, remove auto-generated
-        labels and set autofocus on first field
+        Initialize the form by adding placeholders, 
+        classes, removing auto-generated labels,
+        and setting autofocus on the first field.
         """
-        self.user = kwargs.pop('user', None)
+        self.user = kwargs.pop('user', None)  # Get user if passed
         super().__init__(*args, **kwargs)
         
+        # Define placeholder text for each field
         placeholders = {
             'full_name': 'Full Name',
             'email': 'Email Address',
@@ -38,14 +41,17 @@ class OrderForm(forms.ModelForm):
             'county': 'County, State or Locality',
         }
 
+        # Set autofocus on the first field (full_name)
         self.fields['full_name'].widget.attrs['autofocus'] = True
+        
+        # Iterate over all fields to set placeholders, classes, and aria-labels
         for field in self.fields:
             if self.fields[field].required:
-                placeholder = f'{placeholders[field]} *'
+                placeholder = f'{placeholders[field]} *'  # Add * for required fields
             else:
                 placeholder = placeholders[field]
             self.fields[field].widget.attrs['placeholder'] = placeholder
-            if field != 'country':
+            if field != 'country':  # Exclude country field from stripe-style-input class
                 self.fields[field].widget.attrs['class'] = 'stripe-style-input'
             self.fields[field].widget.attrs['aria-label'] = placeholders[field]
-            self.fields[field].label = False
+            self.fields[field].label = False  # Remove labels

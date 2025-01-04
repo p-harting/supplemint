@@ -2,73 +2,134 @@
 {% load static %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
+<!-- Include custom CSS for the checkout page -->
+<link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
 {% endblock %}
 
 {% block content %}
+<!-- Background overlay for aesthetic effect -->
 <div class="background-overlay"></div>
+
+<!-- Main container for the checkout page -->
 <div class="checkout-container">
+
+    <!-- Checkout header section -->
     <section class="checkout-header-section">
         <div class="horizontal-line"></div>
         <h2 class="bag-title">Thank You!</h2>
         <div class="horizontal-line"></div>
         <p class="confirmation-message">
+            <!-- Display the user's email for confirmation -->
             Your order information is below. A confirmation email will be sent to <strong>{{ order.email }}</strong>.
         </p>
     </section>
 
+    <!-- Order summary section -->
     <section class="order-summary">
+
+        <!-- Order information section -->
         <article class="order-section">
             <p class="section-title">Order Info:</p>
             <div class="info-row">
                 <span class="label">Order Number:</span>
+                <!-- Display the order number -->
                 <span class="value">{{ order.order_number }}</span>
             </div>
             <div class="info-row">
                 <span class="label">Order Date:</span>
+                <!-- Display the order date -->
                 <span class="value">{{ order.date }}</span>
             </div>
+
             <p class="section-title">Order Details:</p>
             {% for item in order.lineitems.all %}
             <div class="item-row">
-                <div class="item-name">{{ item.product.name }}{% if item.product_size %} - Size {{ item.product.size|upper }}{% endif %}</div>
-                <div class="item-details">{{ item.quantity }} @ ${{ item.product.price }} each</div>
+                <!-- Display the product name and size if applicable -->
+                <div class="item-name">
+                    {{ item.product.name }}
+                    {% if item.product_size %} - Size {{ item.product.size|upper }}{% endif %}
+                </div>
+                <!-- Display the quantity and price per item -->
+                <div class="item-details">
+                    {{ item.quantity }} @ ${{ item.product.price }} each
+                </div>
             </div>
             {% endfor %}
         </article>
 
+        <!-- Delivery information section -->
         <article class="order-section">
             <p class="section-title">Delivering To:</p>
-            <div class="info-row"><span class="label">Full Name:</span><span class="value">{{ order.full_name }}</span></div>
-            <div class="info-row"><span class="label">Address 1:</span><span class="value">{{ order.street_address1 }}</span></div>
+            <!-- Display delivery address and contact details -->
+            <div class="info-row">
+                <span class="label">Full Name:</span>
+                <span class="value">{{ order.full_name }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Address 1:</span>
+                <span class="value">{{ order.street_address1 }}</span>
+            </div>
             {% if order.street_address2 %}
-            <div class="info-row"><span class="label">Address 2:</span><span class="value">{{ order.street_address2 }}</span></div>
+            <div class="info-row">
+                <span class="label">Address 2:</span>
+                <span class="value">{{ order.street_address2 }}</span>
+            </div>
             {% endif %}
             {% if order.county %}
-            <div class="info-row"><span class="label">County:</span><span class="value">{{ order.county }}</span></div>
+            <div class="info-row">
+                <span class="label">County:</span>
+                <span class="value">{{ order.county }}</span>
+            </div>
             {% endif %}
-            <div class="info-row"><span class="label">Town or City:</span><span class="value">{{ order.town_or_city }}</span></div>
+            <div class="info-row">
+                <span class="label">Town or City:</span>
+                <span class="value">{{ order.town_or_city }}</span>
+            </div>
             {% if order.postcode %}
-            <div class="info-row"><span class="label">Postal Code:</span><span class="value">{{ order.postcode }}</span></div>
+            <div class="info-row">
+                <span class="label">Postal Code:</span>
+                <span class="value">{{ order.postcode }}</span>
+            </div>
             {% endif %}
-            <div class="info-row"><span class="label">Country:</span><span class="value">{{ order.country }}</span></div>
-            <div class="info-row"><span class="label">Phone Number:</span><span class="value">{{ order.phone_number }}</span></div>
+            <div class="info-row">
+                <span class="label">Country:</span>
+                <span class="value">{{ order.country }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Phone Number:</span>
+                <span class="value">{{ order.phone_number }}</span>
+            </div>
         </article>
 
+        <!-- Billing information section -->
         <article class="order-section">
             <p class="section-title">Billing Info:</p>
-            <div class="info-row"><span class="label">Order Total:</span><span class="value">${{ order.order_total }}</span></div>
-            <div class="info-row"><span class="label">Delivery:</span><span class="value">${{ order.delivery_cost }}</span></div>
+            <div class="info-row">
+                <!-- Display order total -->
+                <span class="label">Order Total:</span>
+                <span class="value">${{ order.order_total }}</span>
+            </div>
+            <div class="info-row">
+                <!-- Display delivery cost -->
+                <span class="label">Delivery:</span>
+                <span class="value">${{ order.delivery_cost }}</span>
+            </div>
             {% if order.discount_code %}
             <div class="info-row discount-row">
+                <!-- Display discount applied -->
                 <span class="label">Discount ({{ order.discount_code.code }}):</span>
                 <span class="value">-${{ order.discount_amount }}</span>
             </div>
             {% endif %}
-            <div class="info-row"><span class="label">Grand Total:</span><span class="value">${{ order.grand_total }}</span></div>
+            <div class="info-row">
+                <!-- Display grand total -->
+                <span class="label">Grand Total:</span>
+                <span class="value">${{ order.grand_total }}</span>
+            </div>
         </article>
     </section>
 
+    <!-- Recommended products section -->
     <div class="action-section">
         <div class="recommended-products-section">
             <div class="products-header">
@@ -81,9 +142,11 @@
                     <div class="product-card">
                         <a href="#">
                             <div class="image-wrapper">
+                                <!-- Display sale badge if applicable -->
                                 {% if product.get_sale_price %}
                                 <span class="sale-badge">{{ product.sale.discount_percentage|floatformat:0 }}% OFF</span>
                                 {% endif %}
+                                <!-- Display product image -->
                                 {% if product.image %}
                                 {% if product.subcategory %}
                                 <a href="{% url 'product_detail' product.category.name product.subcategory.name product.slug %}">
@@ -95,36 +158,30 @@
                                 </a>
                                 {% endif %}
                                 {% else %}
-                                {% if product.subcategory %}
-                                <a href="{% url 'product_detail' product.category.name product.subcategory.name product.slug %}">
-                                    <img class="product-image" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
-                                </a>
-                                {% else %}
                                 <a href="{% url 'product_detail_no_subcategory' product.category.name product.slug %}">
                                     <img class="product-image" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
                                 </a>
                                 {% endif %}
-                                {% endif %}
                             </div>
                         </a>
                         <div class="product-details">
+                            <!-- Display product details -->
                             <p class="product-name">{{ product.name }}</p>
                             <p class="product-description">{{ product.description }}</p>
-                            {% if product.rating %}
-                            <p class="product-rating" data-rating="{{ product.rating }}"></p>
-                            {% else %}
-                            <p class="product-rating">No Rating</p>
-                            {% endif %}
+                            <p class="product-rating">
+                                {% if product.rating %}
+                                Rated {{ product.rating }} stars
+                                {% else %}
+                                No Rating
+                                {% endif %}
+                            </p>
                             <div class="price-bag-container">
                                 <p class="product-price">${{ product.base_price }}</p>
+                                <!-- Add-to-cart form -->
                                 <form class="add-to-cart-form" action="{% url 'add_to_bag' product.id %}" method="POST">
                                     {% csrf_token %}
                                     {% if product.has_sizes %}
-                                    {% for size in product.sizes.all %}
-                                    {% if size.price == product.base_price %}
-                                    <input type="hidden" id="product-size" name="product_size" value="{{ size.name }}">
-                                    {% endif %}
-                                    {% endfor %}
+                                    <input type="hidden" name="product_size" value="{{ product.sizes.first.name }}">
                                     {% endif %}
                                     <input type="hidden" name="quantity" value="1">
                                     <input type="hidden" name="redirect_url" value="{{ request.path }}">
@@ -134,7 +191,8 @@
                         </div>
                     </div>
                     {% empty %}
-                        <p>No products available.</p>
+                    <!-- Display message if no products are available -->
+                    <p>No products available.</p>
                     {% endfor %}
                 </div>
             </div>

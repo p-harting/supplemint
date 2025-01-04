@@ -3,12 +3,17 @@
 {% load bag_tools %}
 
 {% block extra_css %}
+<!-- Include custom CSS for the checkout page -->
 <link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
 {% endblock %}
 
 {% block content %}
+<!-- Overlay for aesthetic effect -->
 <div class="overlay"></div>
+
+<!-- Main container for the checkout page -->
 <div class="checkout-container">
+    <!-- Header section with title -->
     <div class="checkout-header-section">
         <hr>
         <h2 class="bag-title">Checkout</h2>
@@ -16,38 +21,43 @@
     </div>
 
     <div class="checkout-content">
+        <!-- Order summary section -->
         <div class="order-summary">
             <p>Order Summary ({{ product_count }})</p>
             <div class="item-list">
                 {% for item in bag_items %}
+                <!-- Row for each item in the bag -->
                 <div class="item-row">
                     <div class="item-image">
+                        <!-- Link to the product detail page -->
                         {% if item.product.subcategory %}
-                        <a
-                            href="{% url 'product_detail' item.product.category.name item.product.subcategory.name item.product.slug %}">
+                        <a href="{% url 'product_detail' item.product.category.name item.product.subcategory.name item.product.slug %}">
+                        {% else %}
+                        <a href="{% url 'product_detail_no_subcategory' item.product.category.name item.product.slug %}">
+                        {% endif %}
+                            <!-- Product image or placeholder if no image -->
+                            {% if item.product.image %}
+                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
                             {% else %}
-                            <a
-                                href="{% url 'product_detail_no_subcategory' item.product.category.name item.product.slug %}">
-                                {% endif %}
-                                {% if item.product.image %}
-                                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
-                                {% else %}
-                                <img src="{{ MEDIA_URL }}noimage.png" alt="{{ item.product.name }}">
-                                {% endif %}
-                            </a>
+                            <img src="{{ MEDIA_URL }}noimage.png" alt="{{ item.product.name }}">
+                            {% endif %}
+                        </a>
                     </div>
                     <div class="item-details">
+                        <!-- Display product name, size, and quantity -->
                         <p><strong>{{ item.product.name }}</strong></p>
                         <p>Size: {% if item.product.has_sizes %}{{ item.size|upper }}{% else %}N/A{% endif %}</p>
                         <p>Qty: {{ item.quantity }}</p>
                     </div>
                     <div class="item-subtotal">
+                        <!-- Subtotal for the item -->
                         <p>${{ item.price | calc_subtotal:item.quantity }}</p>
                     </div>
                 </div>
                 {% endfor %}
             </div>
             <hr>
+            <!-- Order totals section -->
             <div class="order-totals">
                 <div class="totals-labels">
                     <p>Order Total:</p>
@@ -55,6 +65,7 @@
                     <p>Grand Total:</p>
                 </div>
                 <div class="totals-values">
+                    <!-- Display order total, delivery cost, and grand total -->
                     <p>${{ total | floatformat:2 }}</p>
                     <p>${{ delivery | floatformat:2 }}</p>
                     <p><strong>${{ grand_total | floatformat:2 }}</strong></p>
@@ -62,11 +73,13 @@
             </div>
         </div>
 
+        <!-- Checkout form section -->
         <div class="checkout-form-section">
             <p>Please fill out the form below to complete your order:</p>
             <form action="{% url 'checkout' %}" method="POST" id="payment-form">
                 {% csrf_token %}
 
+                <!-- User details section -->
                 <fieldset class="form-section">
                     <legend>Details</legend>
                     <div class="form-group">
@@ -79,6 +92,7 @@
                     </div>
                 </fieldset>
 
+                <!-- Delivery details section -->
                 <fieldset class="form-section">
                     <legend>Delivery</legend>
                     <div class="form-group">
@@ -110,6 +124,7 @@
                         {{ order_form.country }}
                     </div>
 
+                    <!-- Save information option for authenticated users -->
                     <div class="save-info">
                         {% if user.is_authenticated %}
                         <input type="checkbox" id="save-info" name="save-info" checked>
@@ -123,6 +138,7 @@
                     </div>
                 </fieldset>
 
+                <!-- Discount code section -->
                 <fieldset class="form-section">
                     <legend>Discount Code</legend>
                     <div class="form-group">
@@ -133,6 +149,7 @@
                     </div>
                 </fieldset>
 
+                <!-- Payment section -->
                 <fieldset class="form-section">
                     <legend>Payment</legend>
                     <div id="card-element" class="card-element"></div>
@@ -140,6 +157,7 @@
                     <input type="hidden" value="{{ client_secret }}" name="client_secret">
                 </fieldset>
 
+                <!-- Form actions -->
                 <div class="form-actions">
                     <a href="{% url 'view_bag' %}" class="btn-back">Adjust Bag</a>
                     <button type="submit" class="btn-submit">Complete Order</button>
@@ -152,6 +170,8 @@
         </div>
     </div>
 </div>
+
+<!-- Loading overlay during payment processing -->
 <div id="loading-overlay">
     <h1 class="logo-font loading-spinner">
         <span class="icon">
@@ -164,65 +184,11 @@
 
 {% block postloadjs %}
 {{ block.super }}
+<!-- Stripe.js configuration -->
+<script src="https://js.stripe.com/v3/"></script>
+<!-- Stripe configuration and custom JS -->
 {{ stripe_public_key|json_script:"id_stripe_public_key" }}
 {{ client_secret|json_script:"id_client_secret" }}
+<script src="{% static 'checkout/js/checkout.js' %}"></script>
 <script src="{% static 'checkout/js/stripe_elements.js' %}"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const applyDiscountBtn = document.getElementById('apply-discount');
-    const discountCodeInput = document.getElementById('discount_code');
-    const discountMessage = document.getElementById('discount-message');
-    const grandTotalElement = document.querySelector('.totals-values p:last-child strong');
-    const paymentWarning = document.querySelector('.payment-warning strong');
-
-    applyDiscountBtn.addEventListener('click', function() {
-        const code = discountCodeInput.value.trim();
-        if (!code) return;
-
-        fetch('{% url "apply_discount" %}', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'X-CSRFToken': '{{ csrf_token }}'
-            },
-            body: `discount_code=${encodeURIComponent(code)}`
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                discountMessage.textContent = data.message;
-                discountMessage.classList.remove('text-danger');
-                discountMessage.classList.add('text-success');
-                
-                const formattedTotal = parseFloat(data.new_total).toFixed(2);
-                grandTotalElement.textContent = `$${formattedTotal}`;
-                paymentWarning.textContent = `$${formattedTotal}`;
-                
-                const clientSecret = document.getElementById('id_client_secret').textContent;
-                fetch('{% url "checkout" %}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'X-CSRFToken': '{{ csrf_token }}'
-                    },
-                    body: `client_secret=${encodeURIComponent(clientSecret)}`
-                }).then(() => {
-                    stripe.update({
-                        amount: Math.round(parseFloat(data.new_total) * 100)
-                    });
-                });
-            } else {
-                discountMessage.textContent = data.message;
-                discountMessage.classList.remove('text-success');
-                discountMessage.classList.add('text-danger');
-            }
-        })
-        .catch(error => {
-            discountMessage.textContent = 'An error occurred. Please try again.';
-            discountMessage.classList.remove('text-success');
-            discountMessage.classList.add('text-danger');
-        });
-    });
-});
-</script>
 {% endblock %}

@@ -3,8 +3,12 @@
 {% load bag_tools %}
 
 {% block content %}
+<!-- Overlay for the bag container -->
 <div class="overlay"></div>
+
+<!-- Main container for the shopping bag page -->
 <div class="bag-container">
+    <!-- Header section with title -->
     <div class="bag-header-section">
         <hr>
         <h2 class="bag-title">Shopping Bag</h2>
@@ -13,8 +17,10 @@
 
     <div class="bag-content">
         {% if bag_items %}
+        <!-- Bag table when there are items in the bag -->
         <div>
             <table class="bag-table">
+                <!-- Table header with column names -->
                 <thead class="table-header">
                     <tr>
                         <th>Product Info</th>
@@ -26,8 +32,10 @@
                     </tr>
                 </thead>
 
+                <!-- Loop through each item in the shopping bag -->
                 {% for item in bag_items %}
                 <tr>
+                    <!-- Product image and details -->
                     <td class="product-image-cell">
                         <div class="product-image-wrapper">
                             <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="product-image">
@@ -39,9 +47,13 @@
                         <p class="product-size"><strong>Size:</strong> {{ item.size }}</p>
                         {% endif %}
                     </td>
+
+                    <!-- Product price -->
                     <td class="product-price-cell">
                         <p class="price-text">${{ item.price }}</p>
                     </td>
+
+                    <!-- Quantity input with form to adjust the quantity of the item -->
                     <td class="quantity-cell">
                         <form method="POST" action="{% url 'adjust_bag' item.product.id %}">
                             {% csrf_token %}
@@ -55,9 +67,13 @@
                             </button>
                         </form>
                     </td>
+
+                    <!-- Subtotal for the item -->
                     <td class="subtotal-cell">
                         <p class="subtotal-text">${{ item.price | calc_subtotal:item.quantity }}</p>
                     </td>
+
+                    <!-- Remove item from the bag -->
                     <td class="remove-item-cell">
                         <form class="form" method="POST" action="{% url 'remove_from_bag' item.product.id %}">
                             {% csrf_token %}
@@ -72,6 +88,7 @@
                 </tr>
                 {% endfor %}
 
+                <!-- Total cost rows -->
                 <tr class="totals-row">
                     <td colspan="4"></td>
                     <td class="totals-label">Bag Total:</td>
@@ -87,6 +104,8 @@
                     <td class="totals-label">Grand Total:</td>
                     <td class="totals-value">${{ grand_total|floatformat:2 }}</td>
                 </tr>
+
+                <!-- Checkout buttons -->
                 <tr class="checkout-buttons-row">
                     <td colspan="6" class="checkout-buttons-cell">
                         <a href="{% url 'products' %}" class="keep-shopping-btn">
@@ -101,6 +120,7 @@
             </table>
         </div>
         {% else %}
+        <!-- Display message when the bag is empty -->
         <p class="empty-bag-text">Your bag is empty.</p>
         <a href="{% url 'products' %}" class="keep-shopping-btn">
             <span class="icon"><i class="arrow-left-icon"></i></span>
@@ -112,20 +132,7 @@
 {% endblock %}
 
 {% block postloadjs %}
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const quantityInputs = document.querySelectorAll('.quantity-input');
-        quantityInputs.forEach(input => {
-            const originalValue = input.value;
-            const updateButton = input.nextElementSibling;
-            input.addEventListener('input', function () {
-                if (input.value !== originalValue) {
-                    updateButton.style.display = 'inline-block';
-                } else {
-                    updateButton.style.display = 'none';
-                }
-            });
-        });
-    });
-</script>
+{{ block.super }}
+<!-- Include the external JavaScript file for handling quantity updates -->
+<script src="{% static 'js/bag.js' %}"></script>
 {% endblock %}
