@@ -2,13 +2,19 @@
 
 {% block content %}
 <div id="post-list-container">
+    <!-- Title for the blog post list page -->
     <h1 class="post-list-title">Blog Posts</h1>
+
+    <!-- Unordered list to display all blog posts -->
     <ul class="post-list">
         {% for post in posts %}
         <li class="post-list-item">
+            <!-- Link to individual blog post -->
             <a class="post-list-link" href="{{ post.get_absolute_url }}">
+                <!-- Blog post title -->
                 <h2 class="post-list-item-title">{{ post.title }}</h2>
             </a>
+            <!-- Meta information for the post -->
             <p class="post-list-item-meta">
                 By <span class="post-list-author">{{ post.author }}</span> 
                 on <span class="post-list-date">{{ post.created_at|date:"F j, Y" }}</span>

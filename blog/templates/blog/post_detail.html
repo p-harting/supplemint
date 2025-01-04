@@ -14,11 +14,13 @@
 <div id="post-detail-container">
     <article class="post-detail">
         <header class="post-detail-header">
+            <!-- Featured image section -->
             {% if post.featured_image %}
                 <div class="featured-image">
                     <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="img-fluid">
                 </div>
             {% endif %}
+            <!-- Post title and meta information -->
             <h1 class="post-detail-title">{{ post.title }}</h1>
             <p class="post-detail-meta">
                 By <span class="post-detail-author">{{ post.author }}</span> 
@@ -26,6 +28,7 @@
             </p>
         </header>
         <section class="post-detail-content">
+            <!-- Post content -->
             {{ post.content|safe }}
         </section>
     </article>

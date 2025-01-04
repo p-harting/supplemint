@@ -1,11 +1,19 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<!-- Contact form container -->
 <div id="contact-form-container">
     <h2>Contact us</h2>
+    
+    <!-- Start of the form for submitting contact inquiries -->
     <form method="post">
+        <!-- CSRF token for security -->
         {% csrf_token %}
+        
+        <!-- Render the form fields as paragraphs (each field will be wrapped in <p> tags) -->
         {{ form.as_p }}
+        
+        <!-- Submit button to send the contact form -->
         <button type="submit" class="contact-us-btn">Send</button>
     </form>
 </div>
