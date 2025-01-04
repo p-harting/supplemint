@@ -701,6 +701,11 @@ body {
     font-size: 0.8rem;
 }
 
+.required-star {
+    color: #ff0000;
+    margin-left: 3px;
+}
+
 @media (min-width: 768px) {
     .hero-title {
         font-size: 2.5rem;
