@@ -12,8 +12,15 @@ from django.core.paginator import Paginator
 
 @login_required
 def add_review(request, product_id):
+    """
+    Handles the addition of a review for a product.
+    
+    If the user has already reviewed the product, the existing review is returned for editing.
+    If the user is submitting a new review, the review is saved and the product rating is updated.
+    """
     product = get_object_or_404(Product, pk=product_id)
     
+    # Check if the user has already reviewed the product
     existing_review = Review.objects.filter(user=request.user, product=product).first()
     if existing_review:
         form = ReviewForm(instance=existing_review)
@@ -29,6 +36,7 @@ def add_review(request, product_id):
             review.product = product
             review.save()
 
+            # Update product rating after review submission
             avg_rating = Review.objects.filter(product=product, approved=True).aggregate(Avg('rating'))['rating__avg']
             product.rating = round(avg_rating, 1)
             product.save()
@@ -44,6 +52,11 @@ def add_review(request, product_id):
 
 @login_required
 def edit_review(request, review_id):
+    """
+    Handles the editing of an existing review.
+    
+    The user can modify their review, and the product rating is recalculated after the update.
+    """
     review = get_object_or_404(Review, id=review_id, user=request.user)
     
     if request.method == 'POST':
@@ -51,6 +64,7 @@ def edit_review(request, review_id):
         if form.is_valid():
             form.save()
 
+            # Recalculate product rating after review update
             approved_reviews = Review.objects.filter(product=review.product, approved=True)
             if approved_reviews.exists():
                 avg_rating = approved_reviews.aggregate(Avg('rating'))['rating__avg']
@@ -72,11 +86,18 @@ def edit_review(request, review_id):
 
 @login_required
 def delete_review(request, review_id):
+    """
+    Handles the deletion of a review.
+    
+    The review is deleted, and the product's rating is updated accordingly.
+    """
     review = get_object_or_404(Review, id=review_id, user=request.user)
     
     if request.method == 'POST':
         product = review.product
         review.delete()
+
+        # Update product rating after review deletion
         avg_rating = Review.objects.filter(product=product, approved=True).aggregate(Avg('rating'))['rating__avg']
         product.rating = round(avg_rating or 0, 1)
         product.save()
@@ -87,12 +108,19 @@ def delete_review(request, review_id):
     return JsonResponse({'success': False}, status=400)
 
 def sort_reviews(request, product_id):
+    """
+    Sorts the reviews for a product based on the selected sorting option.
+    
+    Reviews can be sorted by the newest, oldest, highest rating, or lowest rating.
+    Pagination is also applied to the sorted reviews.
+    """
     product = get_object_or_404(Product, pk=product_id)
     sort_option = request.GET.get('sort', 'newest')
     page = request.GET.get('page', 1)
     
     reviews = product.reviews.all()
     
+    # Sorting reviews based on selected option
     if sort_option == 'oldest':
         reviews = reviews.order_by('created_at')
     elif sort_option == 'rating_high':

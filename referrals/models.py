@@ -13,6 +13,9 @@ class ReferralCode(models.Model):
     unredeemed_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
     def update_balances(self):
+        """
+        Recalculates the total earnings and unredeemed balance for the referral code.
+        """
         total_earnings = ReferralTransaction.objects.filter(
             referrer=self.user,
             commission__gt=0
@@ -30,6 +33,7 @@ class ReferralCode(models.Model):
     def __str__(self):
         return f"{self.user.username}'s referral code: {self.code}"
 
+
 class ReferralTransaction(models.Model):
     referrer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='referral_earnings')
     referred_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='referral_purchases', null=True, blank=True)
@@ -40,6 +44,9 @@ class ReferralTransaction(models.Model):
     description = models.TextField(null=True, blank=True)
 
     def save(self, *args, **kwargs):
+        """
+        Saves the transaction and updates the associated referral code's balances.
+        """
         super().save(*args, **kwargs)
         referral_code = ReferralCode.objects.get(user=self.referrer)
         
@@ -50,16 +57,19 @@ class ReferralTransaction(models.Model):
             referrer=self.referrer,
             commission__lt=0
         ).aggregate(Sum('commission'))['commission__sum'] or 0
-        referral_code.unredeemed_balance = referral_code.total_earnings + redeemed_amount
         
-        referral_code.unredeemed_balance = max(0, referral_code.unredeemed_balance)
+        referral_code.unredeemed_balance = max(0, referral_code.total_earnings + redeemed_amount)
         referral_code.save()
 
     def __str__(self):
         return f"Referral commission for order {self.order_number}"
 
+
 @receiver(post_save, sender=User)
 def create_referral_code(sender, instance, created, **kwargs):
+    """
+    Creates a referral code for a newly registered user.
+    """
     if created:
         ReferralCode.objects.create(
             user=instance,

@@ -9,16 +9,21 @@ from profiles.models import UserProfile
 from bag.models import DiscountCode
 
 def calculate_redeemable_balance(total_earnings, redeemed_amount):
+    """
+    Calculate the redeemable balance by rounding down to the nearest $10.
+    """
     available_balance = total_earnings - redeemed_amount
     return max(0, (available_balance // 10) * 10)
 
 @login_required
 def referral_dashboard(request):
+    """
+    Render the referral dashboard, displaying the user's referral statistics and transactions.
+    """
     try:
         referral_code = ReferralCode.objects.get(user=request.user)
-        
         referral_code.update_balances()
-        
+
         transactions = ReferralTransaction.objects.filter(referrer=request.user)
         total_earnings = referral_code.total_earnings
         redeemed_amount = referral_code.total_earnings - referral_code.unredeemed_balance
@@ -39,6 +44,9 @@ def referral_dashboard(request):
 @csrf_exempt
 @login_required
 def redeem_balance(request):
+    """
+    Handle the redemption of referral balances into discount codes.
+    """
     if request.method == 'POST':
         try:
             referral_code = ReferralCode.objects.get(user=request.user)
@@ -73,8 +81,7 @@ def redeem_balance(request):
                 'discount_code': discount_code.code,
                 'amount': redeemable_balance
             })
-        except ReferralCode.DoesNotExist as e:
-            print(f"Error: Referral code not found - {str(e)}")
+        except ReferralCode.DoesNotExist:
             return JsonResponse({
                 'success': False,
                 'message': 'No referral code found'

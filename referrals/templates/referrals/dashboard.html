@@ -1,11 +1,17 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block extra_css %}
+<!-- Include custom CSS for the referral page -->
+<link rel="stylesheet" href="{% static 'referrals/css/referrals.css' %}">
+{% endblock %}
+
 {% block content %}
 <div class="referral-dashboard">
     <h1 class="dashboard-title">Your Referral Dashboard</h1>
     
     {% if referral_code %}
+        <!-- Section: Display Referral Code -->
         <div class="referral-code-section">
             <h2 class="section-title">Your Referral Code</h2>
             <div class="code-display">
@@ -19,6 +25,7 @@
             </div>
         </div>
 
+        <!-- Section: Referral Statistics -->
         <div class="referral-stats">
             <div class="stat-box">
                 <h3>Total Earnings</h3>
@@ -29,18 +36,22 @@
                 <p class="stat-value">{{ referred_users }}</p>
             </div>
             <div class="stat-box">
-                <h3>Redeemable balance</h3>
+                <h3>Redeemable Balance</h3>
                 <p class="stat-value">${{ redeemable_balance|floatformat:2 }}</p>
             </div>
         </div>
 
+        <!-- Section: Transactions and Redeem -->
         <div class="transactions-section">
             {% if redeemable_balance >= 10 %}
+                <!-- Button to redeem balance if eligible -->
                 <button class="redeem-btn" id="redeemButton">Redeem ${{ redeemable_balance|floatformat:2 }}</button>
             {% else %}
+                <!-- Disabled button if balance is below minimum -->
                 <button class="redeem-btn disabled" disabled>Redeem (Minimum $10)</button>
             {% endif %}
             
+            <!-- Modal for displaying discount code after redemption -->
             <div id="redeemModal" class="modal">
                 <div class="modal-content">
                     <span class="close-modal">&times;</span>
@@ -50,6 +61,7 @@
                 </div>
             </div>
 
+            <!-- Recent Transactions Table -->
             <h2 class="section-title">Recent Transactions</h2>
             <table class="transactions-table">
                 <thead>
@@ -75,99 +87,15 @@
             </table>
         </div>
     {% else %}
+        <!-- Error message if no referral code is found -->
         <p class="error-message">{{ error }}</p>
     {% endif %}
 </div>
 {% endblock %}
 
 {% block postloadjs %}
+<script src="{% static 'referrals/js/dashboard.js' %}"></script>
 <script>
-function copyCode() {
-    const code = document.getElementById('referralCode').textContent;
-    navigator.clipboard.writeText(code);
-    alert('Referral code copied!');
-}
-
-function copyLink() {
-    const link = document.getElementById('referralLink').textContent;
-    navigator.clipboard.writeText(link);
-    alert('Referral link copied!');
-}
-
-const modal = document.getElementById('redeemModal');
-const redeemBtn = document.querySelector('.redeem-btn');
-const closeModal = document.querySelector('.close-modal');
-
-const redeemButton = document.getElementById('redeemButton');
-if (redeemButton) {
-    redeemButton.addEventListener('click', function(e) {
-        e.preventDefault();
-        redeemBalance();
-    });
-}
-
-closeModal.onclick = function() {
-    modal.style.display = 'none';
-}
-
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = 'none';
-    }
-}
-
-function copyDiscountCode() {
-    const code = document.getElementById('discountCode').textContent;
-    navigator.clipboard.writeText(code);
-    alert('Discount code copied!');
-}
-
-function redeemBalance() {
-    fetch("{% url 'referrals:redeem_balance' %}", {
-        method: 'POST',
-        headers: {
-            'X-CSRFToken': '{{ csrf_token }}',
-            'Content-Type': 'application/json'
-        },
-        credentials: 'same-origin'
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        if (data && data.success) {
-            const discountCodeElement = document.getElementById('discountCode');
-            const discountValueElement = document.getElementById('discountValue');
-            
-            discountCodeElement.textContent = data.discount_code;
-            
-            const amount = parseFloat(data.amount);
-            if (!isNaN(amount)) {
-                discountValueElement.textContent = `$${amount.toFixed(2)}`;
-            } else {
-                discountValueElement.textContent = '$0.00';
-                console.error('Invalid amount received:', data.amount);
-            }
-            
-            const redeemBtn = document.querySelector('.redeem-btn');
-            if (redeemBtn) {
-                redeemBtn.textContent = `Redeem $0.00`;
-                redeemBtn.disabled = true;
-                redeemBtn.classList.add('disabled');
-            }
-            
-            modal.style.display = 'block';
-        } else {
-            alert('Error: ' + data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('An error occurred while processing your request');
-    });
-}
+    const csrfToken = '{{ csrf_token }}';
 </script>
 {% endblock %}

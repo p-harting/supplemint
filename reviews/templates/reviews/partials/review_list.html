@@ -2,20 +2,29 @@
     {% if review.approved or review.user == request.user %}
     <div class="review-card {% if not review.approved %}pending-review{% endif %}">
         <div class="review-header">
+            <!-- Display reviewer name -->
             <span class="reviewer-name">{{ review.user.username }}</span>
+            
+            <!-- Render star rating -->
             <div class="review-stars">
                 {% for i in "12345" %}
                 {% if forloop.counter <= review.rating %}
-                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>  <!-- Filled star -->
                 {% else %}
-                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>  <!-- Empty star -->
                 {% endif %}
                 {% endfor %}
             </div>
+            
+            <!-- Display review creation date -->
             <span class="review-date">{{ review.created_at|date:"F d, Y" }}</span>
+            
+            <!-- Pending approval badge for unapproved reviews -->
             {% if not review.approved %}
             <span class="pending-badge">Pending Approval</span>
             {% endif %}
+            
+            <!-- Review actions (edit and delete) for the review author -->
             {% if review.user == request.user %}
             <div class="review-actions">
                 <button onclick="editReview('{{ review.id }}')" class="btn-edit">
@@ -27,14 +36,18 @@
             </div>
             {% endif %}
         </div>
+        
+        <!-- Display review text -->
         <p class="review-text">{{ review.text }}</p>
     </div>
     {% endif %}
 {% empty %}
+    <!-- Message when no reviews are available -->
     <p>No reviews yet. Be the first to review this product!</p>
 {% endfor %}
 
 {% if reviews.paginator.num_pages > 1 %}
+<!-- Pagination controls for navigating through pages of reviews -->
 <div class="pagination-controls">
     {% if reviews.has_previous %}
     <button class="pagination-btn" onclick="loadPage('{{ reviews.previous_page_number }}')">

@@ -1,49 +1,23 @@
-<form method="POST" class="review-form" id="reviewForm" {% if is_edit %}data-review-id="{{ review.id }}"{% else %}data-product-id="{{ product.id }}"{% endif %}>
+{% load static %}
+<form method="POST" class="review-form" id="reviewForm" 
+      {% if is_edit %}data-review-id="{{ review.id }}"{% else %}data-product-id="{{ product.id }}"{% endif %}>
     {% csrf_token %}
+    
+    <!-- Dynamic heading based on edit state -->
     <h3>{% if is_edit %}Edit Your Review{% else %}Write a Review{% endif %}</h3>
-    {{ form.as_p }}
+    
+    {{ form.as_p }}  <!-- Render form fields -->
+    
     <div class="form-buttons">
+        <!-- Submit button text changes based on edit state -->
         <button type="submit" class="btn btn-primary">
             {% if is_edit %}Update Review{% else %}Submit Review{% endif %}
         </button>
+        
+        <!-- Cancel button to close the modal -->
         <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
     </div>
 </form>
 
-<script>
-document.getElementById('reviewForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const formData = new FormData(this);
-    const reviewId = this.dataset.reviewId;
-    const productId = this.dataset.productId;
-    
-    const url = reviewId 
-        ? `/reviews/edit/${reviewId}/`
-        : `/reviews/add/${productId}/`;
-    
-    fetch(url, {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'X-CSRFToken': getCookie('csrftoken')
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        if (data.success) {
-            closeModal();
-            location.reload();
-        } else if (data.errors) {
-            console.error('Form errors:', data.errors);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-});
-</script>
+<!-- Include the external JavaScript file -->
+<script src="{% static 'reviews/js/review_form.js' %}"></script>
