@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block extra_css %}
+    <!-- Link to custom profile CSS -->
     <link rel="stylesheet" href="{% static 'profiles/css/profile.css' %}">
 {% endblock %}
 
@@ -9,49 +10,59 @@
 <div class="profile-layout">
     <div class="profile-wrapper">
         <div class="profile-header">
-            <h2 class="profile-heading">My Profile</h2>
+            <h2 class="profile-heading">My Profile</h2>  <!-- Profile page heading -->
         </div>
         
         <div class="profile-form-container">
             <form method="POST" action="{% url 'profile' %}" class="profile-form">
+                <!-- CSRF token for form security -->
                 {% csrf_token %}
+                
+                <!-- Loop through form fields and render each one -->
                 {% for field in profile_form %}
                     <div class="form-field">
                         <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                        {{ field }}
+                        {{ field }}  <!-- Render form field -->
+                        
+                        <!-- Display help text if available -->
                         {% if field.help_text %}
                             <span class="form-help">{{ field.help_text }}</span>
                         {% endif %}
+                        
+                        <!-- Display field errors if any -->
                         {% for error in field.errors %}
                             <div class="form-error">{{ error }}</div>
                         {% endfor %}
                     </div>
                 {% endfor %}
+                
+                <!-- Submit button for profile update -->
                 <button class="form-submit" type="submit">Update Profile</button>
             </form>
         </div>
 
-
         <div class="order-history">
-            <h3 class="order-history-heading">Order History</h3>
+            <h3 class="order-history-heading">Order History</h3>  <!-- Heading for order history section -->
+            
             {% if orders %}
                 <div class="order-history-container">
+                    <!-- Loop through and display each order -->
                     {% for order in orders %}
                         <div class="order">
                             <div class="order-details">
-                                <div class="order-date">{{ order.date }}</div>
+                                <div class="order-date">{{ order.date }}</div>  <!-- Display order date -->
                                 <div class="order-number">
                                     <span title="{{ order.order_number }}">
                                         Order #{{ order.order_number }}
                                     </span>
                                 </div>
                             </div>
-                            <div class="order-total">${{ order.grand_total }}</div>
+                            <div class="order-total">${{ order.grand_total }}</div>  <!-- Display order total -->
                         </div>
                     {% endfor %}
                 </div>
             {% else %}
-                <p class="no-orders">You have no previous orders.</p>
+                <p class="no-orders">You have no previous orders.</p>  <!-- Message when no orders are found -->
             {% endif %}
         </div>
     </div>
