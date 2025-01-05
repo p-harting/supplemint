@@ -1,10 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from products.models import Product
 import random
-from django.shortcuts import redirect
 from django.contrib import messages
 from .models import NewsletterSubscriber, PageContent
-from django.shortcuts import get_object_or_404
+from core.utils import validate_email
+from django.core.exceptions import ValidationError
 
 def index(request):
     """View for the homepage displaying random products."""
@@ -51,14 +51,22 @@ def custom_404(request, exception):
 def newsletter_subscribe(request):
     """View for subscribing to the newsletter."""
     
-    if request.method == 'POST':  # If the request is a POST request
-        email = request.POST.get('email')  # Get the email from the form input
-        if email:
-            try:
-                NewsletterSubscriber.objects.create(email=email)  # Create a new subscription entry
-                messages.success(request, 'Thank you for subscribing!')  # Success message
-            except:
-                messages.error(request, 'This email is already subscribed.')  # Error if email is already subscribed
-        else:
-            messages.error(request, 'Please enter a valid email address.')  # Error if email is not provided
-    return redirect('home')  # Redirect to the homepage after submission
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        
+        try:
+            # Validate the email using the custom validation function
+            validate_email(email)
+            
+            # If email is valid, save the subscriber
+            NewsletterSubscriber.objects.create(email=email)
+            messages.success(request, 'Thank you for subscribing!')
+            return redirect('home')
+        except ValidationError as e:
+            # If email is invalid, display the error message
+            messages.error(request, str(e))
+    
+    # Render the page with the form and any messages
+    return render(request, 'home/index.html', {
+        'random_products': Product.objects.all()[:5],  # Maintain existing context
+    })

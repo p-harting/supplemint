@@ -113,6 +113,15 @@
     <form class="newsletter-form" method="POST" action="{% url 'newsletter_subscribe' %}">
         {% csrf_token %}
         <input type="email" class="newsletter-input" name="email" placeholder="Your email address" required>
+        
+        {% if form.email.errors %}
+            <div class="error-message">
+                {% for error in form.email.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
         <button type="submit" class="newsletter-button">Sign Up</button>
     </form>
 </div>

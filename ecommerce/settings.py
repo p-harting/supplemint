@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'reviews',
     'ckeditor',
     'ckeditor_uploader',
+    'core',
 ]
 
 MIDDLEWARE = [
