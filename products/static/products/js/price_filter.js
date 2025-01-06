@@ -39,11 +39,22 @@ class PriceFilter {
         });
     }
 
+    validatePrice(value) {
+        const num = parseInt(value);
+        if (isNaN(num)) return false;
+        return num >= 0 && num <= 100;
+    }
+
     setupRangeInputListeners() {
         this.rangeInputs.forEach((input, index) => {
             input.addEventListener("input", (e) => {
-                let minVal = parseInt(this.rangeInputs[0].value);
-                let maxVal = parseInt(this.rangeInputs[1].value);
+                // Validate price inputs
+                const minVal = parseInt(this.rangeInputs[0].value);
+                const maxVal = parseInt(this.rangeInputs[1].value);
+                
+                if (!this.validatePrice(minVal) || !this.validatePrice(maxVal)) {
+                    return;
+                }
 
                 if (maxVal - minVal < this.priceGap) {
                     if (e.target.className === "range-min") {
@@ -58,6 +69,26 @@ class PriceFilter {
                     this.range.style.right = 100 - (maxVal / this.rangeInputs[1].max) * 100 + "%";
                     this.filterProductsByPrice(minVal, maxVal);
                 }
+            });
+        });
+    }
+
+    setupPriceInputListeners() {
+        this.priceInputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                let value = parseInt(input.value);
+                if (isNaN(value)) {
+                    value = 0;
+                }
+                value = Math.min(Math.max(value, 0), 100);
+                input.value = value;
+                
+                // Update corresponding range input
+                const rangeInput = this.rangeInputs[index];
+                rangeInput.value = input.value;
+
+                // Trigger range input event to update filter
+                rangeInput.dispatchEvent(new Event('input'));
             });
         });
     }
