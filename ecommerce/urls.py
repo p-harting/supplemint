@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
+from django.views.generic.base import TemplateView, RedirectView
+from django.contrib.staticfiles.storage import staticfiles_storage
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -16,6 +18,7 @@ urlpatterns = [
     path('referrals/', include('referrals.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('reviews/', include('reviews.urls')),
+    path('robots.txt', RedirectView.as_view(url=staticfiles_storage.url('robots.txt'))),
 ]
 
 if settings.DEBUG:
