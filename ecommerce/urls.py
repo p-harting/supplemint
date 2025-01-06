@@ -3,6 +3,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
 from django.views.generic.base import TemplateView, RedirectView
+from django.views.static import serve
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.contrib.sitemaps.views import sitemap
 from .sitemaps import (
@@ -34,7 +35,7 @@ urlpatterns = [
     path('referrals/', include('referrals.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('reviews/', include('reviews.urls')),
-    path('robots.txt', RedirectView.as_view(url=staticfiles_storage.url('robots.txt'))),
+    path('robots.txt', serve, {'path': 'robots.txt', 'document_root': settings.BASE_DIR}),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
 
