@@ -31,17 +31,30 @@
                 {% element form form=form method="post" action=login_url tags="entrance,login" class="auth-form" %}
                     {% slot body %}
                         {% csrf_token %}
+                        {% if form.non_field_errors %}
+                            <div class="error-message">
+                                {% for error in form.non_field_errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        
                         {% for field in form %}
                             <div class="form-group {% if field.name == 'remember' %}checkbox-group{% endif %}">
                                 {{ field.label_tag }}
                                 {{ field }}
                                 {% if field.errors %}
-                                    {% for error in field.errors %}
-                                        <div class="error-message">{{ error }}</div>
-                                    {% endfor %}
+                                    <div class="field-error">
+                                        {% for error in field.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
                                 {% endif %}
                             </div>
                         {% endfor %}
+                        {% element p class="password-reset-link" %}
+                            <a href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+                        {% endelement %}
                         {{ redirect_field }}
                     {% endslot %}
                     {% slot actions %}
