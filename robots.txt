@@ -1,0 +1,7 @@
+User-agent: Googlebot
+Disallow: /nogooglebot/
+
+User-agent: *
+Allow: /
+
+Sitemap: https://supplemint-ff2fe0e93175.herokuapp.com/sitemap.xml
