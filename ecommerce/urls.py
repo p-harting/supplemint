@@ -4,6 +4,22 @@ from django.conf.urls.static import static
 from django.urls import path, include
 from django.views.generic.base import TemplateView, RedirectView
 from django.contrib.staticfiles.storage import staticfiles_storage
+from django.contrib.sitemaps.views import sitemap
+from .sitemaps import (
+    StaticViewSitemap,
+    BlogSitemap,
+    ProductSitemap,
+    CategorySitemap,
+    SubCategorySitemap
+)
+
+sitemaps = {
+    'static': StaticViewSitemap,
+    'blog': BlogSitemap,
+    'products': ProductSitemap,
+    'categories': CategorySitemap,
+    'subcategories': SubCategorySitemap,
+}
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -19,6 +35,7 @@ urlpatterns = [
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('reviews/', include('reviews.urls')),
     path('robots.txt', RedirectView.as_view(url=staticfiles_storage.url('robots.txt'))),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
 
 if settings.DEBUG:
