@@ -234,7 +234,7 @@
                             {% if product.has_sizes %}
                             {% for size in product.sizes.all %}
                             {% if size.price == product.base_price %}
-                            <input type="hidden" id="product-size" name="product_size" value="{{ size.name }}">
+                            <input type="hidden" name="product_size" value="{{ size.name }}">
                             {% endif %}
                             {% endfor %}
                             {% endif %}
