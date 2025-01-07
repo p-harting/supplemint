@@ -52,8 +52,8 @@
             </div>
             <div class="search-section">
                 <form method="GET" action="{% url 'products' %}" class="search-form">
-                    <input class="search-input" type="text" name="q" placeholder="Search...">
-                    <button class="search-button" type="submit">
+                    <input class="search-input" type="text" name="q" aria-label="search" placeholder="Search...">
+                    <button class="search-button" aria-label="searchbutton" type="submit">
                         <i class="fas fa-search search-icon"></i>
                     </button>
                 </form>

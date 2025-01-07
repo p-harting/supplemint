@@ -119,7 +119,7 @@
     <p class="newsletter-description">Get exclusive offers and news directly to your inbox.</p>
     <form class="newsletter-form" method="POST" action="{% url 'newsletter_subscribe' %}">
         {% csrf_token %}
-        <input type="email" class="newsletter-input" name="email" placeholder="Your email address" required>
+        <input type="email" class="newsletter-input" name="email" aria-label="email" placeholder="Your email address" required>
 
         {% if form.email.errors %}
         <div class="error-message">
