@@ -109,8 +109,13 @@ def all_products(request):
 
     current_sorting = f'{sort}_{direction}'
 
+    # Pagination - 20 items per page
+    paginator = Paginator(products, 20)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
-        'products': products,
+        'products': page_obj,
         'search_term': query,
         'current_categories': categories,
         'current_subcategories': subcategories,
@@ -147,11 +152,16 @@ def category_products(request, category_name):
                     sortkey = f'-{sortkey}'
             products = products.order_by(sortkey)
 
+    # Pagination - 20 items per page
+    paginator = Paginator(products, 20)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     current_sorting = f'{sort}_{direction}'
     
     context = {
         'category': category,
-        'products': products,
+        'products': page_obj,
         'current_sorting': current_sorting,
     }
     return render(request, 'products/products.html', context)
