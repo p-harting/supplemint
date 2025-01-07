@@ -26,7 +26,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 30vh;
     background-image: url('https://supplemint.s3.eu-north-1.amazonaws.com/media/hero-index.webp');
     background-size: cover;
     background-position: center;

@@ -131,6 +131,7 @@ body {
     display: none;
     position: absolute;
     right: 0;
+    min-width: 200px;
     background-color: white;
     border: 1px solid #ccc;
     z-index: 2000;
@@ -202,12 +203,6 @@ body {
     text-decoration: none;
     color: #333;
     border-bottom: 1px solid #eee;
-}
-
-.dropdown-content {
-    display: none;
-    width: 100%;
-    background-color: #f9f9f9;
 }
 
 .nav-item:hover .dropdown-content,
