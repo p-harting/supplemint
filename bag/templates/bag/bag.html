@@ -50,11 +50,13 @@
 
                     <!-- Product price -->
                     <td class="product-price-cell">
+                        <p class="mobile-description-text">Price:</p>
                         <p class="price-text">${{ item.price }}</p>
                     </td>
 
                     <!-- Quantity input with form to adjust the quantity of the item -->
                     <td class="quantity-cell">
+                        <p class="mobile-description-text">Amount:</p>
                         <form method="POST" action="{% url 'adjust_bag' item.product.id %}">
                             {% csrf_token %}
                             {% if item.size %}
@@ -62,7 +64,7 @@
                             {% endif %}
                             <input class="quantity-input" type="number" name="quantity" value="{{ item.quantity }}"
                                 min="1" max="99" data-item_id="{{ item.product.id }}" id="id_qty_{{ item.product.id }}">
-                            <button type="submit" class="update-quantity-btn" style="display: none;">
+                            <button type="submit" class="update-quantity-btn btn" style="display: none;">
                                 <i class="fa fa-check"></i>
                             </button>
                         </form>
@@ -70,6 +72,7 @@
 
                     <!-- Subtotal for the item -->
                     <td class="subtotal-cell">
+                        <p class="mobile-description-text">Subtotal:</p>
                         <p class="subtotal-text">${{ item.price | calc_subtotal:item.quantity }}</p>
                     </td>
 
@@ -80,7 +83,7 @@
                             {% if item.size %}
                                 <input type="hidden" name="product_size" value="{{ item.size }}">
                             {% endif %}
-                            <button type="submit" class="remove-item">
+                            <button type="submit" class="remove-item btn">
                                 <i class="fas fa-times"></i>
                             </button>
                         </form>
