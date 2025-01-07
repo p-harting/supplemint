@@ -49,6 +49,16 @@
                             <div class="form-group">
                                 {{ field.label_tag }}
                                 {{ field }}
+                                {% if field.name == 'password1' %}
+                                    <small id="id_password1_helptext" class="form-text text-muted">
+                                        {% trans "Your password must contain at least 8 characters." %}
+                                    </small>
+                                {% endif %}
+                                {% if field.name == 'password2' %}
+                                    <small id="id_password2_helptext" class="form-text text-muted">
+                                        {% trans "Enter the same password as before, for verification." %}
+                                    </small>
+                                {% endif %}
                                 {% if field.errors %}
                                     {% for error in field.errors %}
                                         <div class="error-message">{{ error }}</div>

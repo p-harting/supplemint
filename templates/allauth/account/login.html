@@ -43,6 +43,11 @@
                             <div class="form-group {% if field.name == 'remember' %}checkbox-group{% endif %}">
                                 {{ field.label_tag }}
                                 {{ field }}
+                                {% if field.name == 'password' %}
+                                    <small id="id_password_helptext" class="form-text text-muted">
+                                        {% trans "Enter your account password." %}
+                                    </small>
+                                {% endif %}
                                 {% if field.errors %}
                                     <div class="field-error">
                                         {% for error in field.errors %}
