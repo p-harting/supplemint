@@ -69,7 +69,7 @@
                             </div>
                         </a>
                         {% else %}
-                        <div class="account-info">
+                        <div class="account-info" id="account-menu">
                             <div><i class="fas fa-user fa-lg"></i></div>
                             <span class="account-text">Account</span>
                         </div>
@@ -146,7 +146,7 @@
     {% include 'includes/footer.html' %}
 
     {% block postloadjs %}
-    <script type="text/javascript">
+    <script>
         document.addEventListener('DOMContentLoaded', function () {
             const toasts = document.querySelectorAll('.toast-container');
 
