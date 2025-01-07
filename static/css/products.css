@@ -1,19 +1,6 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    font-family: 'Arial', sans-serif;
-    line-height: 1.5;
-    background-color: #f8f9fa;
-    color: #333;
-}
-
 .products-container {
     max-width: 1200px;
-    margin: 200px auto;
+    margin: 160px auto;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -259,7 +246,8 @@ input[type="number"]::-webkit-inner-spin-button {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 180px;
+    margin-top: 160px;
+    padding: 20px;
 }
 
 .product-detail-row {
@@ -269,7 +257,6 @@ input[type="number"]::-webkit-inner-spin-button {
     gap: 20px;
     justify-content: center;
     max-width: 1200px;
-    padding: 40px;
 }
 
 .product-image-section {
@@ -308,7 +295,7 @@ input[type="number"]::-webkit-inner-spin-button {
     font-size: 1.25rem;
     font-weight: bold;
     margin-bottom: 10px;
-    text-align: start;
+    text-align: left;
 }
 
 .product-rating {
@@ -589,6 +576,10 @@ input[type="number"]::-webkit-inner-spin-button {
     padding: 8px;
     border-radius: 30px;
     border: 1px solid #ddd;
+}
+
+.size-selector {
+    border-radius: 4px;
 }
 
 /* Pagination styles */
@@ -893,6 +884,7 @@ input[type="number"]::-webkit-inner-spin-button {
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 16px;
+    min-width: 40px;
 }
 
 .form-buttons {
@@ -905,7 +897,6 @@ input[type="number"]::-webkit-inner-spin-button {
     text-decoration: none;
     color: black;
     padding: 10px 15px;
-    border: 1px solid #000;
     border-radius: 4px;
     font-weight: bold;
     display: flex;
@@ -916,7 +907,6 @@ input[type="number"]::-webkit-inner-spin-button {
 .custom-link:hover {
     background-color: #f0f0f0;
 }
-
 
 .custom-button {
     background-color: #ADEBB3;
@@ -932,10 +922,6 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .custom-button:hover {
     background-color: #89b98e;
-}
-
-.keep-shopping {
-    border-color: #000;
 }
 
 .add-to-bag {

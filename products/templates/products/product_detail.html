@@ -72,7 +72,7 @@
                     <div class="form-section">
                         {% if product.has_sizes %}
                         <div class="size-selector-container">
-                            <select class="size-selector" name="product_size" id="id_product_size" required>
+                            <select class="size-selector form-select" name="product_size" id="id_product_size" required>
                                 <option value="">Select Size</option>
                                 {% for size in product.sizes.all %}
                                 <option value="{{ size.name }}" data-price="{{ size.price }}"
