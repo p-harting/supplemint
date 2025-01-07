@@ -39,12 +39,14 @@
             <div class="price-input">
                 <div class="field">
                     <span>Min</span>
-                    <input type="number" class="input-min" value="1" min="0" max="100" oninput="validity.valid||(value='');">
+                    <input type="number" class="input-min" value="1" min="0" max="100"
+                        oninput="validity.valid||(value='');">
                 </div>
                 <div class="separator">-</div>
                 <div class="field">
                     <span>Max</span>
-                    <input type="number" class="input-max" value="100" min="0" max="100" oninput="validity.valid||(value='');">
+                    <input type="number" class="input-max" value="100" min="0" max="100"
+                        oninput="validity.valid||(value='');">
                 </div>
             </div>
             <div class="slider">
@@ -61,14 +63,22 @@
             <div>
                 <select id="sort-selector">
                     <option value="reset" {% if current_sorting == 'None_None' %}selected{% endif %}>Sort by...</option>
-                    <option value="price_asc" {% if current_sorting == 'price_asc' %}selected{% endif %}>Price (low to high)</option>
-                    <option value="price_desc" {% if current_sorting == 'price_desc' %}selected{% endif %}>Price (high to low)</option>
-                    <option value="rating_asc" {% if current_sorting == 'rating_asc' %}selected{% endif %}>Rating (low to high)</option>
-                    <option value="rating_desc" {% if current_sorting == 'rating_desc' %}selected{% endif %}>Rating (high to low)</option>
-                    <option value="name_asc" {% if current_sorting == 'name_asc' %}selected{% endif %}>Name (A-Z)</option>
-                    <option value="name_desc" {% if current_sorting == 'name_desc' %}selected{% endif %}>Name (Z-A)</option>
-                    <option value="category_asc" {% if current_sorting == 'category_asc' %}selected{% endif %}>Category (A-Z)</option>
-                    <option value="category_desc" {% if current_sorting == 'category_desc' %}selected{% endif %}>Category (Z-A)</option>
+                    <option value="price_asc" {% if current_sorting == 'price_asc' %}selected{% endif %}>Price (low to
+                        high)</option>
+                    <option value="price_desc" {% if current_sorting == 'price_desc' %}selected{% endif %}>Price (high
+                        to low)</option>
+                    <option value="rating_asc" {% if current_sorting == 'rating_asc' %}selected{% endif %}>Rating (low
+                        to high)</option>
+                    <option value="rating_desc" {% if current_sorting == 'rating_desc' %}selected{% endif %}>Rating
+                        (high to low)</option>
+                    <option value="name_asc" {% if current_sorting == 'name_asc' %}selected{% endif %}>Name (A-Z)
+                    </option>
+                    <option value="name_desc" {% if current_sorting == 'name_desc' %}selected{% endif %}>Name (Z-A)
+                    </option>
+                    <option value="category_asc" {% if current_sorting == 'category_asc' %}selected{% endif %}>Category
+                        (A-Z)</option>
+                    <option value="category_desc" {% if current_sorting == 'category_desc' %}selected{% endif %}>
+                        Category (Z-A)</option>
                 </select>
             </div>
             <button class="sale-filter-btn" id="sale-filter-btn">Sale</button>
@@ -84,34 +94,32 @@
     <div class="product-grid">
         {% for product in products %}
         <div class="product-card">
-            <a href="#">
-                <div class="image-wrapper">
-                    {% if product.get_sale_price %}
-                    <span class="sale-badge">{{ product.sale.discount_percentage|floatformat:0 }}% OFF</span>
-                    {% endif %}
-                    {% if product.image %}
-                    {% if product.subcategory %}
-                    <a href="{% url 'product_detail' product.category.name product.subcategory.name product.slug %}">
-                        <img class="product-image" src="{{ product.image.url }}" alt="{{ product.name }}">
-                    </a>
-                    {% else %}
-                    <a href="{% url 'product_detail_no_subcategory' product.category.name product.slug %}">
-                        <img class="product-image" src="{{ product.image.url }}" alt="{{ product.name }}">
-                    </a>
-                    {% endif %}
-                    {% else %}
-                    {% if product.subcategory %}
-                    <a href="{% url 'product_detail' product.category.name product.subcategory.name product.slug %}">
-                        <img class="product-image" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
-                    </a>
-                    {% else %}
-                    <a href="{% url 'product_detail_no_subcategory' product.category.name product.slug %}">
-                        <img class="product-image" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
-                    </a>
-                    {% endif %}
-                    {% endif %}
-                </div>
-            </a>
+            <div class="image-wrapper">
+                {% if product.get_sale_price %}
+                <span class="sale-badge">{{ product.sale.discount_percentage|floatformat:0 }}% OFF</span>
+                {% endif %}
+                {% if product.image %}
+                {% if product.subcategory %}
+                <a href="{% url 'product_detail' product.category.name product.subcategory.name product.slug %}">
+                    <img class="product-image" src="{{ product.image.url }}" alt="{{ product.name }}">
+                </a>
+                {% else %}
+                <a href="{% url 'product_detail_no_subcategory' product.category.name product.slug %}">
+                    <img class="product-image" src="{{ product.image.url }}" alt="{{ product.name }}">
+                </a>
+                {% endif %}
+                {% else %}
+                {% if product.subcategory %}
+                <a href="{% url 'product_detail' product.category.name product.subcategory.name product.slug %}">
+                    <img class="product-image" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+                </a>
+                {% else %}
+                <a href="{% url 'product_detail_no_subcategory' product.category.name product.slug %}">
+                    <img class="product-image" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+                </a>
+                {% endif %}
+                {% endif %}
+            </div>
 
             <!-- Product Details (Name, Description, Rating, Price, Add to Cart) -->
             <div class="product-details">
@@ -149,8 +157,8 @@
     <div class="pagination-container">
         <div class="pagination">
             {% if products.has_previous %}
-                <a href="?page=1" class="pagination-link">&laquo; First</a>
-                <a href="?page={{ products.previous_page_number }}" class="pagination-link">Previous</a>
+            <a href="?page=1" class="pagination-link">&laquo; First</a>
+            <a href="?page={{ products.previous_page_number }}" class="pagination-link">Previous</a>
             {% endif %}
 
             <span class="current-page">
@@ -158,8 +166,8 @@
             </span>
 
             {% if products.has_next %}
-                <a href="?page={{ products.next_page_number }}" class="pagination-link">Next</a>
-                <a href="?page={{ products.paginator.num_pages }}" class="pagination-link">Last &raquo;</a>
+            <a href="?page={{ products.next_page_number }}" class="pagination-link">Next</a>
+            <a href="?page={{ products.paginator.num_pages }}" class="pagination-link">Last &raquo;</a>
             {% endif %}
         </div>
     </div>
@@ -167,8 +175,8 @@
 {% endblock %}
 
 {% block postloadjs %}
-    {{ block.super }}
-    <script src="{% static 'products/js/product_sorting.js' %}"></script>
-    <script src="{% static 'products/js/product_rating.js' %}"></script>
-    <script src="{% static 'products/js/price_filter.js' %}"></script>
+{{ block.super }}
+<script src="{% static 'products/js/product_sorting.js' %}"></script>
+<script src="{% static 'products/js/product_rating.js' %}"></script>
+<script src="{% static 'products/js/price_filter.js' %}"></script>
 {% endblock %}

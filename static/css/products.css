@@ -870,6 +870,80 @@ input[type="number"]::-webkit-inner-spin-button {
     color: white;
 }
 
+.custom-form {
+    margin-top: 20px;
+}
+
+.form-section {
+    margin-bottom: 20px;
+}
+
+.quantity-label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.quantity-wrapper {
+    width: 50%;
+}
+
+.quantity-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.form-buttons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.custom-link {
+    text-decoration: none;
+    color: black;
+    padding: 10px 15px;
+    border: 1px solid #000;
+    border-radius: 4px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+.custom-link:hover {
+    background-color: #f0f0f0;
+}
+
+
+.custom-button {
+    background-color: #ADEBB3;
+    color: black;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s;
+}
+
+.custom-button:hover {
+    background-color: #89b98e;
+}
+
+.keep-shopping {
+    border-color: #000;
+}
+
+.add-to-bag {
+    background-color: #ADEBB3;
+    border: none;
+}
+
+
 /* Mobile Styles */
 @media (max-width: 768px) {
     .product-table__header th {
