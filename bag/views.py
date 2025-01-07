@@ -2,6 +2,7 @@ from django.shortcuts import (
     render, redirect, reverse, HttpResponse, get_object_or_404
 )
 from django.contrib import messages
+from django.utils import timezone
 from django.http import JsonResponse
 from products.models import Product
 from .models import DiscountCode
@@ -77,6 +78,16 @@ def add_to_bag(request, item_id):
             messages.error(request, f"Only {product_size.stock} items available in size {size}. You already have {existing_quantity} in your bag.")
             return redirect(redirect_url)
         size_price = product_size.price if product_size else product.base_price
+        # Calculate sale price based on size price if product is on sale
+        if product.sale and product.sale.active:
+            now = timezone.now()
+            if product.sale.start_date <= now <= product.sale.end_date:
+                discount = size_price * (product.sale.discount_percentage / 100)
+                sale_price = round(size_price - discount, 2)
+            else:
+                sale_price = size_price
+        else:
+            sale_price = size_price
 
         if item_id in bag:
             bag[item_id].setdefault('items_by_size', {})
@@ -84,10 +95,20 @@ def add_to_bag(request, item_id):
                 bag[item_id]['items_by_size'][size]['quantity'] += quantity
                 messages.success(request, f'Updated size {size.upper()} {product.name} quantity.')
             else:
-                bag[item_id]['items_by_size'][size] = {'quantity': quantity, 'price': str(size_price)}
+                bag[item_id]['items_by_size'][size] = {
+                    'quantity': quantity,
+                    'price': str(sale_price),
+                    'original_price': str(size_price)
+                }
                 messages.success(request, f'Added size {size.upper()} {product.name} to your bag.')
         else:
-            bag[item_id] = {'items_by_size': {size: {'quantity': quantity, 'price': str(size_price)}}}
+            bag[item_id] = {'items_by_size': {
+                size: {
+                    'quantity': quantity,
+                    'price': str(sale_price),
+                    'original_price': str(size_price)
+                }
+            }}
     else:
         existing_quantity = bag.get(item_id, 0)
         total_quantity = existing_quantity + quantity
@@ -97,8 +118,14 @@ def add_to_bag(request, item_id):
         if total_quantity > product.stock:
             messages.error(request, f"Only {product.stock} items available. You already have {existing_quantity} in your bag.")
             return redirect(redirect_url)
-        bag[item_id] = bag.get(item_id, 0) + quantity
-        messages.success(request, f'Updated {product.name} quantity to {bag[item_id]}.')
+        # Use the product's built-in sale price calculation
+        sale_price = product.get_sale_price or product.base_price
+        bag[item_id] = {
+            'quantity': bag.get(item_id, {}).get('quantity', 0) + quantity,
+            'price': str(sale_price),
+            'original_price': str(product.base_price)
+        }
+        messages.success(request, f'Updated {product.name} quantity to {bag[item_id]["quantity"]}.')
 
     request.session['bag'] = bag
     return redirect(redirect_url)

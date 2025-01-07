@@ -19,13 +19,16 @@ def bag_contents(request):
         
         if isinstance(item_data, int):
             # Item without size selection
-            total += item_data * product.base_price
-            product_count += item_data
+            price = Decimal(item_data['price'])
+            original_price = Decimal(item_data['original_price'])
+            total += item_data['quantity'] * price
+            product_count += item_data['quantity']
             bag_items.append({
                 'item_id': item_id,
-                'quantity': item_data,
+                'quantity': item_data['quantity'],
                 'product': product,
-                'price': product.base_price,
+                'price': price,
+                'original_price': original_price,
             })
         else:
             # Item with size selection
@@ -40,6 +43,8 @@ def bag_contents(request):
                     product_size = product.sizes.filter(name=size).first()
                     price = product_size.price if product_size else product.base_price
                 
+                price = Decimal(size_data['price'])
+                original_price = Decimal(size_data['original_price'])
                 total += quantity * price
                 product_count += quantity
                 bag_items.append({
@@ -48,6 +53,7 @@ def bag_contents(request):
                     'product': product,
                     'size': size,
                     'price': price,
+                    'original_price': original_price,
                 })
 
     # Calculate delivery and free delivery delta
