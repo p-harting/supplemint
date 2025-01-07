@@ -1,6 +1,20 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block extra_head %}
+{% if subcategory %}
+<title>{{ subcategory.seo_title }}</title>
+<meta property="og:title" content="{{ subcategory.seo_title }}">
+<meta property="og:description" content="{{ subcategory.seo_meta_description }}">
+<meta property="og:keywords" content="{{ subcategory.seo_keywords }}">
+{% elif category %}
+<title>{{ category.seo_title }}</title>
+<meta property="og:title" content="{{ category.seo_title }}">
+<meta property="og:description" content="{{ category.seo_meta_description }}">
+<meta property="og:keywords" content="{{ category.seo_keywords }}">
+{% endif %}
+{% endblock %}
+
 {% block content %}
 <!-- Overlay for background effect -->
 <div class="overlay"></div>
@@ -12,20 +26,18 @@
     <div class="products-header">
         {% if subcategory %}
         <h1 class="products-title">{{ subcategory.friendly_name }}</h1>
-        <p class="subcategory-description">
+        {% if subcategory.description %}
+        <div class="subcategory-description">
             {{ subcategory.description|safe }}
-        </p>
-        <title>{{ subcategory.seo_title }}</title>
-        <meta name="description" content="{{ subcategory.seo_meta_description }}">
-        <meta name="keywords" content="{{ subcategory.seo_keywords }}">
+        </div>
+        {% endif %}
         {% elif category %}
         <h1 class="products-title">{{ category.friendly_name }}</h1>
-        <p class="category-description">
+        {% if category.description %}
+        <div class="category-description">
             {{ category.description|safe }}
-        </p>
-        <title>{{ category.seo_title }}</title>
-        <meta name="description" content="{{ category.seo_meta_description }}">
-        <meta name="keywords" content="{{ category.seo_keywords }}">
+        </div>
+        {% endif %}
         {% else %}
         <h1 class="products-title">Products</h1>
         {% endif %}
