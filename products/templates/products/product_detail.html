@@ -64,7 +64,7 @@
                 {% else %}
                 <small class="product-rating">No Rating</small>
                 {% endif %}
-                <p class="product-description">{{ product.description }}</p>
+                <div class="product-description">{{ product.description|striptags }}</div>
 
                 <!-- Add to Cart Form -->
                 <form class="custom-form" action="{% url 'add_to_bag' product.id %}" method="POST">
@@ -122,7 +122,7 @@
     <!-- Product Detailed Description Section -->
     <div class="product-detailed-description">
         <h3>Description</h3>
-        <p>{{ product.detailed_description|safe }}</p>
+        <div>{{ product.detailed_description|striptags }}</div>
     </div>
 
     <!-- Product Information Dropdown Section -->
@@ -135,7 +135,7 @@
             <div class="info-grid">
                 <div class="nutritional-info">
                     <h4>Nutritional Information</h4>
-                    <div>{{ product.nutritional_info|safe }}</div>
+                    <div>{{ product.nutritional_info|striptags }}</div>
                 </div>
 
                 <div class="divider-vertical"></div>
@@ -191,7 +191,6 @@
         <div class="detail-product-grid">
             {% for product in random_products %}
             <div class="product-card">
-                <a href="#">
                     <div class="image-wrapper">
                         {% if product.get_sale_price %}
                         <span class="sale-badge">{{ product.sale.discount_percentage|floatformat:0 }}% OFF</span>
@@ -218,7 +217,6 @@
                         {% endif %}
                         {% endif %}
                     </div>
-                </a>
                 <div class="product-details">
                     <p class="product-name">{{ product.name }}</p>
                     <p class="product-description">{{ product.description }}</p>
