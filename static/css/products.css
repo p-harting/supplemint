@@ -9,8 +9,7 @@
 
 .products-header {
     text-align: start;
-    margin-bottom: 20px;
-    padding: 20px;
+    padding: 0px 20px;
 }
 
 .products-title {
@@ -819,15 +818,6 @@ input[type="number"]::-webkit-inner-spin-button {
     justify-content: center;
 }
 
-.btn {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    text-decoration: none;
-    transition: all 0.2s ease;
-}
-
 .btn--primary {
     background-color: #007bff;
     color: white;
@@ -944,11 +934,7 @@ input[type="number"]::-webkit-inner-spin-button {
     .action-buttons {
         gap: 0.25rem;
     }
-    
-    .btn {
-        padding: 0.25rem 0.5rem;
-        font-size: 0.9rem;
-    }
+
 }
 
 /* Product Form Styles */

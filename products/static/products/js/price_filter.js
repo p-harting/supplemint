@@ -11,23 +11,75 @@ class PriceFilter {
         this.init();
     }
 
+    getPriceRange() {
+        let minPrice = Infinity;
+        let maxPrice = -Infinity;
+
+        this.productCards.forEach(card => {
+            const salePriceElement = card.querySelector('.sale-price');
+            const priceElement = salePriceElement || card.querySelector('.product-price');
+            
+            if (priceElement) {
+                const price = parseFloat(priceElement.textContent.replace('$', ''));
+                minPrice = Math.min(minPrice, price);
+                maxPrice = Math.max(maxPrice, price);
+            }
+        });
+
+        // If no prices found, use default range
+        if (minPrice === Infinity || maxPrice === -Infinity) {
+            return { min: 1, max: 100 };
+        }
+
+        // Round to nearest 10
+        minPrice = Math.floor(minPrice / 10) * 10;
+        maxPrice = Math.ceil(maxPrice / 10) * 10;
+
+        return { min: minPrice, max: maxPrice };
+    }
+
     init() {
         // Set range input accent color
         this.rangeInputs.forEach(input => {
             input.style.accentColor = '#ADEBB3';
         });
 
+        // Get actual price range from products
+        const { min, max } = this.getPriceRange();
+        
+        // Update range inputs
+        this.rangeInputs[0].min = min;
+        this.rangeInputs[0].max = max;
+        this.rangeInputs[0].value = min;
+        
+        this.rangeInputs[1].min = min;
+        this.rangeInputs[1].max = max;
+        this.rangeInputs[1].value = max;
+
+        // Update price inputs
+        this.priceInputs[0].value = min;
+        this.priceInputs[1].value = max;
+
         // Initialize event listeners
         this.setupRangeInputListeners();
         this.setupSaleFilterListener();
 
         // Initial filter
-        this.filterProductsByPrice(1, 100);
+        this.filterProductsByPrice(min, max);
     }
 
     filterProductsByPrice(minPrice, maxPrice) {
         this.productCards.forEach(card => {
-            const price = parseFloat(card.querySelector('.product-price').textContent.replace('$', ''));
+            // Check for sale price first, then regular price
+            const salePriceElement = card.querySelector('.sale-price');
+            const priceElement = salePriceElement || card.querySelector('.product-price');
+            
+            if (!priceElement) {
+                card.style.display = 'none';
+                return;
+            }
+
+            const price = parseFloat(priceElement.textContent.replace('$', ''));
             const isSale = card.querySelector('.sale-badge') !== null;
             const isInPriceRange = price >= minPrice && price <= maxPrice;
 
