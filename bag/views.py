@@ -97,25 +97,32 @@ def adjust_bag(request, item_id):
     bag = request.session.get('bag', {})
 
     if size:
-        if quantity > 0:
-            bag[item_id]['items_by_size'][size] = quantity
-            messages.success(request, f'Updated size {size.upper()} {product.name} quantity.')
+        # Ensure the structure is consistent
+        if item_id in bag and isinstance(bag[item_id], dict) and 'items_by_size' in bag[item_id]:
+            if quantity > 0:
+                bag[item_id]['items_by_size'][size] = {'quantity': quantity, 'price': bag[item_id]['items_by_size'][size]['price']}
+                messages.success(request, f'Updated size {size.upper()} {product.name} quantity.')
+            else:
+                del bag[item_id]['items_by_size'][size]
+                if not bag[item_id]['items_by_size']:
+                    bag.pop(item_id)
+                messages.success(request, f'Removed size {size.upper()} {product.name} from your bag.')
         else:
-            del bag[item_id]['items_by_size'][size]
-            if not bag[item_id]['items_by_size']:
-                bag.pop(item_id)
-            messages.success(request, f'Removed size {size.upper()} {product.name} from your bag.')
+            messages.error(request, "Size not found in the bag.")
     else:
-        if quantity > 0:
-            bag[item_id] = quantity
-            messages.success(request, f'Updated {product.name} quantity to {bag[item_id]}.')
+        # Handle non-size items
+        if item_id in bag and isinstance(bag[item_id], int):
+            if quantity > 0:
+                bag[item_id] = quantity
+                messages.success(request, f'Updated {product.name} quantity to {bag[item_id]}.')
+            else:
+                bag.pop(item_id)
+                messages.success(request, f'Removed {product.name} from your bag.')
         else:
-            bag.pop(item_id)
-            messages.success(request, f'Removed {product.name} from your bag.')
+            messages.error(request, "Item not found in the bag.")
 
     request.session['bag'] = bag
     return redirect(reverse('view_bag'))
-
 
 def remove_from_bag(request, item_id):
     """Remove a product or size from the shopping bag."""
