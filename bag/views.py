@@ -134,7 +134,21 @@ def add_to_bag(request, item_id):
 def adjust_bag(request, item_id):
     """Adjust the quantity of a product or size in the shopping bag."""
     product = get_object_or_404(Product, pk=item_id)
-    quantity = int(request.POST.get('quantity'))
+    quantity_str = request.POST.get('quantity')
+    if not quantity_str or not quantity_str.strip():
+        messages.error(request, "Please enter a valid quantity")
+        return redirect(reverse('view_bag'))
+        
+    try:
+        quantity = int(quantity_str)
+    except ValueError:
+        messages.error(request, "Please enter a valid number for quantity")
+        return redirect(reverse('view_bag'))
+        
+    if quantity < 1:
+        messages.error(request, "Quantity must be at least 1")
+        return redirect(reverse('view_bag'))
+        
     size = request.POST.get('product_size') if 'product_size' in request.POST else None
     bag = request.session.get('bag', {})
 
