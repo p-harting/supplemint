@@ -110,6 +110,8 @@ def all_products(request):
     current_sorting = f'{sort}_{direction}'
 
     # Pagination - 20 items per page
+    if not products.ordered:
+        products = products.order_by('id')
     paginator = Paginator(products, 20)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -153,6 +155,8 @@ def category_products(request, category_name):
             products = products.order_by(sortkey)
 
     # Pagination - 20 items per page
+    if not products.ordered:
+        products = products.order_by('id')
     paginator = Paginator(products, 20)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
