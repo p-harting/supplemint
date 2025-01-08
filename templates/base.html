@@ -4,7 +4,9 @@
 <html lang="en">
 
 <head>
-
+    {% block head %}
+    {% endblock %}
+    
     {% block meta %}
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta charset="utf-8">
@@ -33,7 +35,9 @@
     <script src="https://js.stripe.com/v3/"></script>
     {% endblock %}
 
-    <title>Supplemint {% block extra_title %}{% endblock %}</title>
+    {% block extra_title %}
+    <title>Supplemint</title>
+    {% endblock %}
 
 </head>
 
