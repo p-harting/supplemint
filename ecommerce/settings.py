@@ -213,14 +213,14 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-# Cache control for static files
-WHITENOISE_MAX_AGE = 31536000  # 1 year
-WHITENOISE_ALLOW_ALL_ORIGINS = True
-WHITENOISE_ADD_HEADERS_FUNCTION = 'ecommerce.settings.add_cache_headers'
-
 def add_cache_headers(headers, path, url):
     if path.endswith(('.css', '.js', '.png', '.jpg', '.jpeg', '.webp', '.svg', '.woff', '.woff2')):
         headers['Cache-Control'] = 'public, max-age=31536000, immutable'
+
+# Cache control for static files
+WHITENOISE_MAX_AGE = 31536000  # 1 year
+WHITENOISE_ALLOW_ALL_ORIGINS = True
+WHITENOISE_ADD_HEADERS_FUNCTION = add_cache_headers
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
