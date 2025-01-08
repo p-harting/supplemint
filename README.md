@@ -834,7 +834,7 @@ Other colors used in the design include:
 2. **Product Details Page**:  
    | **Desktop** | **Mobile** |
    |-------------|------------|
-   | ![Product Details Desktop](media/documentation/wireframes/product-details-desktop.png) | ![Product Details Mobile](media/documentation/wireframes/product-details-mobile.png) |
+   | ![Product Details Desktop](media/documentation/wireframes/product-desktop.png) | ![Product Details Mobile](media/documentation/wireframes/product-mobile.png) |
 
 3. **Category Page**:  
    | **Desktop** | **Mobile** |
