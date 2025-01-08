@@ -148,6 +148,15 @@ body {
     flex-direction: column;
     align-items: center;
     font-size: 0.8rem;
+    position: relative;
+}
+
+.user-item.dropdown:hover .dropdown-content,
+.user-item.dropdown:focus-within .dropdown-content {
+    display: block;
+    top: 100%;
+    right: 0;
+    z-index: 1000;
 }
 
 .account-text,

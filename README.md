@@ -925,12 +925,12 @@ Below are the Lighthouse testing results for various pages of the website. Each 
 
 | **Page**                     | **Screenshot**                                                |
 |------------------------------|---------------------------------------------------------------|
-| **Homepage (Index Page) - Desktop** | ![Home Desktop](media/documentation/testing/lighthouse/index-desktop.png) |
-| **Homepage (Index Page) - Mobile**  | ![Home Mobile](media/documentation/testing/lighthouse/index-mobile.png)  |
-| **Category Page - Desktop**   | ![Category Desktop](media/documentation/testing/lighthouse/category-desktop.png) |
-| **Category Page - Mobile**    | ![Category Mobile](media/documentation/testing/lighthouse/category-mobile.png)  |
-| **Product Details Page - Desktop** | ![Product Details Desktop](media/documentation/testing/lighthouse/product-desktop.png) |
-| **Product Details Page - Mobile**  | ![Product Details Mobile](media/documentation/testing/lighthouse/product-mobile.png) |
+| **Homepage (Index Page) - Desktop** | ![Home Desktop](media/documentation/testing/lighthouse/index-desktop.PNG) |
+| **Homepage (Index Page) - Mobile**  | ![Home Mobile](media/documentation/testing/lighthouse/index-mobile.PNG)  |
+| **Category Page - Desktop**   | ![Category Desktop](media/documentation/testing/lighthouse/category-desktop.PNG) |
+| **Category Page - Mobile**    | ![Category Mobile](media/documentation/testing/lighthouse/category-mobile.PNG)  |
+| **Product Details Page - Desktop** | ![Product Details Desktop](media/documentation/testing/lighthouse/product-desktop.PNG) |
+| **Product Details Page - Mobile**  | ![Product Details Mobile](media/documentation/testing/lighthouse/product-mobile.PNG) |
 
 ### Manual Testing
 
