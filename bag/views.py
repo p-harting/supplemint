@@ -110,21 +110,25 @@ def add_to_bag(request, item_id):
                 }
             }}
     else:
-        existing_quantity = bag.get(item_id, 0)
-        total_quantity = existing_quantity + quantity
-        if total_quantity > 99:
-            messages.error(request, f"You can't have more than 99 items of the same product. You already have {existing_quantity} in your bag.")
-            return redirect(redirect_url)
-        if total_quantity > product.stock:
-            messages.error(request, f"Only {product.stock} items available. You already have {existing_quantity} in your bag.")
-            return redirect(redirect_url)
-        # Use the product's built-in sale price calculation
-        sale_price = product.get_sale_price or product.base_price
-        bag[item_id] = {
-            'quantity': bag.get(item_id, {}).get('quantity', 0) + quantity,
-            'price': str(sale_price),
-            'original_price': str(product.base_price)
-        }
+        if item_id in bag:
+            # Item already exists, update quantity
+            existing_quantity = bag[item_id].get('quantity', 0)
+            total_quantity = existing_quantity + quantity
+            if total_quantity > 99:
+                messages.error(request, f"You can't have more than 99 items of the same product. You already have {existing_quantity} in your bag.")
+                return redirect(redirect_url)
+            if total_quantity > product.stock:
+                messages.error(request, f"Only {product.stock} items available. You already have {existing_quantity} in your bag.")
+                return redirect(redirect_url)
+            bag[item_id]['quantity'] += quantity
+        else:
+            # New item, create structure
+            sale_price = product.get_sale_price or product.base_price
+            bag[item_id] = {
+                'quantity': quantity,
+                'price': str(sale_price),
+                'original_price': str(product.base_price)
+            }
         messages.success(request, f'Updated {product.name} quantity to {bag[item_id]["quantity"]}.')
 
     request.session['bag'] = bag
