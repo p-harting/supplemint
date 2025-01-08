@@ -1,5 +1,7 @@
 from django import forms
+from django.core.exceptions import ValidationError
 from allauth.account.forms import SignupForm
+from allauth.account.models import EmailAddress
 from .models import ReferralCode
 from profiles.models import UserProfile
 
@@ -8,6 +10,15 @@ class CustomSignupForm(SignupForm):
     Extends the default SignupForm to include an optional referral code field.
     """
     referral_code = forms.CharField(max_length=12, required=False)
+
+    def clean_email(self):
+        """
+        Validate that the email is not already registered.
+        """
+        email = self.cleaned_data.get('email')
+        if EmailAddress.objects.filter(email__iexact=email).exists():
+            raise ValidationError("This email is already registered. Please use a different email or login.")
+        return email
 
     def save(self, request):
         """
