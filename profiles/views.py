@@ -1,9 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from .models import UserProfile
 from .forms import UserProfileForm
 
+@login_required
 def profile(request):
     """Display and handle the user's profile."""
     # Retrieve the UserProfile for the current logged-in user
