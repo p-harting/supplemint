@@ -120,8 +120,6 @@
     border: 2px solid #e0e0e0 !important;
     border-radius: 4px !important;
     transition: all 0.2s !important;
-    -webkit-appearance: none !important;
-    -moz-appearance: none !important;
     appearance: none !important;
     position: relative !important;
     background: white !important;
@@ -129,7 +127,6 @@
 
 .form-group.checkbox-group input[type="checkbox"]:checked {
     background-color: #ADEBB3 !important;
-    border-color: #ADEBB3 !important;
 }
 
 .form-group.checkbox-group input[type="checkbox"]:checked::after {
@@ -314,8 +311,6 @@ div:has(> #id_remember) {
     border: 2px solid #e0e0e0 !important;
     border-radius: 4px !important;
     transition: all 0.2s !important;
-    -webkit-appearance: none !important;
-    -moz-appearance: none !important;
     appearance: none !important;
     position: relative !important;
     background: white !important;
@@ -324,7 +319,6 @@ div:has(> #id_remember) {
 
 #id_remember:checked {
     background-color: #ADEBB3 !important;
-    border-color: #ADEBB3 !important;
 }
 
 #id_remember:checked::after {

@@ -32,9 +32,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const updateDisplayPrice = () => {
         if (sizeSelector && priceDisplay) {
             const selectedOption = sizeSelector.options[sizeSelector.selectedIndex];
-            const price = selectedOption.getAttribute('data-price');
-            if (price) {
-                priceDisplay.textContent = `$${price}`;
+            const originalPrice = parseFloat(selectedOption.getAttribute('data-original-price'));
+            const salePercentage = parseFloat(selectedOption.getAttribute('data-sale-percentage'));
+            
+            if (originalPrice) {
+                if (salePercentage > 0) {
+                    const discountAmount = originalPrice * (salePercentage / 100);
+                    const salePrice = (originalPrice - discountAmount).toFixed(2);
+                    
+                    // Show both prices with strikethrough for original
+                    priceDisplay.innerHTML = `
+                        <span class="original-price">$${originalPrice.toFixed(2)}</span>
+                        <span class="sale-price">$${salePrice}</span>
+                    `;
+                } else {
+                    // Show only original price
+                    priceDisplay.innerHTML = `$${originalPrice.toFixed(2)}`;
+                }
             }
         }
     };
