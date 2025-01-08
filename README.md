@@ -87,7 +87,9 @@ This project was developed as part of a full-stack web development course, showc
 - **Secure Transactions**: Enjoy peace of mind with reliable payment processing and order confirmations.  
 
 ## Business Model
-Supplemint is an innovative e-commerce platform dedicated to providing high-quality supplements with a focus on wellness, fitness, and convenience. Our business model outlines the key components of our operations, value proposition, and customer segments to ensure a seamless and impactful experience for our users.
+
+**Supplemint** is an innovative e-commerce platform dedicated to providing high-quality supplements with a focus on wellness, fitness, and convenience. Our business model outlines the key components of our operations, value proposition, and customer segments to ensure a seamless and impactful experience for our users.
+
 ![mockup](media/documentation/business-model-canvas.png)
 ---
 
@@ -822,21 +824,23 @@ Other colors used in the design include:
    - Filters and sorting options allow users to refine their search by price, rating, or other criteria.
    - The design ensures that users can easily navigate between different categories and subcategories.
 
-### Desktop vs. Mobile Design
+### UX Design
 
-Below are the screenshots showcasing the design on both **desktop** and **mobile** views for the following pages:
+1. **Homepage**:  
+   | **Desktop** | **Mobile** |
+   |-------------|------------|
+   | ![Home Desktop](media/documentation/wireframes/home-desktop.png) | ![Home Mobile](media/documentation/wireframes/home-mobile.png) |
 
-- **Homepage (Index Page)**:
-  - **Desktop**: [Desktop Screenshot of Homepage]
-  - **Mobile**: [Mobile Screenshot of Homepage]
+2. **Product Details Page**:  
+   | **Desktop** | **Mobile** |
+   |-------------|------------|
+   | ![Product Details Desktop](media/documentation/wireframes/product-details-desktop.png) | ![Product Details Mobile](media/documentation/wireframes/product-details-mobile.png) |
 
-- **Product Details Page**:
-  - **Desktop**: [Desktop Screenshot of Product Details]
-  - **Mobile**: [Mobile Screenshot of Product Details]
+3. **Category Page**:  
+   | **Desktop** | **Mobile** |
+   |-------------|------------|
+   | ![Category Desktop](media/documentation/wireframes/category-desktop.png) | ![Category Mobile](media/documentation/wireframes/category-mobile.png) |
 
-- **Category Page**:
-  - **Desktop**: [Desktop Screenshot of Category Page]
-  - **Mobile**: [Mobile Screenshot of Category Page]
 
 ### Future Improvements
 
@@ -851,3 +855,126 @@ Below are the screenshots showcasing the design on both **desktop** and **mobile
 
 4. **Design System**:
    Moving forward, I plan to create a **design system** to streamline the development process and ensure consistency across the platform. This system will include reusable components, styles, and design patterns that can be easily implemented and maintained.
+
+## Marketing Strategies
+
+### 1. **Digital Marketing**
+- **SEO**: Optimize product pages and blog content with targeted keywords to improve organic search rankings.
+- **PPC Ads**: Run Google Ads and social media campaigns targeting health-conscious audiences.
+- **Email Marketing**: Send personalized emails, including welcome discounts, newsletters, and cart abandonment reminders.
+
+### 2. **Social Media Marketing**
+- **Platforms**: Focus on Instagram, Facebook, TikTok, and Pinterest for visually engaging content.
+- **Content**: Share product highlights, customer testimonials, and educational posts about supplements.
+- **Influencers**: Partner with fitness and wellness influencers to promote products and build credibility.
+
+### 3. **Community Engagement**
+- **Referral Program**: Reward customers for referring friends with discounts or exclusive perks.
+- **User-Generated Content**: Encourage customers to share their experiences using a branded hashtag.
+- **Online Communities**: Engage in health and fitness forums to build trust and visibility.
+
+### 4. **Content Marketing**
+- **Blog**: Publish articles on topics like "Top Supplements for Fitness" or "How to Boost Immunity."
+- **Videos**: Create short, informative videos about product benefits and share them on YouTube and Instagram.
+
+### 5. **Partnerships**
+- **Gyms**: Collaborate with fitness centers to offer exclusive discounts to members.
+- **Brands**: Partner with complementary health and wellness brands for cross-promotions.
+
+### 6. **Customer Retention**
+- **Loyalty Program**: Launch a points-based system to reward repeat purchases.
+- **Personalized Recommendations**: Use customer data to suggest relevant products via email.
+
+### 7. **Performance Tracking**
+- **Metrics**: Monitor website traffic, conversion rates, and campaign ROI using tools like Google Analytics.
+- **Feedback**: Analyze customer reviews to identify areas for improvement.
+
+## Testing
+
+### Code Validation
+
+#### HTML Validation
+
+#### CSS Validation
+
+#### JavaScript Validation
+
+#### Python Validation
+
+#### Lighthouse Testing
+
+### Manual Testing
+
+### Summary
+
+## Deployment
+
+The **Supplemint** Django application was deployed on **Heroku**, leveraging its seamless integration with GitHub for efficient deployment. Below is a detailed overview of the deployment process, including the necessary configurations and adjustments made to ensure a smooth and secure deployment.
+
+---
+
+### 1. **Heroku App Creation**
+- A new Heroku app was created by logging into the Heroku dashboard and selecting **"New" > "Create new app"**.
+- A unique app name was chosen, and the appropriate region was selected to optimize performance.
+
+---
+
+### 2. **GitHub Integration**
+- In the **"Deploy"** tab of the Heroku app, GitHub was selected as the deployment method.
+- The repository containing the Django application was connected to Heroku, enabling automatic deployments upon pushing changes to the main branch.
+
+---
+
+### 3. **Environment Configuration**
+- In the **"Settings"** tab, the **"Reveal Config Vars"** option was used to add the necessary environment variables. These included:
+  - **SECRET_KEY**: The Django secret key for securing the application.
+  - **DATABASE_URL**: The URL for the PostgreSQL database provided by Heroku.
+  - **AWS_ACCESS_KEY_ID** and **AWS_SECRET_ACCESS_KEY**: Credentials for integrating Amazon AWS S3 buckets for static and media file storage.
+  - **EMAIL_HOST_PASS** and **EMAIL_HOST_USER**: Credentials for sending transactional emails via the configured email service.
+  - **STRIPE_SECRET_KEY** and **STRIPE_WH_SECRET**: Keys for enabling secure payment processing through Stripe.
+
+---
+
+### 4. **Database Configuration**
+- The **DATABASE_URL** environment variable was used to configure the PostgreSQL database in the Django settings. This ensured a reliable and scalable database connection for the application.
+
+---
+
+### 5. **Amazon AWS S3 Integration**
+- Instead of using Cloudinary, **Amazon AWS S3** was utilized for storing static and media files. The following steps were taken:
+  - An S3 bucket was created, and the necessary permissions were configured.
+  - The **django-storages** library was installed and configured in the Django settings to enable S3 integration.
+  - The **AWS_ACCESS_KEY_ID** and **AWS_SECRET_ACCESS_KEY** environment variables were added to Heroku to authenticate the S3 connection.
+
+---
+
+### 6. **Buildpack Configuration**
+- In the **"Settings"** tab, the **"Buildpacks"** section was accessed, and the **heroku/python** buildpack was added. This ensured that Heroku recognized the application as a Python-based project.
+
+---
+
+### 7. **Content Security Policy (CSP)**
+- To enhance security, a **Content Security Policy (CSP)** was implemented in the Django settings. This included:
+  - Allowing trusted sources for scripts, styles, and images.
+  - Restricting unsafe inline scripts and styles to prevent cross-site scripting (XSS) attacks.
+  - Configuring the CSP to work seamlessly with AWS S3 for serving static and media files.
+
+---
+
+### 8. **Manual Deployment**
+- In the **"Deploy"** tab, the **main branch** was selected for deployment, and the **"Deploy Branch"** button was clicked to initiate the deployment process.
+- Once the deployment was complete, the application was verified by clicking **"View"** to ensure it was functioning as expected.
+
+---
+
+### 9. **Post-Deployment Verification**
+- After deployment, the application was thoroughly tested to ensure all features, including product browsing, cart management, and Stripe payments, were working correctly.
+- Error logs and performance metrics were monitored using Heroku's built-in tools to identify and resolve any issues promptly.
+
+## Future Improvements
+
+### Unsolved Issues and Bugs
+
+### Future Features
+
+## Credits and Acknowledgments
