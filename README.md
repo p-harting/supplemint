@@ -895,13 +895,42 @@ Other colors used in the design include:
 
 #### HTML Validation
 
+Below are the HTML validation results for various pages of the website:
+
+| **Page**                     | **Screenshot**                                                |
+|------------------------------|---------------------------------------------------------------|
+| **Blog Post Page**            | ![Blog Post](media/documentation/testing/html/blog-post.PNG)  |
+| **Blog Page**                 | ![Blog](media/documentation/testing/html/blog.PNG)           |
+| **Category Page**             | ![Category](media/documentation/testing/html/categorie.PNG)  |
+| **Contact Page**              | ![Contact](media/documentation/testing/html/contact.PNG)     |
+| **Index Page**                | ![Index](media/documentation/testing/html/index.PNG)         |
+| **Login Page**                | ![Login](media/documentation/testing/html/login.PNG)         |
+| **Privacy Page**              | ![Privacy](media/documentation/testing/html/privacy.PNG)     |
+| **Product Page**              | ![Product](media/documentation/testing/html/product.PNG)     |
+| **Returns Page**              | ![Returns](media/documentation/testing/html/returns.PNG)     |
+| **Shipping Page**             | ![Shipping](media/documentation/testing/html/shipping.PNG)   |
+| **Signup Page**               | ![Signup](media/documentation/testing/html/signup.PNG)       |
+| **Sub-Category Page**         | ![Sub-Category](media/documentation/testing/html/sub-category.PNG) |
+| **Terms Page**                | ![Terms](media/documentation/testing/html/terms.PNG)         |
+
 #### CSS Validation
 
 #### JavaScript Validation
 
 #### Python Validation
 
-#### Lighthouse Testing
+### Lighthouse Testing
+
+Below are the Lighthouse testing results for various pages of the website. Each screenshot represents the performance, accessibility, and best practices for both **desktop** and **mobile** views:
+
+| **Page**                     | **Screenshot**                                                |
+|------------------------------|---------------------------------------------------------------|
+| **Homepage (Index Page) - Desktop** | ![Home Desktop](media/documentation/testing/lighthouse/index-desktop.png) |
+| **Homepage (Index Page) - Mobile**  | ![Home Mobile](media/documentation/testing/lighthouse/index-mobile.png)  |
+| **Category Page - Desktop**   | ![Category Desktop](media/documentation/testing/lighthouse/category-desktop.png) |
+| **Category Page - Mobile**    | ![Category Mobile](media/documentation/testing/lighthouse/category-mobile.png)  |
+| **Product Details Page - Desktop** | ![Product Details Desktop](media/documentation/testing/lighthouse/product-desktop.png) |
+| **Product Details Page - Mobile**  | ![Product Details Mobile](media/documentation/testing/lighthouse/product-mobile.png) |
 
 ### Manual Testing
 
