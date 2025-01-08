@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.core.exceptions import ValidationError
 from .models import Product, Category, SubCategory, ProductSize, Sale
 
 # Inline for managing product sizes
@@ -7,8 +8,24 @@ class ProductSizeInline(admin.TabularInline):
     extra = 1
     fields = ('name', 'price', 'stock')
 
+    def clean(self):
+        """Validate that stock is not negative for each size"""
+        super().clean()
+        for form in self.forms:
+            if not form.cleaned_data or form.cleaned_data.get('DELETE'):
+                continue
+            stock = form.cleaned_data.get('stock', 0)
+            if stock < 0:
+                form.add_error('stock', 'Stock cannot be negative')
+
 # Product admin configuration
 class ProductAdmin(admin.ModelAdmin):
+    def clean(self):
+        """Validate that stock is not negative"""
+        super().clean()
+        if self.cleaned_data.get('stock', 0) < 0:
+            raise ValidationError('Stock cannot be negative')
+
     # List of fields to display in the product list view
     list_display = (
         'sku', 'name', 'category', 'subcategory', 'base_price', 
