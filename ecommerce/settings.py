@@ -68,8 +68,10 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'django.middleware.gzip.GZipMiddleware',
     'csp.middleware.CSPMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -196,6 +198,15 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
+# Cache control for static files
+WHITENOISE_MAX_AGE = 31536000  # 1 year
+WHITENOISE_ALLOW_ALL_ORIGINS = True
+WHITENOISE_ADD_HEADERS_FUNCTION = 'ecommerce.settings.add_cache_headers'
+
+def add_cache_headers(headers, path, url):
+    if path.endswith(('.css', '.js', '.png', '.jpg', '.jpeg', '.webp', '.svg', '.woff', '.woff2')):
+        headers['Cache-Control'] = 'public, max-age=31536000, immutable'
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -204,6 +215,7 @@ if 'USE_AWS' in os.environ:
     AWS_S3_OBJECT_PARAMETERS = {
         'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
         'CacheControl': 'max-age=94608000',
+        'ContentEncoding': 'br',  # Enable brotli compression
     }
     # Bucket Config
     AWS_STORAGE_BUCKET_NAME = 'supplemint'

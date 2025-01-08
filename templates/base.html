@@ -17,9 +17,17 @@
     {% endblock %}
 
     {% block core_css %}
-    <link rel="stylesheet" href="{% static 'css/base.css' %}">
-    <link rel="stylesheet" href="{% static 'css/contact.css' %}">
-    <link rel="stylesheet" href="{% static 'css/products.css' %}">
+    <!-- Preload critical CSS -->
+    <link rel="preload" href="{% static 'css/base.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{% static 'css/base.css' %}"></noscript>
+    
+    <!-- Load non-critical CSS asynchronously -->
+    <link rel="preload" href="{% static 'css/contact.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{% static 'css/contact.css' %}"></noscript>
+    
+    <link rel="preload" href="{% static 'css/products.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{% static 'css/products.css' %}"></noscript>
+    
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
@@ -29,10 +37,11 @@
     {% endblock %}
 
     {% block core_js %}
-    <script src="https://kit.fontawesome.com/1d63fa792f.js" crossorigin="anonymous"></script>
+    <!-- Load non-critical JS with defer -->
+    <script src="https://kit.fontawesome.com/1d63fa792f.js" crossorigin="anonymous" defer></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="https://js.stripe.com/v3/"></script>
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous" defer></script>
+    <script src="https://js.stripe.com/v3/" defer></script>
     {% endblock %}
 
     {% block extra_title %}
