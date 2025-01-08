@@ -273,11 +273,70 @@ CKEDITOR_CONFIGS = {
 
 # Content Security Policy
 CSP_DEFAULT_SRC = ("'none'",)
-CSP_IMG_SRC = ("'self'", 'https://supplemint-ff2fe0e93175.herokuapp.com/', 'https://supplemint.s3.eu-north-1.amazonaws.com', 'https://*.s3.eu-north-1.amazonaws.com')
-CSP_STYLE_SRC = ("'self'", "'unsafe-inline'", 'https://fonts.googleapis.com', 'https://supplemint-ff2fe0e93175.herokuapp.com/', 'https://supplemint.s3.amazonaws.com', 'https://supplemint.s3.eu-north-1.amazonaws.com', 'https://*.s3.amazonaws.com', 'https://*.s3.eu-north-1.amazonaws.com')
-CSP_STYLE_SRC_ELEM = ("'self'", "'unsafe-inline'", 'https://fonts.googleapis.com', 'https://supplemint-ff2fe0e93175.herokuapp.com/', 'https://supplemint.s3.amazonaws.com', 'https://supplemint.s3.eu-north-1.amazonaws.com', 'https://*.s3.amazonaws.com', 'https://*.s3.eu-north-1.amazonaws.com')
-CSP_SCRIPT_SRC = ("'self'", "'unsafe-inline'", 'https://supplemint-ff2fe0e93175.herokuapp.com/', 'https://supplemint.s3.eu-north-1.amazonaws.com', 'https://*.s3.eu-north-1.amazonaws.com', 'https://js.stripe.com/v3/', 'https://kit.fontawesome.com', 'https://code.jquery.com')
-CSP_FONT_SRC = ("'self'", 'https://fonts.gstatic.com/', 'https://ka-f.fontawesome.com/')
-CSP_CONNECT_SRC = ("'self'", 'https://api.stripe.com/', 'https://ka-f.fontawesome.com/')
-CSP_FRAME_SRC = ("'self'", 'https://js.stripe.com')
-CSP_FRAME_ANCESTORS = ("'self'", 'https://js.stripe.com')
+CSP_IMG_SRC = (
+    "'self'", 
+    'https://supplemint-ff2fe0e93175.herokuapp.com/', 
+    'https://supplemint.s3.eu-north-1.amazonaws.com', 
+    'https://*.s3.eu-north-1.amazonaws.com', 
+    'https://supplemint.s3.amazonaws.com'
+)
+CSP_STYLE_SRC = (
+    "'self'", 
+    "'unsafe-inline'", 
+    'https://fonts.googleapis.com', 
+    'https://supplemint-ff2fe0e93175.herokuapp.com/', 
+    'https://supplemint.s3.amazonaws.com', 
+    'https://supplemint.s3.eu-north-1.amazonaws.com', 
+    'https://*.s3.amazonaws.com', 
+    'https://*.s3.eu-north-1.amazonaws.com'
+)
+CSP_STYLE_SRC_ELEM = (
+    "'self'", 
+    "'unsafe-inline'", 
+    'https://fonts.googleapis.com', 
+    'https://supplemint-ff2fe0e93175.herokuapp.com/', 
+    'https://supplemint.s3.amazonaws.com', 
+    'https://supplemint.s3.eu-north-1.amazonaws.com', 
+    'https://*.s3.amazonaws.com', 
+    'https://*.s3.eu-north-1.amazonaws.com'
+)
+CSP_SCRIPT_SRC = (
+    "'self'", 
+    "'unsafe-inline'", 
+    'https://supplemint-ff2fe0e93175.herokuapp.com/', 
+    'https://supplemint.s3.eu-north-1.amazonaws.com', 
+    'https://*.s3.eu-north-1.amazonaws.com', 
+    'https://supplemint.s3.amazonaws.com', 
+    'https://js.stripe.com/v3/', 
+    'https://kit.fontawesome.com', 
+    'https://code.jquery.com'
+)
+CSP_SCRIPT_SRC_ELEM = (
+    "'self'", 
+    "'unsafe-inline'", 
+    'https://supplemint-ff2fe0e93175.herokuapp.com/', 
+    'https://supplemint.s3.amazonaws.com', 
+    'https://supplemint.s3.eu-north-1.amazonaws.com', 
+    'https://*.s3.eu-north-1.amazonaws.com', 
+    'https://js.stripe.com/v3/', 
+    'https://kit.fontawesome.com', 
+    'https://code.jquery.com'
+)
+CSP_FONT_SRC = (
+    "'self'", 
+    'https://fonts.gstatic.com/', 
+    'https://ka-f.fontawesome.com/'
+)
+CSP_CONNECT_SRC = (
+    "'self'", 
+    'https://api.stripe.com/', 
+    'https://ka-f.fontawesome.com/'
+)
+CSP_FRAME_SRC = (
+    "'self'", 
+    'https://js.stripe.com'
+)
+CSP_FRAME_ANCESTORS = (
+    "'self'", 
+    'https://js.stripe.com'
+)
