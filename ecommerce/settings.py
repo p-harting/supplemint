@@ -302,6 +302,7 @@ CKEDITOR_CONFIGS = {
 CSP_DEFAULT_SRC = ("'none'",)
 CSP_IMG_SRC = (
     "'self'", 
+    'data:', 
     'https://supplemint-ff2fe0e93175.herokuapp.com/', 
     'https://supplemint.s3.eu-north-1.amazonaws.com', 
     'https://*.s3.eu-north-1.amazonaws.com', 

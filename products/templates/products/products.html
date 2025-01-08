@@ -1,19 +1,27 @@
 {% extends "base.html" %}
-{% load static %}
 
-{% block extra_head %}
-{% if subcategory %}
-<title>{{ subcategory.seo_title }}</title>
-<meta property="og:title" content="{{ subcategory.seo_title }}">
-<meta property="og:description" content="{{ subcategory.seo_meta_description }}">
-<meta property="og:keywords" content="{{ subcategory.seo_keywords }}">
-{% elif category %}
-<title>{{ category.seo_title }}</title>
-<meta property="og:title" content="{{ category.seo_title }}">
-<meta property="og:description" content="{{ category.seo_meta_description }}">
-<meta property="og:keywords" content="{{ category.seo_keywords }}">
-{% endif %}
+{% block meta %}
+    {% if subcategory %}
+    <title>{{ subcategory.seo_title }}</title>
+    <meta name="description" content="{{ subcategory.seo_meta_description|default:'Shop high-quality supplements at Supplemint. Find vitamins, minerals, and health products for your wellness needs.' }}">
+    <meta name="keywords" content="{{ subcategory.seo_keywords|default:'supplements, vitamins, minerals, health, wellness' }}">
+    <meta property="og:title" content="{{ subcategory.seo_title }}">
+    <meta property="og:description" content="{{ subcategory.seo_meta_description }}">
+    <meta property="og:keywords" content="{{ subcategory.seo_keywords }}">
+    {% elif category %}
+    <title>{{ category.seo_title }}</title>
+    <meta name="description" content="{{ category.seo_meta_description|default:'Shop high-quality supplements at Supplemint. Find vitamins, minerals, and health products for your wellness needs.' }}">
+    <meta name="keywords" content="{{ category.seo_keywords|default:'supplements, vitamins, minerals, health, wellness' }}">
+    <meta property="og:title" content="{{ category.seo_title }}">
+    <meta property="og:description" content="{{ category.seo_meta_description }}">
+    <meta property="og:keywords" content="{{ category.seo_keywords }}">
+    {% else %}
+    <title>Supplemint - Products</title>
+    <meta name="description" content="Shop high-quality supplements at Supplemint. Find vitamins, minerals, and health products for your wellness needs.">
+    <meta name="keywords" content="supplements, vitamins, minerals, health, wellness">
+    {% endif %}
 {% endblock %}
+{% load static %}
 
 {% block content %}
 <!-- Overlay for background effect -->
@@ -72,8 +80,9 @@
 
         <!-- Sorting Options (Price, Rating, Name, etc.) -->
         <div class="product-sort-container-left">
-            <div>
-                <select id="sort-selector">
+        <div class="sort-section">
+            <label for="sort-selector" class="sort-label">Sort by:</label>
+            <select id="sort-selector">
                     <option value="reset" {% if current_sorting == 'None_None' %}selected{% endif %}>Sort by...</option>
                     <option value="price_asc" {% if current_sorting == 'price_asc' %}selected{% endif %}>Price (low to
                         high)</option>
