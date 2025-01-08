@@ -1,6 +1,15 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block head %}
+{{ block.super }}
+<meta name="description" content="Discover premium nutrition for everyone. Shop our selection of vitamins, supplements, and protein powders to support your health and wellness goals.">
+<meta name="keywords" content="nutrition, vitamins, supplements, protein powders, health, wellness, premium nutrition, superfoods, bioactives, fitness">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<title>Premium Nutrition for Everyone | Supplemint</title>
+{% endblock %}
+
 {% block extra_css %}
 <!-- Include custom CSS for the index page -->
 <link rel="stylesheet" href="{% static 'home/css/index.css' %}">
