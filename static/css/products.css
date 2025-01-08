@@ -1,34 +1,34 @@
-.products-container {
-    max-width: 1200px;
-    margin: 160px auto;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 2px;
+/* Modern Nutritional Table Styles */
+.nutritional-info.modern-table {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
-.products-header {
-    text-align: start;
-    padding: 0px 20px;
+.nutrition-title {
+    color: #2c3e50;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
 }
 
-.products-title {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 10px;
+.nutrition-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
 }
 
-.divider {
-    width: 80%;
-    height: 4px;
-    background-color: #ADEBB3;
-    margin: 20px 0;
+.nutrition-table th {
+    background-color: #f8f9fa;
+    color: #495057;
+    font-weight: 600;
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 2px solid #dee2e6;
 }
 
-.product-sort-container {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
     padding: 15px;
 }
 
