@@ -32,26 +32,40 @@ def bag_contents(request):
             })
         else:
             # Item with size selection
-            for size, size_data in item_data['items_by_size'].items():
-                if isinstance(size_data, dict):
-                    # New format with explicit price and quantity
-                    quantity = size_data['quantity']
+            if 'items_by_size' in item_data:
+                for size, size_data in item_data['items_by_size'].items():
+                    if isinstance(size_data, dict):
+                        # New format with explicit price and quantity
+                        quantity = size_data['quantity']
+                        price = Decimal(size_data['price'])
+                    else:
+                        # Old format with just quantity
+                        quantity = size_data
+                        product_size = product.sizes.filter(name=size).first()
+                        price = product_size.price if product_size else product.base_price
+                    
                     price = Decimal(size_data['price'])
-                else:
-                    # Old format with just quantity
-                    quantity = size_data
-                    product_size = product.sizes.filter(name=size).first()
-                    price = product_size.price if product_size else product.base_price
-                
-                price = Decimal(size_data['price'])
-                original_price = Decimal(size_data['original_price'])
-                total += quantity * price
-                product_count += quantity
+                    original_price = Decimal(size_data['original_price'])
+                    total += quantity * price
+                    product_count += quantity
+                    bag_items.append({
+                        'item_id': item_id,
+                        'quantity': quantity,
+                        'product': product,
+                        'size': size,
+                        'price': price,
+                        'original_price': original_price,
+                    })
+            else:
+                # Handle items without sizes
+                price = Decimal(item_data['price'])
+                original_price = Decimal(item_data['original_price'])
+                total += item_data['quantity'] * price
+                product_count += item_data['quantity']
                 bag_items.append({
                     'item_id': item_id,
-                    'quantity': quantity,
+                    'quantity': item_data['quantity'],
                     'product': product,
-                    'size': size,
                     'price': price,
                     'original_price': original_price,
                 })
