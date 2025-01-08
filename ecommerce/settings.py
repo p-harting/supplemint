@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'core',
     'django.contrib.sitemaps',
+    'compressor',
 ]
 
 MIDDLEWARE = [
@@ -191,6 +192,20 @@ ACCOUNT_FORMS = {
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# Django Compressor Settings
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+)
+
+COMPRESS_ENABLED = True
+COMPRESS_OFFLINE = True
+COMPRESS_CSS_FILTERS = [
+    'compressor.filters.css_default.CssAbsoluteFilter',
+    'compressor.filters.cssmin.CSSMinFilter',
+]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 

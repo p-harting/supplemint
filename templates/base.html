@@ -17,16 +17,23 @@
     {% endblock %}
 
     {% block core_css %}
+    {% load compress %}
     <!-- Preload critical CSS -->
+    {% compress css %}
     <link rel="preload" href="{% static 'css/base.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="{% static 'css/base.css' %}"></noscript>
+    {% endcompress %}
     
     <!-- Load non-critical CSS asynchronously -->
+    {% compress css %}
     <link rel="preload" href="{% static 'css/contact.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="{% static 'css/contact.css' %}"></noscript>
+    {% endcompress %}
     
+    {% compress css %}
     <link rel="preload" href="{% static 'css/products.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="{% static 'css/products.css' %}"></noscript>
+    {% endcompress %}
     
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
