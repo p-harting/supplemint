@@ -2,9 +2,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
-from django.views.generic.base import TemplateView, RedirectView
 from django.views.static import serve
-from django.contrib.staticfiles.storage import staticfiles_storage
 from django.contrib.sitemaps.views import sitemap
 from .sitemaps import (
     StaticViewSitemap,
@@ -35,9 +33,14 @@ urlpatterns = [
     path('referrals/', include('referrals.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('reviews/', include('reviews.urls')),
-    path('robots.txt', serve, {'path': 'robots.txt', 'document_root': settings.BASE_DIR}),
-    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    path(
+        'robots.txt', serve,
+        {'path': 'robots.txt', 'document_root': settings.BASE_DIR}),
+    path(
+        'sitemap.xml', sitemap,
+        {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(
+        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

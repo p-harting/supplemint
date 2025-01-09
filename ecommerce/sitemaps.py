@@ -2,7 +2,7 @@ from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 from blog.models import Post
 from products.models import Product, Category, SubCategory
-from datetime import datetime
+
 
 class StaticViewSitemap(Sitemap):
     priority = 0.5
@@ -14,6 +14,7 @@ class StaticViewSitemap(Sitemap):
     def location(self, item):
         return reverse(item)
 
+
 class BlogSitemap(Sitemap):
     changefreq = "weekly"
     priority = 0.7
@@ -24,6 +25,7 @@ class BlogSitemap(Sitemap):
     def location(self, obj):
         return reverse('post_detail', args=[obj.slug])
 
+
 class ProductSitemap(Sitemap):
     changefreq = "weekly"
     priority = 0.8
@@ -33,8 +35,13 @@ class ProductSitemap(Sitemap):
 
     def location(self, obj):
         if obj.subcategory:
-            return reverse('product_detail', args=[obj.category.name, obj.subcategory.name, obj.slug])
-        return reverse('product_detail_no_subcategory', args=[obj.category.name, obj.slug])
+            return reverse(
+                'product_detail',
+                args=[obj.category.name, obj.subcategory.name, obj.slug])
+        return reverse(
+            'product_detail_no_subcategory',
+            args=[obj.category.name, obj.slug])
+
 
 class CategorySitemap(Sitemap):
     changefreq = "monthly"
@@ -46,6 +53,7 @@ class CategorySitemap(Sitemap):
     def location(self, obj):
         return reverse('category_products', args=[obj.name])
 
+
 class SubCategorySitemap(Sitemap):
     changefreq = "monthly"
     priority = 0.6
@@ -54,4 +62,6 @@ class SubCategorySitemap(Sitemap):
         return SubCategory.objects.all()
 
     def location(self, obj):
-        return reverse('subcategory_products', args=[obj.category.name, obj.name])
+        return reverse(
+            'subcategory_products',
+            args=[obj.category.name, obj.name])

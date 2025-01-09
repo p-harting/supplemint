@@ -1,6 +1,7 @@
 import re
 from django.core.exceptions import ValidationError
 
+
 def validate_email(email):
     """
     Validate email format using regex pattern

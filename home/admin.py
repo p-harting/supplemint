@@ -7,26 +7,29 @@ from django.urls import path
 from django.shortcuts import redirect
 from .models import NewsletterSubscriber, NewsletterEmail, PageContent
 
+
 @admin.register(NewsletterSubscriber)
 class NewsletterSubscriberAdmin(admin.ModelAdmin):
     """Admin configuration for NewsletterSubscriber model."""
-    
-    list_display = ('email', 'subscribed_at')  # Display email and subscription date
-    search_fields = ('email',)  # Enable search by email
-    list_filter = ('subscribed_at',)  # Filter by subscription date
+    list_display = ('email', 'subscribed_at')
+    search_fields = ('email',)
+    list_filter = ('subscribed_at',)
+
 
 @admin.register(NewsletterEmail)
 class NewsletterEmailAdmin(admin.ModelAdmin):
     """Admin configuration for NewsletterEmail model."""
-    
-    list_display = ('subject', 'created_at')  # Display subject and creation date
-    change_form_template = 'admin/newsletter_email_change_form.html'  # Custom form template for email changes
+    list_display = ('subject', 'created_at')
+    change_form_template = 'admin/newsletter_email_change_form.html'
 
     def get_urls(self):
         """Add custom URL for sending the newsletter."""
         urls = super().get_urls()
         custom_urls = [
-            path('<path:object_id>/send/', self.admin_site.admin_view(self.send_newsletter), name='home_newsletteremail_send_newsletter'),
+            path(
+                '<path:object_id>/send/',
+                self.admin_site.admin_view(self.send_newsletter),
+                name='home_newsletteremail_send_newsletter'),
         ]
         return custom_urls + urls
 
@@ -51,13 +54,14 @@ class NewsletterEmailAdmin(admin.ModelAdmin):
                 fail_silently=False,
             )
         # Notify the admin that the email was sent successfully
-        self.message_user(request, f"Newsletter '{email.subject}' sent successfully!")
+        self.message_user(
+            request, f"Newsletter '{email.subject}' sent successfully!")
         return redirect('..')
+
 
 @admin.register(PageContent)
 class PageContentAdmin(admin.ModelAdmin):
     """Admin configuration for PageContent model."""
-    
-    list_display = ('get_page_display', 'last_updated')  # Display page name and last updated date
-    list_filter = ('page',)  # Filter by page
-    search_fields = ('content',)  # Enable search by content
+    list_display = ('get_page_display', 'last_updated')
+    list_filter = ('page',)
+    search_fields = ('content',)
