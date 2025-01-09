@@ -79,12 +79,7 @@
                                     data-sale-percentage="{% if product.sale and product.sale.active %}{{ product.sale.discount_percentage }}{% else %}0{% endif %}"
                                     data-original-price="{{ size.price }}"
                                     {% if size.stock == 0 %}disabled{% endif %}>
-                                    {{ size.name }} - 
-                                    {% if product.sale and product.sale.active %}
-                                        <span class="sale-price">${{ size.price|floatformat:2 }}</span><span class="original-price">${{ size.price|floatformat:2 }}</span>
-                                    {% else %}
-                                        ${{ size.price|floatformat:2 }}
-                                    {% endif %}
+                                    {{ size.name }} - ${{ size.price|floatformat:2 }}
                                     {% if size.stock == 0 %}
                                     (Out of Stock)
                                     {% else %}
