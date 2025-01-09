@@ -15,7 +15,7 @@ def contact_view(request):
         if form.is_valid():
             form.save()  # Save the contact message
             messages.success(
-                request, 'Ihre Nachricht wurde erfolgreich gesendet.')
+                request, 'Your message got sent.')
             return redirect('contact')  # Redirect after successful submission
     else:
         form = ContactForm()  # Empty form for GET request

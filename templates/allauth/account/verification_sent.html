@@ -5,6 +5,10 @@
 
 {% block extra_title %}| Verify Email{% endblock %}
 
+{% block extra_meta %}
+    <meta name="description" content="Supplemint has sent you an email verification link. Check your inbox (and spam folder) to complete your account setup and access all features.">
+{% endblock %}
+
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/auth.css' %}">
 {% endblock %}
