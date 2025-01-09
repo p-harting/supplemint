@@ -919,6 +919,61 @@ Below are the HTML validation results for various pages of the website:
 
 #### Python Validation
 
+### Python Testing Screenshots
+
+| App          | File               | Screenshot                                                                 |
+|--------------|--------------------|----------------------------------------------------------------------------|
+| Bag          | admin.py           | ![bag-admin](media/documentation/testing/python/bag-admin.PNG)             |
+| Bag          | contexts.py        | ![bag-contexts](media/documentation/testing/python/bag-contexts.PNG)       |
+| Bag          | models.py          | ![bag-models](media/documentation/testing/python/bag-models.PNG)           |
+| Bag          | urls.py            | ![bag-urls](media/documentation/testing/python/bag-urls.PNG)               |
+| Bag          | views.py           | ![bag-views](media/documentation/testing/python/bag-views.PNG)             |
+| Blog         | admin.py           | ![blog-admin](media/documentation/testing/python/blog-admin.PNG)           |
+| Blog         | models.py          | ![blog-models](media/documentation/testing/python/blog-models.PNG)         |
+| Blog         | urls.py            | ![blog-urls](media/documentation/testing/python/blog-urls.PNG)             |
+| Blog         | views.py           | ![blog-views](media/documentation/testing/python/blog-views.PNG)           |
+| Checkout     | admin.py           | ![checkout-admin](media/documentation/testing/python/checkout-admin.PNG)   |
+| Checkout     | forms.py           | ![checkout-forms](media/documentation/testing/python/checkout-forms.PNG)   |
+| Checkout     | models.py          | ![checkout-models](media/documentation/testing/python/checkout-models.PNG) |
+| Checkout     | signals.py         | ![checkout-signals](media/documentation/testing/python/checkout-signals.PNG) |
+| Checkout     | urls.py            | ![checkout-urls](media/documentation/testing/python/checkout-urls.PNG)     |
+| Checkout     | views.py           | ![checkout-views](media/documentation/testing/python/checkout-views.PNG)   |
+| Checkout     | webhookhandler.py  | ![checkout-webhookhandler](media/documentation/testing/python/checkout-webhookhandler.PNG) |
+| Checkout     | webhooks.py        | ![checkout-webhooks](media/documentation/testing/python/checkout-webhooks.PNG) |
+| Contact      | admin.py           | ![contact-admin](media/documentation/testing/python/contact-admin.PNG)     |
+| Contact      | forms.py           | ![contact-forms](media/documentation/testing/python/contac-forms.PNG)      |
+| Contact      | models.py          | ![contact-models](media/documentation/testing/python/contact-models.PNG)   |
+| Contact      | urls.py            | ![contact-urls](media/documentation/testing/python/contact-urls.PNG)       |
+| Contact      | views.py           | ![contact-views](media/documentation/testing/python/contact-views.PNG)     |
+| Core         | utils.py           | ![core-utils](media/documentation/testing/python/core-utils.PNG)           |
+| Ecommerce    | settings.py        | ![ecommerce-settings](media/documentation/testing/python/ecommerce-settings.PNG) |
+| Ecommerce    | sitemaps.py        | ![ecommerce-sitemaps](media/documentation/testing/python/ecommerce-sitemaps.PNG) |
+| Ecommerce    | urls.py            | ![ecommerce-urls](media/documentation/testing/python/ecommerce-urls.PNG)   |
+| Home         | admin.py           | ![home-admin](media/documentation/testing/python/home-admin.PNG)           |
+| Home         | models.py          | ![home-models](media/documentation/testing/python/home-models.PNG)         |
+| Home         | urls.py            | ![home-urls](media/documentation/testing/python/home-urls.PNG)             |
+| Home         | views.py           | ![home-views](media/documentation/testing/python/home-views.PNG)           |
+| Products     | admin.py           | ![products-admin](media/documentation/testing/python/products-admin.PNG)   |
+| Products     | forms.py           | ![products-forms](media/documentation/testing/python/products-forms.PNG)   |
+| Products     | models.py          | ![products-models](media/documentation/testing/python/products-models.PNG) |
+| Products     | urls.py            | ![products-urls](media/documentation/testing/python/products-urls.PNG)     |
+| Products     | views.py           | ![products-views](media/documentation/testing/python/products-views.PNG)   |
+| Profiles     | admin.py           | ![profiles-admin](media/documentation/testing/python/profiles-admin.PNG)   |
+| Profiles     | forms.py           | ![profiles-forms](media/documentation/testing/python/profiles-forms.PNG)   |
+| Profiles     | models.py          | ![profiles-models](media/documentation/testing/python/profiles-models.PNG) |
+| Profiles     | urls.py            | ![profiles-urls](media/documentation/testing/python/profiles-urls.PNG)     |
+| Profiles     | views.py           | ![profiles-views](media/documentation/testing/python/profiles-views.PNG)   |
+| Referrals    | admin.py           | ![referrals-admin](media/documentation/testing/python/referrals-admin.PNG) |
+| Referrals    | forms.py           | ![referrals-forms](media/documentation/testing/python/referrals-forms.PNG) |
+| Referrals    | models.py          | ![referrals-models](media/documentation/testing/python/referrals-models.PNG) |
+| Referrals    | urls.py            | ![referrals-urls](media/documentation/testing/python/referrals-urls.PNG)   |
+| Referrals    | views.py           | ![referrals-views](media/documentation/testing/python/referrals-views.PNG) |
+| Reviews      | admin.py           | ![reviews-admin](media/documentation/testing/python/reviews-admin.PNG)     |
+| Reviews      | forms.py           | ![reviews-forms](media/documentation/testing/python/reviews-forms.PNG)     |
+| Reviews      | models.py          | ![reviews-models](media/documentation/testing/python/reviews-models.PNG)   |
+| Reviews      | urls.py            | ![reviews-urls](media/documentation/testing/python/reviews-urls.PNG)       |
+| Reviews      | views.py           | ![reviews-views](media/documentation/testing/python/reviews-views.PNG)     |
+
 ### Lighthouse Testing
 
 Below are the Lighthouse testing results for various pages of the website. Each screenshot represents the performance, accessibility, and best practices for both **desktop** and **mobile** views:
