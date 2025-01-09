@@ -8,6 +8,14 @@ This project was developed as part of a full-stack web development course, showc
 
 ### View the live website [here](https://supplemint-ff2fe0e93175.herokuapp.com/)
 
+## Project Rationale
+
+Supplemint was developed to address the growing demand for a reliable, user-friendly e-commerce platform specializing in high-quality nutritional supplements. The health and wellness industry has seen significant growth, with consumers increasingly prioritizing their well-being and seeking convenient, trustworthy solutions for their nutritional needs. Supplemint fills this gap by offering a curated selection of premium supplements, backed by a seamless shopping experience and robust backend functionality.
+
+The platform is designed to cater to a diverse audience, including health-conscious individuals, fitness enthusiasts, and busy professionals. Each user group has unique needs, and Supplemint addresses these through features such as detailed product information, personalized recommendations, and a secure, efficient checkout process. By focusing on user-centric design and functionality, Supplemint ensures that customers can easily find and purchase products tailored to their health goals.
+
+The development of Supplemint also serves as a demonstration of full-stack web development skills, showcasing the integration of Django, Python, Stripe for payment processing, and advanced database management. This project not only meets the needs of its target audience but also highlights the technical expertise required to build a scalable, secure, and responsive e-commerce platform.
+
 ## Features  
 
 ### Superior Product Selection  
