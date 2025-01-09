@@ -44,8 +44,9 @@ def bag_contents(request):
                         product_size = product.sizes.filter(name=size).first()
                         price = (product_size.price if product_size
                                  else product.base_price)
-                    price = Decimal(size_data['price'])
-                    original_price = Decimal(size_data['original_price'])
+                    original_price = Decimal(
+                        size_data.get('original_price', product.base_price)
+                    )
                     total += quantity * price
                     product_count += quantity
                     bag_items.append({
