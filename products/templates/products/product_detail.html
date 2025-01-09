@@ -48,8 +48,7 @@
                 <h2 class="product-name">{{ product.name }}</h2>
                 <div class="product-price" id="product-price">
                     {% if product.get_sale_price %}
-                    <span class="original-price">${{ product.base_price }}</span>
-                    <span class="sale-price">${{ product.get_sale_price }}</span>
+                    <span class="original-price">${{ product.base_price }}</span><span class="sale-price">${{ product.get_sale_price }}</span>
                     {% else %}
                     <span>${{ product.base_price }}</span>
                     {% endif %}
@@ -82,8 +81,7 @@
                                     {% if size.stock == 0 %}disabled{% endif %}>
                                     {{ size.name }} - 
                                     {% if product.sale and product.sale.active %}
-                                        <span class="sale-price">${{ size.price|floatformat:2 }}</span>
-                                        <span class="original-price">${{ size.price|floatformat:2 }}</span>
+                                        <span class="sale-price">${{ size.price|floatformat:2 }}</span><span class="original-price">${{ size.price|floatformat:2 }}</span>
                                     {% else %}
                                         ${{ size.price|floatformat:2 }}
                                     {% endif %}
@@ -235,7 +233,7 @@
                     <p class="product-rating">No Rating</p>
                     {% endif %}
                     <div class="price-bag-container">
-                        <p class="product-price">${{ product.base_price }}</p>
+                        <p class="product-price"><span>${{ product.base_price }}</span></p>
                         <form class="add-to-cart-form" action="{% url 'add_to_bag' product.id %}" method="POST">
                             {% csrf_token %}
                             {% if product.has_sizes %}
