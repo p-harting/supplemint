@@ -124,6 +124,12 @@ def add_to_bag(request, item_id):
                 }
             }}
     else:
+        if product.stock <= 0:
+            messages.error(
+                request,
+                f"Sorry, {product.name} is currently out of stock.")
+            return redirect(redirect_url)
+            
         if item_id in bag:
             # Item already exists, update quantity
             existing_quantity = bag[item_id].get('quantity', 0)
