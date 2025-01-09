@@ -7,6 +7,7 @@ from profiles.models import UserProfile
 from bag.models import DiscountCode
 
 
+@login_required
 def calculate_redeemable_balance(total_earnings, redeemed_amount):
     """
     Calculate the redeemable balance by rounding down to the nearest $10.

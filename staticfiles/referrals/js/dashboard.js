@@ -76,9 +76,7 @@ function redeemBalance() {
                 discountCodeElement.textContent = data.discount_code;
 
                 const amount = parseFloat(data.amount);
-                discountValueElement.textContent = !isNaN(amount)
-                    ? `$${amount.toFixed(2)}`
-                    : '$0.00';
+                discountValueElement.textContent = !isNaN(amount) ? `$${amount.toFixed(2)}` : '$0.00';
 
                 const redeemBtn = document.querySelector('.redeem-btn');
                 if (redeemBtn) {

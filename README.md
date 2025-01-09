@@ -1149,7 +1149,7 @@ As part of the development process, comprehensive testing was conducted to ensur
 
 #### Testing Methodology
 1. **Manual Testing**:
-   - The application was personally tested on Android and iOS devices, including iPhones and iPads, to ensure all buttons, functionalities, and game mechanics worked as intended. This included testing the game restart functionality, navigation, and overall user experience.
+   - The application was personally tested on Android and iOS devices, including iPhones and iPads, to ensure all buttons, functionalities, and the mechanics worked as intended. This included testing the navigation, and overall user experience.
    - Friends and relatives were also enlisted to test the application on their personal devices, covering additional Android models and ensuring a broader range of real-world usage scenarios.
 
 2. **Responsive Design Testing**:

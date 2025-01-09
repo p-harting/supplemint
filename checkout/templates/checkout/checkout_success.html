@@ -142,30 +142,29 @@ Checkout Success
                 <div class="product-tile-grid">
                     {% for product in recommended_products|slice:":6" %}
                     <div class="product-card">
-                        <a href="#">
-                            <div class="image-wrapper">
-                                <!-- Display sale badge if applicable -->
-                                {% if product.get_sale_price %}
-                                <span class="sale-badge">{{ product.sale.discount_percentage|floatformat:0 }}% OFF</span>
-                                {% endif %}
-                                <!-- Display product image -->
-                                {% if product.image %}
-                                {% if product.subcategory %}
-                                <a href="{% url 'product_detail' product.category.name product.subcategory.name product.slug %}">
-                                    <img class="product-image" src="{{ product.image.url }}" alt="{{ product.name }}">
-                                </a>
-                                {% else %}
-                                <a href="{% url 'product_detail_no_subcategory' product.category.name product.slug %}">
-                                    <img class="product-image" src="{{ product.image.url }}" alt="{{ product.name }}">
-                                </a>
-                                {% endif %}
-                                {% else %}
-                                <a href="{% url 'product_detail_no_subcategory' product.category.name product.slug %}">
-                                    <img class="product-image" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
-                                </a>
-                                {% endif %}
-                            </div>
-                        </a>
+                        <div class="image-wrapper">
+                            <!-- Display sale badge if applicable -->
+                            {% if product.get_sale_price %}
+                            <span class="sale-badge">{{ product.sale.discount_percentage|floatformat:0 }}% OFF</span>
+                            {% endif %}
+                            <!-- Display product image -->
+                            {% if product.image %}
+                            {% if product.subcategory %}
+                            <a
+                                href="{% url 'product_detail' product.category.name product.subcategory.name product.slug %}">
+                                <img class="product-image" src="{{ product.image.url }}" alt="{{ product.name }}">
+                            </a>
+                            {% else %}
+                            <a href="{% url 'product_detail_no_subcategory' product.category.name product.slug %}">
+                                <img class="product-image" src="{{ product.image.url }}" alt="{{ product.name }}">
+                            </a>
+                            {% endif %}
+                            {% else %}
+                            <a href="{% url 'product_detail_no_subcategory' product.category.name product.slug %}">
+                                <img class="product-image" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+                            </a>
+                            {% endif %}
+                        </div>
                         <div class="product-details">
                             <!-- Display product details -->
                             <p class="product-name">{{ product.name }}</p>

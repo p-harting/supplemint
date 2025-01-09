@@ -7,8 +7,6 @@ class PriceFilter {
         this.priceGap = 2;
         this.saleFilterBtn = document.getElementById('sale-filter-btn');
         this.showSaleOnly = false;
-
-        this.init();
     }
 
     getPriceRange() {
@@ -159,5 +157,6 @@ class PriceFilter {
 
 // Initialize price filter when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    new PriceFilter();
+    const priceFilter = new PriceFilter();
+    priceFilter.init(); // Explicitly call the init method
 });
