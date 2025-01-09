@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block title_extension %}
+Referral Dashboard
+{% endblock %}
+
 {% block extra_css %}
 <!-- Include custom CSS for the referral page -->
 <link rel="stylesheet" href="{% static 'referrals/css/referrals.css' %}">

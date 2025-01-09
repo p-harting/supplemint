@@ -1,22 +1,25 @@
 {% extends "base.html" %}
 
+{% block title_extension %}
+{% if subcategory %}
+{{ subcategory.seo_title|default:subcategory.friendly_name }}
+{% elif category %}
+{{ category.seo_title|default:category.friendly_name }}
+{% endif %}
+{% endblock %}
+
 {% block meta %}
     {% if subcategory %}
-    <title>{{ subcategory.seo_title }}</title>
     <meta name="description" content="{{ subcategory.seo_meta_description|default:'Shop high-quality supplements at Supplemint. Find vitamins, minerals, and health products for your wellness needs.' }}">
     <meta name="keywords" content="{{ subcategory.seo_keywords|default:'supplements, vitamins, minerals, health, wellness' }}">
-    <meta property="og:title" content="{{ subcategory.seo_title }}">
     <meta property="og:description" content="{{ subcategory.seo_meta_description }}">
     <meta property="og:keywords" content="{{ subcategory.seo_keywords }}">
     {% elif category %}
-    <title>{{ category.seo_title }}</title>
     <meta name="description" content="{{ category.seo_meta_description|default:'Shop high-quality supplements at Supplemint. Find vitamins, minerals, and health products for your wellness needs.' }}">
     <meta name="keywords" content="{{ category.seo_keywords|default:'supplements, vitamins, minerals, health, wellness' }}">
-    <meta property="og:title" content="{{ category.seo_title }}">
     <meta property="og:description" content="{{ category.seo_meta_description }}">
     <meta property="og:keywords" content="{{ category.seo_keywords }}">
     {% else %}
-    <title>Supplemint - Products</title>
     <meta name="description" content="Shop high-quality supplements at Supplemint. Find vitamins, minerals, and health products for your wellness needs.">
     <meta name="keywords" content="supplements, vitamins, minerals, health, wellness">
     {% endif %}

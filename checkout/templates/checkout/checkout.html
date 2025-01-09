@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% load static %}
 {% load bag_tools %}
-
+{% block title_extension %}
+Checkout
+{% endblock %}
 {% block extra_css %}
 <!-- Include custom CSS for the checkout page -->
 <link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">

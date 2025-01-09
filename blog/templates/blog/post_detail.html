@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
-
+{% block title_extension %}
+{{ post.title }}
+{% endblock %}
 {% block extra_css %}
 <!-- Include custom CSS for the blog page -->
 <link rel="stylesheet" href="{% static 'blog/css/blog.css' %}">
