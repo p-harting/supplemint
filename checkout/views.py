@@ -80,10 +80,20 @@ def checkout(request):
     # Create Stripe payment intent
     stripe_total = round(total * 100)
     stripe.api_key = stripe_secret_key
-    intent = stripe.PaymentIntent.create(
-        amount=stripe_total,
-        currency=settings.STRIPE_CURRENCY,
-    )
+    
+    # Handle zero total case
+    if stripe_total == 0:
+        # Use SetupIntent for zero amount transactions
+        intent = stripe.SetupIntent.create(
+            usage='off_session',
+            payment_method_types=['card'],
+        )
+    else:
+        # Use PaymentIntent for normal transactions
+        intent = stripe.PaymentIntent.create(
+            amount=stripe_total,
+            currency=settings.STRIPE_CURRENCY,
+        )
 
     # Handle form submission
     if request.method == 'POST':
