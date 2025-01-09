@@ -177,6 +177,32 @@
     box-shadow: 0 2px 6px rgba(173, 235, 179, 0.2);
 }
 
+/* New classes for password reset success page */
+.auth-button-flex {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    color: #000 !important;
+    padding: 1rem 1.5rem;
+}
+
+.auth-button-flex span {
+    color: #000 !important;
+    font-size: 1rem;
+}
+
+.auth-button-icon {
+    font-size: 1.2rem;
+    width: 1.2rem;
+    text-align: center;
+}
+
+.auth-actions-center {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
 .auth-divider {
     display: flex;
     align-items: center;
@@ -233,6 +259,27 @@
     margin-bottom: 1.5rem;
     font-size: 0.95rem;
     line-height: 1.4;
+}
+
+.success-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    background-color: #e8f5e9;
+    border: 1px solid #c8e6c9;
+    color: #2e7d32;
+    padding: 1.5rem;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.success-message i {
+    font-size: 2rem;
+    color: #2e7d32;
 }
 
 .field-error {

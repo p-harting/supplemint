@@ -822,14 +822,14 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .btn--primary {
-    background-color: #007bff;
+    background-color: #ADEBB3;
     color: white;
-    border: 1px solid #007bff;
+    border: 1px solid #ADEBB3;
 }
 
 .btn--primary:hover {
-    background-color: #0056b3;
-    border-color: #004085;
+    background-color: #ADEBB3;
+    border-color: #ADEBB3;
 }
 
 .btn--icon {
@@ -976,7 +976,7 @@ input[type="range"]::-moz-range-thumb {
 .product-form select:focus,
 .product-form textarea:focus {
     outline: none;
-    border-color: #007bff;
+    border-color: #ADEBB3;
     box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
 }
 
