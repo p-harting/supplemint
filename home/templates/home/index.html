@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block head %}
-{{ block.super }}
-<meta name="description" content="Discover premium nutrition for everyone. Shop our selection of vitamins, supplements, and protein powders to support your health and wellness goals.">
-<meta name="keywords" content="nutrition, vitamins, supplements, protein powders, health, wellness, premium nutrition, superfoods, bioactives, fitness">
-<link rel="preload" as="image" href="https://supplemint.s3.eu-north-1.amazonaws.com/media/hero-index.webp">
 {% block title_extension %}
 Premium Nutrition for Everyone
 {% endblock %}
+
+{% block extra_meta %}
+<meta name="description" content="Discover premium nutrition for everyone. Shop our selection of vitamins, supplements, and protein powders to support your health and wellness goals.">
+<meta name="keywords" content="nutrition, vitamins, supplements, protein powders, health, wellness, premium nutrition, superfoods, bioactives, fitness">
+<link rel="preload" as="image" href="https://supplemint.s3.eu-north-1.amazonaws.com/media/hero-index.webp">
 {% endblock %}
 
 {% block extra_css %}
