@@ -78,7 +78,9 @@ Checkout
         <!-- Checkout form section -->
         <div class="checkout-form-section">
             <p>Please fill out the form below to complete your order:</p>
-            <form action="{% url 'checkout' %}" method="POST" id="payment-form">
+            <form action="{% url 'checkout' %}" method="POST" id="payment-form" 
+                  data-discount-url="{% url 'apply_discount' %}"
+                  data-csrf-token="{{ csrf_token }}">
                 {% csrf_token %}
 
                 <!-- User details section -->

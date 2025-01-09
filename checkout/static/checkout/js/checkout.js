@@ -10,11 +10,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const code = discountCodeInput.value.trim();
         if (!code) return;
 
-        fetch('{% url "apply_discount" %}', {
+        const form = document.getElementById('payment-form');
+        const discountUrl = form.dataset.discountUrl;
+        const csrfToken = form.dataset.csrfToken;
+
+        fetch(discountUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'X-CSRFToken': '{{ csrf_token }}'
+                'X-CSRFToken': csrfToken
             },
             body: `discount_code=${encodeURIComponent(code)}`
         })
