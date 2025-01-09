@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.core.exceptions import ValidationError
 from .models import Product, Category, SubCategory, ProductSize, Sale
 
+
 # Inline for managing product sizes
 class ProductSizeInline(admin.TabularInline):
     model = ProductSize
@@ -18,6 +19,7 @@ class ProductSizeInline(admin.TabularInline):
             if stock < 0:
                 form.add_error('stock', 'Stock cannot be negative')
 
+
 # Product admin configuration
 class ProductAdmin(admin.ModelAdmin):
     def clean(self):
@@ -28,18 +30,17 @@ class ProductAdmin(admin.ModelAdmin):
 
     # List of fields to display in the product list view
     list_display = (
-        'sku', 'name', 'category', 'subcategory', 'base_price', 
-        'get_sale_display', 'get_stock_display', 'rating', 'image', 
+        'sku', 'name', 'category', 'subcategory', 'base_price',
+        'get_sale_display', 'get_stock_display', 'rating', 'image',
         'seo_title', 'seo_meta_description',
     )
-    
     # Fields to display in the form for adding/editing a product
     fields = (
-        'sku', 'name', 'category', 'subcategory', 'description', 'detailed_description', 
-        'nutritional_info', 'how_to_use', 'key_facts', 'has_sizes', 'base_price', 'sale', 
-        'stock', 'rating', 'image', 'slug', 'seo_title', 'seo_meta_description', 'seo_keywords',
+        'sku', 'name', 'category', 'subcategory', 'description',
+        'detailed_description', 'nutritional_info', 'how_to_use', 'key_facts',
+        'has_sizes', 'base_price', 'sale', 'stock', 'rating', 'image', 'slug',
+        'seo_title', 'seo_meta_description', 'seo_keywords',
     )
-    
     readonly_fields = ('rating',)  # Rating field is read-only
 
     inlines = [ProductSizeInline]
@@ -52,33 +53,48 @@ class ProductAdmin(admin.ModelAdmin):
         form = super().get_form(request, obj, **kwargs)
         if obj and obj.has_sizes:
             form.base_fields['stock'].widget.attrs['readonly'] = True
-            form.base_fields['stock'].help_text = 'Stock is managed through product sizes'
+            form.base_fields['stock'].help_text = (
+                'Stock is managed through product sizes')
         return form
-    
+
     def get_sale_display(self, obj):
         """
         Display sale price with discount info, or "No sale" if not on sale.
         """
         sale_price = obj.get_sale_price
         if sale_price:
-            return f"${sale_price} (${obj.base_price} - {obj.sale.discount_percentage}% off)"
+            return (
+                f"${sale_price} (${obj.base_price} - "
+                f"{obj.sale.discount_percentage}% off)")
         return "No sale"
     get_sale_display.short_description = 'Sale Price'
 
+
 # Category admin configuration
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('friendly_name', 'name', 'seo_title', 'seo_meta_description')
-    search_fields = ('name', 'friendly_name', 'seo_title', 'seo_meta_description')
+    list_display = (
+        'friendly_name', 'name', 'seo_title', 'seo_meta_description')
+    search_fields = (
+        'name', 'friendly_name', 'seo_title', 'seo_meta_description')
     ordering = ('name',)
-    fields = ('name', 'friendly_name', 'description', 'seo_title', 'seo_meta_description', 'seo_keywords')
+    fields = (
+        'name', 'friendly_name', 'description', 'seo_title',
+        'seo_meta_description', 'seo_keywords')
+
 
 # SubCategory admin configuration
 class SubCategoryAdmin(admin.ModelAdmin):
-    list_display = ('friendly_name', 'name', 'category', 'seo_title', 'seo_meta_description')
-    search_fields = ('name', 'friendly_name', 'seo_title', 'seo_meta_description')
+    list_display = (
+        'friendly_name', 'name', 'category', 'seo_title',
+        'seo_meta_description')
+    search_fields = (
+        'name', 'friendly_name', 'seo_title', 'seo_meta_description')
     ordering = ('name',)
     list_filter = ('category',)
-    fields = ('name', 'friendly_name', 'category', 'description', 'seo_title', 'seo_meta_description', 'seo_keywords')
+    fields = (
+        'name', 'friendly_name', 'category', 'description', 'seo_title',
+        'seo_meta_description', 'seo_keywords')
+
 
 # Register models with the admin site
 admin.site.register(Product, ProductAdmin)

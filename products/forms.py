@@ -6,6 +6,7 @@ from core.utils import (
 )
 from .models import Product
 
+
 # Form for Product model
 class ProductForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -15,8 +16,8 @@ class ProductForm(forms.ModelForm):
         for field_name in required_fields:
             if field_name in self.fields:
                 self.fields[field_name].label_suffix = ' *'
-                self.fields[field_name].label_attrs = {'class': 'required-star'}
-                
+                self.fields[field_name].label_attrs = (
+                    {'class': 'required-star'})
         # Add field-specific validations
         self.fields['name'].validators.append(
             lambda value: validate_max_length(value, 254, 'Name')
@@ -37,8 +38,8 @@ class ProductForm(forms.ModelForm):
         model = Product
         fields = '__all__'
         widgets = {
-            'description': forms.Textarea(attrs={'rows': 3}),  # Short description
-            'detailed_description': forms.Textarea(attrs={'rows': 5}),  # Longer description
-            'nutritional_info': forms.Textarea(attrs={'rows': 5}),  # Nutritional info
-            'how_to_use': forms.Textarea(attrs={'rows': 3}),  # Instructions
+            'description': forms.Textarea(attrs={'rows': 3}),
+            'detailed_description': forms.Textarea(attrs={'rows': 5}),
+            'nutritional_info': forms.Textarea(attrs={'rows': 5}),
+            'how_to_use': forms.Textarea(attrs={'rows': 3}),
         }

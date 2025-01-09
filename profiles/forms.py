@@ -1,16 +1,19 @@
 from django import forms
 from django.utils.safestring import mark_safe
 from .models import UserProfile
-from core.utils import validate_email, validate_max_length
+from core.utils import validate_max_length
+
 
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         # Fields to be included in the form
-        fields = ('full_name', 'email', 'phone_number',
-                 'street_address1', 'street_address2',
-                 'town_or_city', 'postcode', 'country',
-                 'county',)
+        fields = (
+            'full_name', 'email', 'phone_number',
+            'street_address1', 'street_address2',
+            'town_or_city', 'postcode', 'country',
+            'county',
+        )
 
     def __init__(self, *args, **kwargs):
         """
@@ -18,7 +21,6 @@ class UserProfileForm(forms.ModelForm):
         Also removes auto-generated labels and adjusts placeholder text.
         """
         super().__init__(*args, **kwargs)
-        
         # Define placeholders for each field
         placeholders = {
             'full_name': 'Full Name',
@@ -34,23 +36,24 @@ class UserProfileForm(forms.ModelForm):
 
         # Set autofocus on the first field
         self.fields['full_name'].widget.attrs['autofocus'] = True
-        
-        # Iterate through all fields to set placeholders, CSS classes, and labels
+        # Iterate through fields to set placeholders, CSS classes, and labels
         for field in self.fields:
             # Add required field indicator and red star
-            if field in ['full_name', 'email', 'phone_number', 'street_address1', 'town_or_city', 'postcode', 'country']:
+            if field in ['full_name', 'email', 'phone_number',
+                         'street_address1', 'town_or_city', 'postcode',
+                         'country']:
                 placeholder = f'{placeholders[field]} *'
-                self.fields[field].label = mark_safe(f'{placeholders[field]} <span class="required-star">*</span>')
+                self.fields[field].label = mark_safe(
+                    f'{placeholders[field]} '
+                    f'<span class="required-star">*</span>')
             else:
                 placeholder = placeholders[field]
                 self.fields[field].label = placeholders[field]
                 self.fields[field].required = False
-            
             # Set placeholder and CSS class for each field
             self.fields[field].widget.attrs['placeholder'] = placeholder
             self.fields[field].widget.attrs['class'] = 'stripe-style-input'
-            
-            # Add maxlength attributes and validation based on model field lengths
+            # Maxlength attributes and validation based on model field lengths
             if field == 'full_name':
                 self.fields[field].widget.attrs['maxlength'] = '50'
                 self.fields[field].validators.append(
@@ -64,7 +67,8 @@ class UserProfileForm(forms.ModelForm):
             elif field == 'phone_number':
                 self.fields[field].widget.attrs['maxlength'] = '20'
                 self.fields[field].validators.append(
-                    lambda value: validate_max_length(value, 20, 'Phone number')
+                    lambda value: validate_max_length(
+                        value, 20, 'Phone number')
                 )
             elif field == 'country':
                 self.fields[field].widget.attrs['maxlength'] = '40'
@@ -79,17 +83,20 @@ class UserProfileForm(forms.ModelForm):
             elif field == 'town_or_city':
                 self.fields[field].widget.attrs['maxlength'] = '40'
                 self.fields[field].validators.append(
-                    lambda value: validate_max_length(value, 40, 'Town or city')
+                    lambda value: validate_max_length(
+                        value, 40, 'Town or city')
                 )
             elif field == 'street_address1':
                 self.fields[field].widget.attrs['maxlength'] = '80'
                 self.fields[field].validators.append(
-                    lambda value: validate_max_length(value, 80, 'Street address 1')
+                    lambda value: validate_max_length(
+                        value, 80, 'Street address 1')
                 )
             elif field == 'street_address2':
                 self.fields[field].widget.attrs['maxlength'] = '80'
                 self.fields[field].validators.append(
-                    lambda value: validate_max_length(value, 80, 'Street address 2')
+                    lambda value: validate_max_length(
+                        value, 80, 'Street address 2')
                 )
             elif field == 'county':
                 self.fields[field].widget.attrs['maxlength'] = '80'

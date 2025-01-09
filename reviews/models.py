@@ -4,6 +4,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import User
 from products.models import Product
 
+
 class Review(models.Model):
     # Foreign key to Product, allowing multiple reviews per product
     product = models.ForeignKey(
@@ -11,14 +12,14 @@ class Review(models.Model):
         on_delete=models.CASCADE,
         related_name='reviews'
     )
-    
+
     # Foreign key to User, allowing multiple reviews per user
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name='reviews'
     )
-    
+
     # Rating field with validation for values between 1 and 5
     rating = models.IntegerField(
         validators=[
@@ -26,13 +27,13 @@ class Review(models.Model):
             MaxValueValidator(5)
         ]
     )
-    
+
     # Review text with a maximum length of 300 characters
     text = models.TextField(max_length=300)
-    
+
     # Boolean field to track if the review is approved
     approved = models.BooleanField(default=False)
-    
+
     # Timestamps for creation and last update
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -40,7 +41,7 @@ class Review(models.Model):
     class Meta:
         # Ensures a user can only leave one review per product
         unique_together = ('product', 'user')
-        
+
         # Orders reviews by creation date, newest first
         ordering = ['-created_at']
 
@@ -53,7 +54,8 @@ class Review(models.Model):
 
     def save(self, *args, **kwargs):
         """
-        Saves the review and updates the product rating if the review is approved.
+        Saves the review and updates the product rating if the
+        review is approved.
         If the approval status changes, the product rating is recalculated.
         """
         if self.pk:
@@ -62,7 +64,7 @@ class Review(models.Model):
                 super().save(*args, **kwargs)
                 self.update_product_rating()
                 return
-        
+
         super().save(*args, **kwargs)
         if self.approved:
             self.update_product_rating()
@@ -72,9 +74,11 @@ class Review(models.Model):
         Updates the product's average rating based on approved reviews.
         If no approved reviews exist, the rating is set to 0.
         """
-        approved_reviews = Review.objects.filter(product=self.product, approved=True)
+        approved_reviews = Review.objects.filter(
+            product=self.product, approved=True)
         if approved_reviews.exists():
-            avg_rating = approved_reviews.aggregate(Avg('rating'))['rating__avg']
+            avg_rating = approved_reviews.aggregate(
+                Avg('rating'))['rating__avg']
             self.product.rating = round(avg_rating, 1)
         else:
             self.product.rating = 0
