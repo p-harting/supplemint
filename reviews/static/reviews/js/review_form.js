@@ -6,9 +6,7 @@ document.getElementById('reviewForm').addEventListener('submit', function(e) {
     const productId = this.dataset.productId;
     
     // Determine the correct URL based on whether we're editing or adding a review
-    const url = reviewId 
-        ? `/reviews/edit/${reviewId}/`  // Edit review URL
-        : `/reviews/add/${productId}/`;  // Add review URL
+    const url = reviewId ? `/reviews/edit/${reviewId}/` : `/reviews/add/${productId}/`;
     
     // Send the form data using fetch
     fetch(url, {
