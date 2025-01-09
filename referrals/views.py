@@ -7,7 +7,6 @@ from profiles.models import UserProfile
 from bag.models import DiscountCode
 
 
-@login_required
 def calculate_redeemable_balance(total_earnings, redeemed_amount):
     """
     Calculate the redeemable balance by rounding down to the nearest $10.
@@ -60,8 +59,6 @@ def redeem_balance(request):
     if request.method == 'POST':
         try:
             referral_code = ReferralCode.objects.get(user=request.user)
-            transactions = ReferralTransaction.objects.filter(
-                referrer=request.user)
             redeemed_amount = (
                 referral_code.total_earnings -
                 referral_code.unredeemed_balance)
