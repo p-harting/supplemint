@@ -48,7 +48,7 @@
 .form-field input:focus,
 .form-field textarea:focus,
 .form-field select:focus {
-    border-color: #007bff;
+    border-color: #ADEBB3;
     outline: none;
 }
 
@@ -64,7 +64,7 @@
 }
 
 .form-submit {
-    background: #007bff;
+    background: #ADEBB3;
     color: white;
     padding: 1rem 2rem;
     border: none;
