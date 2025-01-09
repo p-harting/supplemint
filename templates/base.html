@@ -4,12 +4,14 @@
 <html lang="en">
 
 <head>
-    {% block head %}
-    {% endblock %}
-    
+    <title>
+        Supplemint - 
+        {% block title_extension %}{% endblock %}
+    </title>
+
     {% block meta %}
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% endblock %}
 
@@ -34,13 +36,18 @@
     <link rel="preload" href="{% static 'css/products.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="{% static 'css/products.css' %}"></noscript>
     {% endcompress %}
-    
+    {% endblock %}
+
+    {% block favicons %}
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
     {% endblock %}
 
     {% block extra_css %}
+    {% endblock %}
+
+    {% block head %}
     {% endblock %}
 
     {% block core_js %}
