@@ -1275,6 +1275,78 @@ The **Supplemint** Django application was deployed on **Heroku**, leveraging its
 - After deployment, the application was thoroughly tested to ensure all features, including product browsing, cart management, and Stripe payments, were working correctly.
 - Error logs and performance metrics were monitored using Heroku's built-in tools to identify and resolve any issues promptly.
 
+---
+
+### Forking and Cloning the Repository
+
+#### Forking the Repository
+To create a copy of the Supplemint repository for viewing or editing without affecting the original, you can fork the repository on GitHub. Follow these steps:
+
+1. Navigate to the [Supplemint repository](https://github.com/p-harting/supplemint) on GitHub.
+2. Click on the **"Fork"** button located in the top right corner of the repository page.
+3. Select **"Create Fork"** to create a copy of the repository under your GitHub account.
+
+#### Cloning the Repository
+To clone the Supplemint repository to your local machine for development or testing:
+
+1. Go to the [Supplemint repository](https://github.com/p-harting/supplemint) on GitHub.
+2. Click on the **"Code"** button to reveal the repository's HTTPS URL.
+3. Copy the HTTPS URL provided.
+4. Open your terminal or Git Bash and navigate to the directory where you want to clone the repository.
+5. Run the following command to clone the repository:
+```bash
+   git clone https://github.com/p-harting/supplemint.git
+```
+6. Press **Enter** to execute the command. The repository will be cloned to your local machine.
+---
+
+### Setting Up the Environment Locally
+After cloning the repository, follow these steps to set up the project environment:
+
+1. Navigate to the project directory:
+```bash
+   cd supplemint
+```
+2. Create a virtual environment to isolate dependencies:
+```bash
+   python -m venv venv
+```
+3. Activate the virtual environment:
+- On Windows:
+  ```
+  venv\Scripts\activate
+  ```
+- On macOS/Linux:
+  ```
+  source venv/bin/activate
+  ```
+4. Install the required dependencies using the `requirements.txt` file:
+```bash
+   pip install -r requirements.txt
+```
+---
+
+### Running the Application Locally
+Once the environment is set up, you can run the application locally:
+
+1. Apply database migrations:
+```bash
+   python manage.py migrate
+```
+2. Create a superuser to access the Django admin panel:
+```bash
+   python manage.py createsuperuser
+```
+3. Start the development server:
+```bash
+   python manage.py runserver
+```
+4. Open your browser and navigate to `http://127.0.0.1:8000/` to view the application.
+
+By following these steps, you can successfully fork, clone, set up, and deploy the Supplemint e-commerce platform.
+
+---
+
 ## Future Improvements
 
 ### Unsolved Issues and Bugs
