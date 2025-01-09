@@ -637,6 +637,73 @@ The application integrates with several external APIs to enhance functionality a
    - **Newsletter Subscription**: Automated welcome emails and regular newsletters are sent to subscribers using this API.
    - **Contact Form Responses**: When users submit queries through the Contact Us page, responses are handled via the Gmail API.
 
+## Technologies Used
+
+Supplemint was built using a combination of modern technologies and tools to ensure a robust, scalable, and user-friendly e-commerce platform. Below is a breakdown of the key technologies and frameworks used in the development of this project, based on the project's requirements:
+
+### Frontend
+- **HTML5**: For structuring the content and layout of the website.
+- **CSS3**: For styling and creating a visually appealing user interface.
+- **JavaScript**: For adding interactivity and dynamic features to the website.
+
+### Backend
+- **Django (5.1.1)**: A high-level Python web framework used for rapid development and clean, pragmatic design.
+- **Python**: The primary programming language for backend logic and functionality.
+
+### Database
+- **PostgreSQL**: A powerful, open-source relational database system used for storing and managing data efficiently.
+- **Django ORM**: For seamless interaction with the database and managing data models.
+
+### Payment Processing
+- **Stripe (11.2.0)**: Integrated for secure and efficient payment processing, ensuring a smooth checkout experience for users.
+
+### Deployment and Hosting
+- **Heroku**: A cloud platform used for deploying and hosting the application.
+- **AWS S3**: For storing and serving static and media files, ensuring fast and reliable access to resources.
+- **Whitenoise (6.8.2)**: For serving static files efficiently in production.
+
+### User Authentication and Management
+- **Django Allauth (64.2.1)**: For user authentication, registration, and account management.
+
+### Content Management
+- **Django CKEditor (6.7.0)**: For rich text editing capabilities, particularly useful for blog posts and product descriptions.
+
+### Static File Compression
+- **Django Compressor (4.5.1)**: For compressing and optimizing static files (CSS and JavaScript) to improve performance.
+
+### Internationalization
+- **Django Countries (7.2.1)**: For handling country-specific data, such as shipping addresses and currency formats.
+
+### Security
+- **Django CSP (3.8)**: For implementing a Content Security Policy to protect against cross-site scripting (XSS) and other code injection attacks.
+
+### Image Handling
+- **Pillow (10.0.0)**: For handling image processing and management, particularly for product images.
+
+### Environment Management
+- **Python Dotenv (1.0.1)**: For managing environment variables and sensitive configuration data.
+
+### Additional Libraries
+- **Boto3 (1.35.54)**: For interacting with AWS services, particularly S3 for file storage.
+- **Psycopg2 (2.9.10)**: For connecting Django to the PostgreSQL database.
+- **Gunicorn (23.0.0)**: A Python WSGI HTTP server used for deploying Django applications on Heroku.
+
+### Testing and Validation
+- **W3C Validator**: For validating HTML and CSS code to ensure compliance with web standards.
+- **JSHint**: For validating JavaScript code and identifying potential issues.
+- **PEP8**: For ensuring Python code adheres to style guidelines and best practices.
+- **Lighthouse**: For testing performance, accessibility, and best practices of the website.
+
+### Agile Methodology
+- **GitHub Projects**: For organizing tasks, tracking progress, and managing sprints during development.
+- **GitHub Issues**: For creating and managing tasks, bugs, and feature requests.
+
+### Design and Prototyping
+- **Figma**: For designing wireframes and prototypes to visualize the user interface and experience.
+- **Mermaid.js**: For creating diagrams and flowcharts to document the database schema and program flow.
+
+By leveraging these technologies, Supplemint delivers a high-performance, secure, and user-friendly e-commerce platform that meets the needs of its target audience while showcasing modern web development practices.
+
 ## Program Flow
 
 The program flow outlines the main user interactions and the sequence of actions that occur in the application. The flowchart below provides a visual representation of how users navigate through the website, from browsing products to completing a purchase or engaging with other features.
