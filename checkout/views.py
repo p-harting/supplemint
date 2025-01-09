@@ -1,10 +1,11 @@
-from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponse
+from django.shortcuts import (
+    render, redirect, reverse, get_object_or_404, HttpResponse)
 from django.views.decorators.http import require_POST
 from referrals.models import ReferralTransaction
 from django.contrib import messages
 from django.conf import settings
-from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template.loader import render_to_string
+from django.core.mail import EmailMultiAlternatives
 from .forms import OrderForm
 from .models import Order, OrderLineItem
 from products.models import Product
@@ -13,10 +14,10 @@ from profiles.forms import UserProfileForm
 from bag.contexts import bag_contents
 from bag.models import DiscountCode
 import stripe
-import random
 import json
 from decimal import Decimal
 from django.db.models import F
+
 
 @require_POST
 def cache_checkout_data(request):
@@ -34,7 +35,10 @@ def cache_checkout_data(request):
         })
         return HttpResponse(status=200)
     except Exception as e:
-        messages.error(request, 'Sorry, your payment cannot be processed right now. Please try again later.')
+        messages.error(
+            request,
+            'Sorry, your payment cannot be processed right now. '
+            'Please try again later.')
         return HttpResponse(content=e, status=400)
 
 
@@ -65,7 +69,10 @@ def checkout(request):
             code = DiscountCode.objects.get(code=discount_code, is_active=True)
             discount_amount = code.apply_discount(total)
             total -= discount_amount
-            messages.success(request, f'Discount code {code.code} applied! ${discount_amount:.2f} off your order.')
+            messages.success(
+                request,
+                f'Discount code {code.code} applied! '
+                f'${discount_amount:.2f} off your order.')
         except DiscountCode.DoesNotExist:
             messages.error(request, 'Invalid discount code.')
             request.session.pop('discount_code', None)
@@ -92,7 +99,7 @@ def checkout(request):
             'county': request.POST.get('county', ''),
         }
 
-        # If the user is authenticated, pre-fill the form with their profile data
+        # Pre-fill the form with their profile data
         if request.user.is_authenticated:
             try:
                 profile = UserProfile.objects.get(user=request.user)
@@ -100,7 +107,9 @@ def checkout(request):
                 if profile_form.is_valid():
                     profile_form.save()
                     if not form_data['full_name']:
-                        form_data['full_name'] = f"{profile.user.first_name} {profile.user.last_name}"
+                        form_data['full_name'] = (
+                            f"{profile.user.first_name}"
+                            f"{profile.user.last_name}")
                     if not form_data['email']:
                         form_data['email'] = profile.user.email
             except UserProfile.DoesNotExist:
@@ -118,13 +127,15 @@ def checkout(request):
             discount_code = request.session.get('discount_code')
             if discount_code:
                 try:
-                    code = DiscountCode.objects.get(code=discount_code, is_active=True)
+                    code = DiscountCode.objects.get(
+                        code=discount_code, is_active=True)
                     order.discount_code = code
                     discount_amount = code.apply_discount(total)
                     order.discount_amount = discount_amount
                     total -= discount_amount
                 except DiscountCode.DoesNotExist:
-                    messages.error(request, 'Invalid or inactive discount code.')
+                    messages.error(
+                        request, 'Invalid or inactive discount code.')
                     request.session.pop('discount_code', None)
 
             # Save the order and link the stripe payment ID
@@ -146,8 +157,12 @@ def checkout(request):
                         )
                         order_line_item.save()
                     else:
-                        for size, size_data in item_data['items_by_size'].items():
-                            quantity = size_data['quantity'] if isinstance(size_data, dict) else size_data
+                        for size, size_data in (
+                                item_data['items_by_size'].items()):
+                            quantity = (
+                                size_data['quantity']
+                                if isinstance(size_data, dict)
+                                else size_data)
                             order_line_item = OrderLineItem(
                                 order=order,
                                 product=product,
@@ -156,16 +171,23 @@ def checkout(request):
                             )
                             order_line_item.save()
                 except Product.DoesNotExist:
-                    messages.error(request, "A product in your bag wasn't found. Please contact us.")
+                    messages.error(
+                        request,
+                        "A product in your bag wasn't found."
+                        "Please contact us.")
                     order.delete()
                     return redirect(reverse('view_bag'))
 
             # Update the order total
             order.update_total()
             request.session['save_info'] = 'save-info' in request.POST
-            return redirect(reverse('checkout_success', args=[order.order_number]))
+            return redirect(
+                reverse('checkout_success', args=[order.order_number]))
         else:
-            messages.error(request, 'There was an error with your form. Please check your details.')
+            messages.error(
+                request,
+                'There was an error with your form. '
+                'Please check your details.')
 
     # Pre-fill the order form if the user is authenticated
     order = None
@@ -185,12 +207,15 @@ def checkout(request):
             )
         except UserProfile.DoesNotExist:
             print("No profile found for user")
-    
+
     order_form = OrderForm(instance=order)
 
     # Warn if Stripe public key is missing
     if not stripe_public_key:
-        messages.warning(request, 'Stripe public key is missing. Did you set it in your environment?')
+        messages.warning(
+            request,
+            'Stripe public key is missing. '
+            'Did you set it in your environment?')
 
     # Render the checkout page
     template = 'checkout/checkout.html'
@@ -202,6 +227,7 @@ def checkout(request):
     }
 
     return render(request, template, context)
+
 
 def checkout_success(request, order_number):
     """
@@ -260,7 +286,6 @@ def checkout_success(request, order_number):
             'checkout/order_confirmation_email.html',
             {'order': order}
         )
-        
         email = EmailMultiAlternatives(
             subject,
             html_body,
@@ -269,9 +294,12 @@ def checkout_success(request, order_number):
         )
         email.content_subtype = "html"
         email.send()
-        
         request.session['email_sent'] = True
-        messages.success(request, f'Order successfully processed! Your order number is {order_number}. A confirmation email has been sent to {order.email}.')
+        messages.success(
+            request,
+            f'Order successfully processed! '
+            f'Your order number is {order_number}.'
+            f'A confirmation email has been sent to {order.email}.')
 
     # Clear the shopping bag from the session
     if 'bag' in request.session:

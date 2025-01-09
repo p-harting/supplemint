@@ -3,10 +3,11 @@ from django.conf import settings
 from django.shortcuts import get_object_or_404
 from products.models import Product
 
+
 def bag_contents(request):
     """Calculate and return the shopping bag context data.
 
-    This includes item details, total cost, product count, delivery cost, 
+    This includes item details, total cost, product count, delivery cost,
     free delivery delta, and the grand total.
     """
     bag_items = []
@@ -16,7 +17,6 @@ def bag_contents(request):
 
     for item_id, item_data in bag.items():
         product = get_object_or_404(Product, pk=item_id)
-        
         if isinstance(item_data, int):
             # Item without size selection
             price = Decimal(item_data['price'])
@@ -42,8 +42,8 @@ def bag_contents(request):
                         # Old format with just quantity
                         quantity = size_data
                         product_size = product.sizes.filter(name=size).first()
-                        price = product_size.price if product_size else product.base_price
-                    
+                        price = (product_size.price if product_size
+                                 else product.base_price)
                     price = Decimal(size_data['price'])
                     original_price = Decimal(size_data['original_price'])
                     total += quantity * price

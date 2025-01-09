@@ -1,5 +1,5 @@
 from django.shortcuts import (
-    render, redirect, reverse, HttpResponse, get_object_or_404
+    render, redirect, reverse, get_object_or_404
 )
 from django.contrib import messages
 from django.utils import timezone
@@ -26,10 +26,12 @@ def apply_discount(request):
                 total = current_bag['grand_total']
                 discount_amount = discount_code.apply_discount(total)
                 new_total = total - discount_amount
-                
                 return JsonResponse({
                     'success': True,
-                    'message': f'Discount code {code} applied! ${discount_amount:.2f} off your order.',
+                    'message': (
+                        f'Discount code {code} applied! '
+                        f'${discount_amount:.2f} off your order.'
+                    ),
                     'new_total': f'{new_total:.2f}'
                 })
             else:
@@ -44,7 +46,6 @@ def apply_discount(request):
                 'success': False,
                 'message': 'Invalid discount code'
             })
-    
     return JsonResponse({
         'success': False,
         'message': 'Invalid request method'
@@ -56,7 +57,9 @@ def add_to_bag(request, item_id):
     product = get_object_or_404(Product, pk=item_id)
     quantity = int(request.POST.get('quantity'))
     redirect_url = request.POST.get('redirect_url')
-    size = request.POST.get('product_size') if 'product_size' in request.POST else None
+    size = (request.POST.get('product_size')
+            if 'product_size' in request.POST
+            else None)
     bag = request.session.get('bag', {})
 
     if size:
@@ -64,25 +67,32 @@ def add_to_bag(request, item_id):
         if not product_size:
             messages.error(request, "Selected size not found")
             return redirect(redirect_url)
-            
         existing_quantity = 0
-        if item_id in bag and isinstance(bag[item_id], dict) and 'items_by_size' in bag[item_id]:
+        if (item_id in bag and isinstance(bag[item_id], dict)
+                and 'items_by_size' in bag[item_id]):
             if size in bag[item_id]['items_by_size']:
-                existing_quantity = bag[item_id]['items_by_size'][size]['quantity']
-                
+                existing_quantity = (
+                    bag[item_id]['items_by_size'][size]['quantity'])
         total_quantity = existing_quantity + quantity
         if total_quantity > 99:
-            messages.error(request, f"You can't have more than 99 items of the same product. You already have {existing_quantity} in your bag.")
+            messages.error(
+                request,
+                f"You can't have more than 99 items of the same product. "
+                f"You already have {existing_quantity} in your bag.")
             return redirect(redirect_url)
         if total_quantity > product_size.stock:
-            messages.error(request, f"Only {product_size.stock} items available in size {size}. You already have {existing_quantity} in your bag.")
+            messages.error(
+                request,
+                (f"Only {product_size.stock} items available in size {size}. "
+                 f"You already have {existing_quantity} in your bag."))
             return redirect(redirect_url)
         size_price = product_size.price if product_size else product.base_price
         # Calculate sale price based on size price if product is on sale
         if product.sale and product.sale.active:
             now = timezone.now()
             if product.sale.start_date <= now <= product.sale.end_date:
-                discount = size_price * (product.sale.discount_percentage / 100)
+                discount = size_price * (
+                    product.sale.discount_percentage / 100)
                 sale_price = round(size_price - discount, 2)
             else:
                 sale_price = size_price
@@ -93,14 +103,18 @@ def add_to_bag(request, item_id):
             bag[item_id].setdefault('items_by_size', {})
             if size in bag[item_id]['items_by_size']:
                 bag[item_id]['items_by_size'][size]['quantity'] += quantity
-                messages.success(request, f'Updated size {size.upper()} {product.name} quantity.')
+                messages.success(
+                    request,
+                    f'Updated size {size.upper()} {product.name} quantity.')
             else:
                 bag[item_id]['items_by_size'][size] = {
                     'quantity': quantity,
                     'price': str(sale_price),
                     'original_price': str(size_price)
                 }
-                messages.success(request, f'Added size {size.upper()} {product.name} to your bag.')
+                messages.success(
+                    request,
+                    f'Added size {size.upper()} {product.name} to your bag.')
         else:
             bag[item_id] = {'items_by_size': {
                 size: {
@@ -115,10 +129,16 @@ def add_to_bag(request, item_id):
             existing_quantity = bag[item_id].get('quantity', 0)
             total_quantity = existing_quantity + quantity
             if total_quantity > 99:
-                messages.error(request, f"You can't have more than 99 items of the same product. You already have {existing_quantity} in your bag.")
+                messages.error(
+                    request,
+                    f"You can't have more than 99 items of the same product."
+                    f"You already have {existing_quantity} in your bag.")
                 return redirect(redirect_url)
             if total_quantity > product.stock:
-                messages.error(request, f"Only {product.stock} items available. You already have {existing_quantity} in your bag.")
+                messages.error(
+                    request,
+                    f"Only {product.stock} items available."
+                    f"You already have {existing_quantity} in your bag.")
                 return redirect(redirect_url)
             bag[item_id]['quantity'] += quantity
         else:
@@ -129,7 +149,9 @@ def add_to_bag(request, item_id):
                 'price': str(sale_price),
                 'original_price': str(product.base_price)
             }
-        messages.success(request, f'Updated {product.name} quantity to {bag[item_id]["quantity"]}.')
+        messages.success(
+            request,
+            f'Updated {product.name} quantity to {bag[item_id]["quantity"]}.')
 
     request.session['bag'] = bag
     return redirect(redirect_url)
@@ -142,47 +164,60 @@ def adjust_bag(request, item_id):
     if not quantity_str or not quantity_str.strip():
         messages.error(request, "Please enter a valid quantity")
         return redirect(reverse('view_bag'))
-        
     try:
         quantity = int(quantity_str)
     except ValueError:
         messages.error(request, "Please enter a valid number for quantity")
         return redirect(reverse('view_bag'))
-        
     if quantity < 1:
         messages.error(request, "Quantity must be at least 1")
         return redirect(reverse('view_bag'))
-        
-    size = request.POST.get('product_size') if 'product_size' in request.POST else None
+    size = (request.POST.get('product_size')
+            if 'product_size' in request.POST
+            else None)
     bag = request.session.get('bag', {})
 
     if size:
-        if item_id in bag and isinstance(bag[item_id], dict) and 'items_by_size' in bag[item_id]:
+        if (item_id in bag
+                and isinstance(bag[item_id], dict)
+                and 'items_by_size' in bag[item_id]):
             if size in bag[item_id]['items_by_size']:
                 existing_price = bag[item_id]['items_by_size'][size]['price']
                 product_size = product.sizes.filter(name=size).first()
-                
                 if not product_size:
-                    messages.error(request, "Selected size is no longer available")
+                    messages.error(
+                        request, "Selected size is no longer available")
                     return redirect(reverse('view_bag'))
-                    
                 if quantity > 99:
-                    messages.error(request, "You can't have more than 99 items of the same product")
+                    messages.error(
+                        request,
+                        "You can't have more than 99 items of"
+                        " the same product")
                     return redirect(reverse('view_bag'))
-                    
                 if quantity > product_size.stock:
-                    existing_quantity = bag[item_id]['items_by_size'][size]['quantity']
-                    messages.error(request, f"Only {product_size.stock} items available in size {size}. You already have {existing_quantity} in your bag.")
+                    existing_quantity = (
+                        bag[item_id]['items_by_size'][size]['quantity'])
+                    messages.error(
+                        request,
+                        f"Only {product_size.stock} items available in "
+                        f"size {size}. "
+                        f"You already have {existing_quantity} in your bag.")
                     return redirect(reverse('view_bag'))
-                    
                 if quantity > 0:
-                    bag[item_id]['items_by_size'][size] = {'quantity': quantity, 'price': existing_price}
-                    messages.success(request, f'Updated size {size.upper()} {product.name} quantity to {quantity}.')
+                    bag[item_id]['items_by_size'][size] = {
+                        'quantity': quantity, 'price': existing_price}
+                    messages.success(
+                        request,
+                        f'Updated size {size.upper()} {product.name} quantity '
+                        f'to {quantity}.')
                 else:
                     del bag[item_id]['items_by_size'][size]
                     if not bag[item_id]['items_by_size']:
                         bag.pop(item_id)
-                    messages.success(request, f'Removed size {size.upper()} {product.name} from your bag.')
+                    messages.success(
+                        request,
+                        f'Removed size {size.upper()} {product.name} '
+                        f'from your bag.')
             else:
                 messages.error(request, "Size not found in your bag.")
         else:
@@ -191,38 +226,51 @@ def adjust_bag(request, item_id):
         # Handle non-size items
         if item_id in bag and isinstance(bag[item_id], int):
             if quantity > 99:
-                messages.error(request, "You can't have more than 99 items of the same product")
+                messages.error(
+                    request,
+                    "You can't have more than 99 items of the same product")
                 return redirect(reverse('view_bag'))
-                
             if quantity > product.stock:
                 existing_quantity = bag[item_id]
-                messages.error(request, f"Only {product.stock} items available. You already have {existing_quantity} in your bag.")
+                messages.error(
+                    request,
+                    f"Only {product.stock} items available."
+                    f"You already have {existing_quantity} in your bag.")
                 return redirect(reverse('view_bag'))
-                
             if quantity > 0:
                 bag[item_id] = quantity
-                messages.success(request, f'Updated {product.name} quantity to {bag[item_id]}.')
+                messages.success(
+                    request,
+                    f'Updated {product.name} quantity to {bag[item_id]}.')
             else:
                 bag.pop(item_id)
-                messages.success(request, f'Removed {product.name} from your bag.')
+                messages.success(
+                    request, f'Removed {product.name} from your bag.')
         else:
             messages.error(request, "Item not found in the bag.")
 
     request.session['bag'] = bag
     return redirect(reverse('view_bag'))
 
+
 def remove_from_bag(request, item_id):
     """Remove a product or size from the shopping bag."""
     try:
         product = get_object_or_404(Product, pk=item_id)
-        size = request.POST.get('product_size') if 'product_size' in request.POST else None
+        size = (
+            request.POST.get('product_size')
+            if 'product_size' in request.POST
+            else None
+        )
         bag = request.session.get('bag', {})
 
         if size:
             del bag[item_id]['items_by_size'][size]
             if not bag[item_id]['items_by_size']:
                 bag.pop(item_id)
-            messages.success(request, f'Removed size {size.upper()} {product.name} from your bag.')
+            messages.success(
+                request,
+                f'Removed size {size.upper()} {product.name} from your bag.')
         else:
             bag.pop(item_id)
             messages.success(request, f'Removed {product.name} from your bag.')

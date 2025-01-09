@@ -16,7 +16,7 @@ class Post(models.Model):
     # Author of the post, linked to the User model
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    # Content of the post using a rich text field (supports images, videos, etc.)
+    # Content of the post using a rich text field
     content = RichTextUploadingField()
 
     # Timestamps for when the post is created and updated
@@ -24,21 +24,28 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     # SEO-related fields
-    meta_description = models.CharField(max_length=160, blank=True, help_text="Meta description for SEO (max 160 characters)")
-    meta_keywords = models.CharField(max_length=200, blank=True, help_text="Comma-separated keywords for SEO")
+    meta_description = models.CharField(
+        max_length=160, blank=True,
+        help_text="Meta description for SEO (max 160 characters)")
+    meta_keywords = models.CharField(
+        max_length=200, blank=True,
+        help_text="Comma-separated keywords for SEO")
 
     # Featured image for the post
-    featured_image = models.ImageField(upload_to='blog_images/', blank=True, null=True, help_text="Featured image for the blog post")
+    featured_image = models.ImageField(
+        upload_to='blog_images/', blank=True, null=True,
+        help_text="Featured image for the blog post")
 
     # Flag to determine if the post is published or not
-    is_published = models.BooleanField(default=False, help_text="Check to publish the post")
+    is_published = models.BooleanField(
+        default=False, help_text="Check to publish the post")
 
     def __str__(self):
-        # String representation of the post (used in admin and other places)
+        # String representation of the post
         return self.title
 
     def get_absolute_url(self):
-        # Returns the absolute URL of the post (used for redirection after saving or for linking)
+        # Returns the absolute URL of the post
         return reverse('post_detail', kwargs={'slug': self.slug})
 
     def clean(self):
@@ -50,7 +57,6 @@ class Post(models.Model):
         # Automatically generate slug from title if not provided
         if not self.slug:
             self.slug = slugify(self.title)
-        
         # Run custom validation
         self.clean()
 
