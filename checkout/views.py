@@ -177,10 +177,15 @@ def checkout(request):
                                     order_line_item.save()
                         else:
                             # Handle items without sizes but with other data
+                            quantity = (
+                                item_data.get('quantity', 1) 
+                                if isinstance(item_data, dict) 
+                                else item_data
+                            )
                             order_line_item = OrderLineItem(
                                 order=order,
                                 product=product,
-                                quantity=item_data,
+                                quantity=int(quantity),
                             )
                             order_line_item.save()
                 except Product.DoesNotExist:
