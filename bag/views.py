@@ -224,24 +224,24 @@ def adjust_bag(request, item_id):
             messages.error(request, "Item not found in your bag.")
     else:
         # Handle non-size items
-        if item_id in bag and isinstance(bag[item_id], int):
+        if item_id in bag and isinstance(bag[item_id], dict):
             if quantity > 99:
                 messages.error(
                     request,
                     "You can't have more than 99 items of the same product")
                 return redirect(reverse('view_bag'))
             if quantity > product.stock:
-                existing_quantity = bag[item_id]
+                existing_quantity = bag[item_id]['quantity']
                 messages.error(
                     request,
                     f"Only {product.stock} items available."
                     f"You already have {existing_quantity} in your bag.")
                 return redirect(reverse('view_bag'))
             if quantity > 0:
-                bag[item_id] = quantity
+                bag[item_id]['quantity'] = quantity
                 messages.success(
                     request,
-                    f'Updated {product.name} quantity to {bag[item_id]}.')
+                    f'Updated {product.name} quantity to {quantity}.')
             else:
                 bag.pop(item_id)
                 messages.success(
