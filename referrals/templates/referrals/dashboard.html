@@ -101,5 +101,6 @@ Referral Dashboard
 <script src="{% static 'referrals/js/dashboard.js' %}"></script>
 <script>
     const csrfToken = '{{ csrf_token }}';
+    const redeemBalanceUrl = "{% url 'redeem_balance' %}";
 </script>
 {% endblock %}
