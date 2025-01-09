@@ -158,19 +158,23 @@ def checkout(request):
                         order_line_item.save()
                     else:
                         if 'items_by_size' in item_data:
-                            for size, size_data in (
-                                    item_data['items_by_size'].items()):
-                                if isinstance(size_data, dict):
-                                    quantity = size_data['quantity']
-                                else:
-                                    quantity = size_data
-                                order_line_item = OrderLineItem(
-                                    order=order,
-                                    product=product,
-                                    quantity=int(quantity),
-                                    product_size=size,
+                            size_items = item_data['items_by_size'].items()
+                            for size, size_data in size_items:
+                                # Handle both old and new size data formats
+                                quantity = (
+                                    int(size_data['quantity'])
+                                    if isinstance(size_data, dict)
+                                    else int(size_data)
                                 )
-                                order_line_item.save()
+                                # Only create line item if quantity is valid
+                                if quantity > 0:
+                                    order_line_item = OrderLineItem(
+                                        order=order,
+                                        product=product,
+                                        quantity=quantity,
+                                        product_size=size,
+                                    )
+                                    order_line_item.save()
                         else:
                             # Handle items without sizes but with other data
                             order_line_item = OrderLineItem(
