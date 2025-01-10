@@ -16,6 +16,26 @@ The platform is designed to cater to a diverse audience, including health-consci
 
 The development of Supplemint also serves as a demonstration of full-stack web development skills, showcasing the integration of Django, Python, Stripe for payment processing, and advanced database management. This project not only meets the needs of its target audience but also highlights the technical expertise required to build a scalable, secure, and responsive e-commerce platform.
 
+## Table of Contents
+
+1. [Introduction](#introduction)
+2. [Project Rationale](#project-rationale)
+3. [Features](#features)
+4. [User Benefits](#user-benefits)
+5. [Business Model](#business-model)
+6. [Personas](#personas)
+7. [E-Commerce Payment System](#e-commerce-payment-system)
+8. [Django Apps and Relational Database](#django-apps-and-relational-database)
+9. [Technologies Used](#technologies-used)
+10. [Program Flow](#program-flow)
+11. [Agile Methodology](#agile-methodology)
+12. [UI/UX Design Documentation](#uiux-design-documentation)
+13. [Marketing Strategies](#marketing-strategies)
+14. [Testing](#testing)
+15. [Deployment](#deployment)
+16. [Future Improvements](#future-improvements)
+17. [Credits and Acknowledgments](#credits-and-acknowledgments)
+
 ## Features  
 
 ### Superior Product Selection  
@@ -1350,7 +1370,91 @@ By following these steps, you can successfully fork, clone, set up, and deploy t
 ## Future Improvements
 
 ### Unsolved Issues and Bugs
+While **Supplemint** is fully functional and provides a seamless shopping experience, there are a few minor issues that could be addressed in future updates:
+
+1. **Manual Image Upload to AWS**:
+   - Currently, images need to be manually uploaded to the AWS S3 bucket, which adds a few extra seconds to the process. Automating this step would streamline product management.
+
+2. **Minor CSS/UX Issues**:
+   - Some CSS elements could be refined for a more polished look, though these do not hinder the purchasing process.
 
 ### Future Features
+To enhance the platform further and provide an even better user experience, the following features and improvements are planned:
+
+1. **Improved Responsiveness**:
+   - Refine CSS to ensure the platform is fully responsive across all devices and screen sizes.
+
+2. **Page Speed Optimization**:
+   - Implement additional optimizations to improve page load times and overall performance.
+
+3. **Enhanced Referral System**:
+   - Add more features to the referral system, such as tiered rewards, leaderboards, and exclusive perks, to make it more engaging and attractive.
+
+4. **Analytics and Tracking**:
+   - Integrate analytics tools to track user behavior, sales trends, and marketing campaign performance.
+
+5. **Automated Emails**:
+   - Expand email automation to include welcome emails, re-engagement emails (e.g., "We haven’t seen you in a while"), and personalized product recommendations.
+
+6. **Expanded Product Catalog**:
+   - Add more categories and products to cater to a wider range of customer needs.
+
+7. **Subscription Options**:
+   - Introduce subscription plans for recurring orders, offering convenience and discounts for loyal customers.
+
+8. **Improved Frontend CRUD Management**:
+   - Enhance the admin interface for managing products, categories, blog posts, and page content directly from the frontend.
+
+9. **Enhanced User Profiles**:
+   - Add more options to user profiles, such as data privacy settings, newsletter preferences, and detailed order history.
+
+10. **Detailed Order History**:
+    - Provide users with a more detailed view of their order history, including tracking information and downloadable invoices.
+
+11. **Favorites/Wishlist**:
+    - Allow users to save favorite products for faster reordering and create wishlists for future purchases.
+
+12. **Additional Payment Options**:
+    - Integrate more payment methods, such as PayPal, Apple Pay, and Google Pay, to cater to a broader audience.
+
+13. **Advanced Product Sorting and Filtering**:
+    - Add more sorting and filtering options, such as filtering by brand, ingredient, or dietary requirements, to help users find products more easily.
+
+These improvements aim to make **Supplemint** more user-friendly, efficient, and feature-rich, ensuring it remains a top choice for health and wellness enthusiasts.
 
 ## Credits and Acknowledgments
+
+### Code and Libraries
+The development of **Supplemint** was made possible by leveraging the following resources, libraries, and frameworks:
+
+- **[Django Documentation](https://docs.djangoproject.com/)**: The backbone of this project, providing a robust framework for building the e-commerce platform.
+- **[Stripe Documentation](https://docs.stripe.com/)**: Enabled secure and seamless payment processing for the platform.
+- **[Django CKEditor](https://django-ckeditor.readthedocs.io/en/latest/)**: Used for rich text editing in the blog and product descriptions.
+- **[Native Dual Range Slider](https://medium.com/@predragdavidovic10/native-dual-range-slider-html-css-javascript-91e778134816)**: Implemented for filtering products by price range.
+- **[Amazon S3 Documentation](https://docs.aws.amazon.com/s3/)**: Used for storing and serving static and media files.
+- **[Django Compressor](https://django-compressor.readthedocs.io/en/stable/)**: Optimized static files for improved performance.
+- **[Django Countries](https://pypi.org/project/django-countries/)**: Simplified country selection during checkout.
+- **[Whitenoise Documentation](https://whitenoise.readthedocs.io/en/latest/)**: Handled static file serving in production.
+- **[Content Security Policy (CSP)](https://www.digitalocean.com/community/tutorials/how-to-secure-your-django-application-with-a-content-security-policy)**: Enhanced security by implementing a strict CSP.
+- **[Django CSRF Protection](https://docs.djangoproject.com/en/5.1/ref/csrf/)**: Ensured secure form submissions.
+- **[Django Gzip Middleware](https://docs.djangoproject.com/en/2.1/_modules/django/middleware/gzip/)**: Improved performance by compressing responses.
+
+### Testing Tools
+The following tools were used to validate and test the application:
+
+- **[JSHint](https://jshint.com/)**: For JavaScript code validation.
+- **[W3C Markup Validation Service](https://validator.w3.org/)**: For HTML validation.
+- **[W3C CSS Validation Service](https://jigsaw.w3.org/css-validator/)**: For CSS validation.
+- **[PEP8 Online](https://pep8ci.herokuapp.com/)**: For Python code style validation.
+- **[Google PageSpeed Insights](https://pagespeed.web.dev/)**: For performance and optimization testing.
+
+### Media and Content
+- **Images**: All product and blog images were self-generated locally using **[FLUX.1](https://huggingface.co/black-forest-labs/FLUX.1-dev)**, an AI image generation tool.
+- **Icons**: Provided by **[Font Awesome](https://fontawesome.com/)** for a clean and professional design.
+- **Text Content**: Product descriptions and blog content were self-generated locally using **[Llama 3](https://ollama.com/library/llama3.1)**, an AI text generation tool.
+
+### Special Thanks
+- **Dick Vlaanderen**: My mentor, whose guidance and feedback were invaluable throughout the development process.
+- **Wenzel**: My roommate, for his support, brainstorming sessions, and testing assistance.
+
+This project would not have been possible without the contributions of these resources, tools, and individuals. Thank you for your support!
